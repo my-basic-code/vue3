@@ -28,7 +28,6 @@
         <div>1243</div>
       </template>
     </Input>
-
     <SeLectBox :options="optionSelect" v-model="valueSelect" />
   </div>
 </template>
@@ -43,9 +42,9 @@ import { classButtonCustom } from "@/utils/customClass"
 
 const valueCheckBox = ref(true)
 const valueInput = ref("")
-const valueSelect = ref()
+const valueSelect = ref(1)
 const optionSelect = ref([
-  { label: "1234123", value: 1 },
+  { label: "ádfdsa", value: 1 },
   { label: "1234123", value: 2 },
 ])
 

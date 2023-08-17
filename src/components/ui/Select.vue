@@ -18,6 +18,10 @@ const selected = ref(props.modelValue)
 const isOpen = ref(false)
 const element = ref(null)
 
+const selectedOption = computed(() => {
+  return props.options.find(option => option.value === selected.value)
+})
+
 watch(selected, () => {
   emit("update:modelValue", selected.value)
 })
@@ -60,7 +64,7 @@ onUnmounted(() => {
       class="flex items-center px-4 py-2 bg-gray-100 border border-transparent rounded cursor-pointer value"
     >
       <component :is="iconComponent" class="mr-2" />
-      <span>{{ selected }}</span>
+      <span>{{ selectedOption.label }}</span>
     </div>
 
     <div
