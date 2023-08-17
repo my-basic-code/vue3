@@ -2,4 +2,4 @@ import { ref } from "vue";
 
 const isOpenModal = ref(false)
 
-export const useSidebar = () => isOpenModal
+export const useModal = () => isOpenModal

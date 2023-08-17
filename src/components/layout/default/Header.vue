@@ -91,6 +91,6 @@
 </template>
 
 <script setup>
-import { containerCustom } from '@/utils/customClassTailwind'
+// import { containerCustom } from '@/utils/customClass'
 import Images from '@/constants/images'
 </script>
