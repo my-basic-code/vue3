@@ -6,6 +6,7 @@ custom by Hoang Hiéu
 - [Giới thiệu](#giới-thiệu)
 - [Hướng dẫn cài đặt](#hướng-dẫn-cài-đặt)
 - [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+- [Document](#document)
 
 ## Giới thiệu
 Vue 3 basic code
@@ -74,3 +75,55 @@ npm run dev
     │
     └── main.js /* Entry point 
 
+## document
+
+# Component Button
+
+Component `Button` là một thành phần Vue được sử dụng để tạo ra một nút đơn giản với khả năng hiển thị biểu tượng ở các vị trí khác nhau.
+
+## Props
+
+- **leftIcon** (kiểu: `Object`, mặc định: `null`): Prop này cho phép bạn chỉ định một biểu tượng để hiển thị bên trái của nút.
+
+- **rightIcon** (kiểu: `Object`, mặc định: `null`): Prop này cho phép bạn chỉ định một biểu tượng để hiển thị bên phải của nút.
+
+## Slots
+
+- **default slot**: Khi sử dụng component `<Button>`, bạn có thể đặt nội dung bên trong nút.
+
+- **left-icon slot**: Khi sử dụng component `<Button>`, bạn có thể đặt biểu tượng bên trái của nút trong slot này.
+
+- **right-icon slot**: Khi sử dụng component `<Button>`, bạn có thể đặt biểu tượng bên phải của nút trong slot này.
+
+## Sử dụng
+
+Dưới đây là một ví dụ về cách sử dụng component `Button` trong code của bạn:
+
+```vue
+<template>
+  <div>
+    <Button :leftIcon="leftIcon" :rightIcon="rightIcon">
+      Gửi
+    </Button>
+  </div>
+</template>
+
+<script>
+import Button from './components/Button.vue';
+
+export default {
+  components: {
+    Button,
+  },
+  data() {
+    return {
+      leftIcon: {
+        // Đối tượng biểu tượng bên trái
+      },
+      rightIcon: {
+        // Đối tượng biểu tượng bên phải
+      },
+    };
+  },
+};
+</script>
