@@ -181,9 +181,9 @@ const inputErrors = ref([])
 </script>
 ```
 
-# Component CheckboxInput
+# Component CheckboxRadio
 
-Component `CheckboxInput` là một thành phần Vue được sử dụng để tạo ra một trường checkbox đơn giản với các tính năng như nhãn và hiển thị thông báo lỗi.
+Component `CheckboxRadio` là một thành phần Vue được sử dụng để tạo ra một trường checkbox đơn giản với các tính năng như nhãn và hiển thị thông báo lỗi.
 
 ## Props
 
@@ -211,15 +211,15 @@ Component `CheckboxInput` là một thành phần Vue được sử dụng để
 
 ## Slots
 
-Không có slot nào trong component `CheckboxInput`.
+Không có slot nào trong component `CheckboxRadio`.
 
 ## Sử dụng
 
-Dưới đây là một ví dụ về cách sử dụng component `CheckboxInput` trong code của bạn:
+Dưới đây là một ví dụ về cách sử dụng component `CheckboxRadio` trong code của bạn:
 
 ```vue
 <template>
-    <CheckboxInput
+    <CheckboxRadio
       className="checkbox-container"
       inputClass="checkbox-field"
       name="agree_terms"
@@ -237,9 +237,9 @@ const agreeTerms = ref(false)
 </script>
 ```
 
-# Component SelectInput
+# Component Select
 
-Component `SelectInput` là một thành phần Vue được sử dụng để tạo ra một trường chọn đơn giản với các tùy chọn và tính năng như lựa chọn đa giá trị, đóng mở dropdown, và xử lý sự kiện.
+Component `Select` là một thành phần Vue được sử dụng để tạo ra một trường chọn đơn giản với các tùy chọn và tính năng như lựa chọn đa giá trị, đóng mở dropdown, và xử lý sự kiện.
 
 ## Props
 
@@ -267,12 +267,12 @@ Component `SelectInput` là một thành phần Vue được sử dụng để t
 
 ## Sử dụng
 
-Dưới đây là một ví dụ về cách sử dụng component `SelectInput` trong code của bạn:
+Dưới đây là một ví dụ về cách sử dụng component `Select` trong code của bạn:
 
 ```vue
 
 <template>
-    <SelectInput
+    <Select
       :options="selectOptions"
       :modelValue="selectedValue"
       :disabled="isDisabled"
@@ -307,7 +307,7 @@ Dưới đây là một ví dụ về cách sử dụng component `SelectInput` 
           {{ option.label }}
         </div>
       </template>
-    </SelectInput>
+    </Select>
 </template>
 
 <script setup>
