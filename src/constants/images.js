@@ -5,6 +5,7 @@ import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
+import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
 import iconUser from '@/assets/images/icon/user.svg'
 import logo from '@/assets/images/logo.png'
@@ -13,6 +14,10 @@ const Images = {
   logo: {
     src: logo,
     alt: 'logo'
+  },
+  iconSearch: {
+    src: iconSearch,
+    alt: 'iconSearch'
   },
   iconCart: {
     src: iconCart,

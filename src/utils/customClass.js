@@ -4,7 +4,7 @@ export const containerCustom = "max-w-[75rem]";
 export const classInputCustom = {
   1: {
     wrapper: "flex items-center border-b border-[#242424]",
-    input: 'placeholder:text-[#242424] placeholder:text-xs placeholder:font-normal'
+    input: 'placeholder:text-[#242424] placeholder:text-xs placeholder:font-normal text-[#242424] text-xs font-normal'
   },
 };
 
