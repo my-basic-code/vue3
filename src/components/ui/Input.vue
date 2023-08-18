@@ -5,10 +5,6 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  wrapClassName: {
-    type: String,
-    default: ''
-  },
   className: {
     type: String,
     default: ''
@@ -49,7 +45,7 @@ const handleChange = (e) => {
 
 
 <template>
-  <div :class="wrapClassName">
+  <div >
     <label v-if="label">{{ label }}</label>
     <slot name="prefix"></slot>
     <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
