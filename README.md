@@ -1,4 +1,5 @@
 # Project of Hoang Hiéu
+
 custom by Hoang Hiéu
 
 ## Mục lục
@@ -9,24 +10,33 @@ custom by Hoang Hiéu
 - [Document](#document)
 
 ## Giới thiệu
+
 Vue 3 basic code
-Để thay đổi layout trong route thêm 
+Để thay đổi layout trong route thêm
+
 ```sh
       meta: {
         layout: "name-layout",
       }
 ```
+
 ## Hướng dẫn cài đặt
+
 Để chạy ứng dụng trên máy local:
 Clone repository này về máy
+
 ```sh
 git clone https://github.com/my-basic-code/vue3.git
 ```
+
 Cài đặt các dependency
+
 ```sh
 npm install
 ```
+
 Khởi động server dev
+
 ```sh
 npm run dev
 ```
@@ -34,13 +44,13 @@ npm run dev
 ## Cấu trúc thư mục
 
 ├── src
-    
+
     ├── assets
         │
         ├── css /* Các file css */
         │
         └── images /* Các file ảnh */
-        
+
     ├── components
         │
         ├── layout /* Các layout component */
@@ -58,13 +68,13 @@ npm run dev
         ├── Default.vue
         │
         └── OnlyView.vue
-     
+
     ├── pages /* Các trang */
     │
     ├── router /* Cấu hình routing */
     │
     ├── stores /* Quản lý state */
-    │ 
+    │
     ├── utils /* Các tiện ích khác */
     │   │
     │   ├── import.js /* import layout */
@@ -73,7 +83,7 @@ npm run dev
     │
     ├── App.vue /* Gốc ứng dụng */
     │
-    └── main.js /* Entry point 
+    └── main.js /* Entry point
 
 ## document
 
@@ -123,6 +133,8 @@ Component `Input` là một thành phần Vue được sử dụng để tạo r
 
 ## Props
 
+- **wrapClass** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường.
+
 - **className** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường nhập liệu.
 
 - **name** (kiểu: `String`, bắt buộc): Prop này chỉ định tên của trường nhập liệu.
@@ -153,22 +165,22 @@ Dưới đây là một ví dụ về cách sử dụng component `Input` trong 
 
 ```vue
 <template>
-    <Input
-      class="input-wrap"
-      className="input-field"
-      name="username"
-      placeholder="Nhập tên người dùng"
-      :label="labelText"
-      :errors="inputErrors"
-      v-model="username"
-    >
-      <template #prefix>
-        <i class="prefix-icon"></i>
-      </template>
-      <template #suffix>
-        <i class="suffix-icon"></i>
-      </template>
-    </Input>
+  <Input
+    class="input-wrap"
+    className="input-field"
+    name="username"
+    placeholder="Nhập tên người dùng"
+    :label="labelText"
+    :errors="inputErrors"
+    v-model="username"
+  >
+    <template #prefix>
+      <i class="prefix-icon"></i>
+    </template>
+    <template #suffix>
+      <i class="suffix-icon"></i>
+    </template>
+  </Input>
 </template>
 
 <script setup>
@@ -177,7 +189,6 @@ import Input from "@/components/ui/Input.vue"
 const username = ref("")
 const labelText = ref("Tên người dùng")
 const inputErrors = ref([])
-
 </script>
 ```
 
@@ -219,15 +230,15 @@ Dưới đây là một ví dụ về cách sử dụng component `CheckboxRadio
 
 ```vue
 <template>
-    <CheckboxRadio
-      className="checkbox-container"
-      inputClass="checkbox-field"
-      name="agree_terms"
-      id="agree_terms"
-      label="Tôi đồng ý với các điều khoản và điều kiện"
-      :errors="checkboxErrors"
-      v-model="agreeTerms"
-    />
+  <CheckboxRadio
+    className="checkbox-container"
+    inputClass="checkbox-field"
+    name="agree_terms"
+    id="agree_terms"
+    label="Tôi đồng ý với các điều khoản và điều kiện"
+    :errors="checkboxErrors"
+    v-model="agreeTerms"
+  />
 </template>
 
 <script setup>
@@ -270,57 +281,55 @@ Component `Select` là một thành phần Vue được sử dụng để tạo 
 Dưới đây là một ví dụ về cách sử dụng component `Select` trong code của bạn:
 
 ```vue
-
 <template>
-    <Select
-      :options="selectOptions"
-      :modelValue="selectedValue"
-      :disabled="isDisabled"
-      :multiple="isMultiple"
-      placeholder="Select an option"
-      placement="bottomLeft"
-      @update:modelValue="handleSelect"
-    >
-      <template #icon>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 12a2 2 0 100-4 2 2 0 000 4z"
-            clip-rule="evenodd"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M10 2a8 8 0 100 16 8 8 0 000-16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </template>
+  <Select
+    :options="selectOptions"
+    :modelValue="selectedValue"
+    :disabled="isDisabled"
+    :multiple="isMultiple"
+    placeholder="Select an option"
+    placement="bottomLeft"
+    @update:modelValue="handleSelect"
+  >
+    <template #icon>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 12a2 2 0 100-4 2 2 0 000 4z"
+          clip-rule="evenodd"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M10 2a8 8 0 100 16 8 8 0 000-16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </template>
 
-      <template #options>
-        <div v-for="option in selectOptions" :key="option.value">
-          <input type="checkbox" />
-          {{ option.label }}
-        </div>
-      </template>
-    </Select>
+    <template #options>
+      <div v-for="option in selectOptions" :key="option.value">
+        <input type="checkbox" />
+        {{ option.label }}
+      </div>
+    </template>
+  </Select>
 </template>
 
 <script setup>
 import Select from "@/components/ui/Select.vue"
 
 const selectOptions = ref([
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' }
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
 ])
 const selectedValue = ref()
 const isDisabled = ref(false)
 const isMultiple = ref(false)
 </script>
 ```
-

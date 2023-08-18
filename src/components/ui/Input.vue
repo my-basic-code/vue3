@@ -1,55 +1,62 @@
 // Input.vue
 
 <script setup>
-
-import { computed } from 'vue'
+import { computed } from "vue"
 
 const props = defineProps({
+  wrapClass: {
+    type: String,
+    default: "",
+  },
   className: {
     type: String,
-    default: ''
+    default: "",
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   placeholder: {
     type: String,
-    default: ''
+    default: "",
   },
   type: {
     type: String,
-    default: 'text'
+    default: "text",
   },
   label: {
     type: String,
-    default: ''
+    default: "",
   },
   errors: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   modelValue: {
     type: String,
-    default: ''
-  }
+    default: "",
+  },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"])
 
-const handleChange = (e) => {
-  emit('update:modelValue', e.target.value)
+const handleChange = e => {
+  emit("update:modelValue", e.target.value)
 }
-
 </script>
 
-
 <template>
-  <div >
+  <div :class="wrapClass">
     <label v-if="label">{{ label }}</label>
     <slot name="prefix"></slot>
-    <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
-      @input="handleChange">
+    <input
+      :class="className"
+      :type="type"
+      :name="name"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="handleChange"
+    />
     <slot name="suffix"></slot>
   </div>
   <ErrorMessages v-if="errors.length" :errors="errors" />

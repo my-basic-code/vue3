@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button :class="`${classButtonCustom[1]}`" @click="handleClick">
+    <Button class="border border-[#DFDFDF]" @click="handleClick">
       <template v-slot:right-icon>
         <div>abcv</div>
       </template>
@@ -60,9 +60,7 @@
       </template>
       <template #options>
         <div v-for="option in optionSelect" :key="option.value">
-          <input
-            type="checkbox"
-          />
+          <input type="checkbox" />
           {{ option.label }}
         </div>
       </template>
@@ -76,7 +74,6 @@ import Button from "@/components/ui/Button.vue"
 import CheckboxRadio from "@/components/ui/CheckboxRadio.vue"
 import Input from "@/components/ui/Input.vue"
 import Select from "@/components/ui/Select.vue"
-import { classButtonCustom } from "@/utils/customClass"
 
 const valueCheckBox = ref(true)
 const valueInput = ref("")

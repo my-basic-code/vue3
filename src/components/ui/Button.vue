@@ -1,5 +1,5 @@
 <template>
-  <button class="flex items-center justify-center">
+  <button>
     <slot name="left-icon"></slot>
     <slot />
     <slot name="right-icon"></slot>

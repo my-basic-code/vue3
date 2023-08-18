@@ -1,96 +1,132 @@
 <template>
-  <header class="relative bg-white shadow dark:bg-gray-800">
-    <div class="container px-6 py-3 mx-auto">
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <a href="#">
-              <img class="w-auto h-6 sm:h-7" :src="Images.logo.src" :alt="Images.logo.alt">
-            </a>
-
-            <!-- Search input on desktop screen -->
-            <div class="hidden mx-10 md:block">
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </svg>
-                </span>
-
-                <input type="text"
-                  class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
-                  placeholder="Search">
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile menu button -->
-          <div class="flex lg:hidden">
-            <button x-cloak @click="isOpen = !isOpen" type="button"
-              class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
-              aria-label="toggle menu">
-              <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" />
-              </svg>
-
-              <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+  <header class="relative bg-white border-b border-[#DFDFDF]">
+    <div class="container flex items-center justify-between py-3 mx-auto">
+      <div class="space-x-[120px] flex items-center">
+        <div class="h-8 w-28">
+          <img :src="Images.logo.src" :alt="Images.logo.alt" />
         </div>
 
-        <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-        <div x-cloak :class="[isOpen ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']"
-          class="absolute inset-x-0 z-20 w-full px-6 py-2 transition-all duration-300 ease-in-out bg-white top-24 dark:bg-gray-800 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center">
-          <div class="flex flex-col md:flex-row md:mx-1">
-            <a class="my-2 text-sm leading-5 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
-              href="#">Home</a>
-            <a class="my-2 text-sm leading-5 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
-              href="#">Blog</a>
-            <a class="my-2 text-sm leading-5 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
-              href="#">Compoents</a>
-            <a class="my-2 text-sm leading-5 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
-              href="#">Courses</a>
-          </div>
-
-          <!-- Search input on mobile screen -->
-          <div class="my-4 md:hidden">
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </span>
-
-              <input type="text"
-                class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
-                placeholder="Search">
-            </div>
-          </div>
-        </div>
+        <Input
+          :wrapClass="classInputCustom[1].wrapper"
+          :className="`pt-1 pb-[10px] ${classInputCustom[1].input}`"
+          name="search"
+          placeholder="썸머 마지막 50% 세일"
+          v-model="search"
+          @click="handleSearch"
+        >
+          <template #suffix>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                stroke="#242424"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M21.0004 21.0004L16.6504 16.6504"
+                stroke="#242424"
+                stroke-linecap="square"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </template>
+        </Input>
       </div>
 
-      <ul class="flex justify-center py-3 mt-3 space-x-10 overflow-y-auto whitespace-nowrap scroll-hidde">
-        <li>카테고리</li>
-        <li>카테고리</li>
-        <li>카테고리</li>
-        <li>카테고리</li>
-        <li>카테고리</li>
-        <li>카테고리</li>
-        <li>카테고리</li>
+      <ul class="menu">
+        <li class="flex space-x-[28px]">
+          <a href="#" class="flex flex-col items-center space-y-1">
+            <img :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
+            <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
+          </a>
+          <a href="#" class="flex flex-col items-center space-y-1">
+            <img
+              :src="Images.iconCustomerService.src"
+              :alt="Images.iconCustomerService.alt"
+            />
+            <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
+          </a>
+          <a href="#" class="flex flex-col items-center space-y-1">
+            <img :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
+            <span class="text-[10px] text-[#242424] font-normal">마이</span>
+          </a>
+        </li>
       </ul>
+    </div>
+
+    <div class="container mx-auto">
+      <div class="relative inline-block">
+        <!-- Dropdown toggle button -->
+        <button
+          @click="isOpenMenu = !isOpenMenu"
+          class="relative py-3 px-[18px] z-10 flex text-[#242424] space-x-[10px] border border-transparent dark:text-white"
+        >
+          <img :src="Images.iconBar3.src" :alt="Images.iconBar3.alt" />
+          <span class="text-[16px] text-[#242424] font-normal">카테고리</span>
+        </button>
+
+        <!-- Dropdown menu -->
+        <ul
+          class="absolute left-0 z-20 w-[335px] origin-top-right bg-white shadow-xl dark:bg-gray-800"
+          v-if="isOpenMenu"
+        >
+          <li
+            v-for="(item, index) in menuItems"
+            :key="index"
+            class="flex justify-start space-x-3 px-5 py-3 text-sm text-[#242424] capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100"
+          >
+            <img :src="item.icon" :alt="item.alt" />
+            <span class="text-[16px] text-[#242424] font-normal">{{
+              item.text
+            }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
 </template>
 
 <script setup>
-// import { containerCustom } from '@/utils/customClass'
-import Images from '@/constants/images'
+import Images from "@/constants/images"
+import Input from "@/components/ui/Input.vue"
+import { classInputCustom } from "@/utils/customClass.js"
+import { ref } from "vue"
+
+const isOpenMenu = ref(false)
+const menuItems = ref([
+  {
+    icon: Images.iconShipping.src,
+    alt: Images.iconShipping.alt,
+    text: "무료배송",
+  },
+  {
+    icon: Images.iconMembership.src,
+    alt: Images.iconMembership.alt,
+    text: "멤버십",
+  },
+  {
+    icon: Images.iconDiscount.src,
+    alt: Images.iconDiscount.alt,
+    text: "할인특가",
+  },
+  {
+    icon: Images.iconGift.src,
+    alt: Images.iconGift.alt,
+    text: "선물하기",
+  },
+  {
+    icon: Images.iconBest.src,
+    alt: Images.iconBest.alt,
+    text: "베스트",
+  },
+])
+const search = ref()
+
+const handleSearch = () => {}
 </script>
