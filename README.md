@@ -102,8 +102,14 @@ Dưới đây là một ví dụ về cách sử dụng component `Button` trong
 ```vue
 <template>
   <div>
-    <Button :leftIcon="leftIcon" :rightIcon="rightIcon">
+    <Button :class="`${classButtonCustom[1]}`" @click="handleClick">
+      <template v-slot:right-icon>
+        <div>right-icon</div>
+      </template>
       Gửi
+      <template v-slot:left-icon>
+        <div>right-icon</div>
+      </template>
     </Button>
   </div>
 </template>
@@ -127,3 +133,4 @@ export default {
   },
 };
 </script>
+```
