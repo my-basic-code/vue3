@@ -81,12 +81,6 @@ npm run dev
 
 Component `Button` là một thành phần Vue được sử dụng để tạo ra một nút đơn giản với khả năng hiển thị biểu tượng ở các vị trí khác nhau.
 
-## Props
-
-- **leftIcon** (kiểu: `Object`, mặc định: `null`): Prop này cho phép bạn chỉ định một biểu tượng để hiển thị bên trái của nút.
-
-- **rightIcon** (kiểu: `Object`, mặc định: `null`): Prop này cho phép bạn chỉ định một biểu tượng để hiển thị bên phải của nút.
-
 ## Slots
 
 - **default slot**: Khi sử dụng component `<Button>`, bạn có thể đặt nội dung bên trong nút.
