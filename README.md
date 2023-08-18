@@ -39,13 +39,11 @@ npm run dev
         ├── css /* Các file css */
         │
         └── images /* Các file ảnh */
-    │
     ├── components
         │
         ├── layout /* Các layout component */
         │
         └── ui /* Các component UI tái sử dụng */
-    │
     ├── constants /* Các hằng số */
     │
     ├── helper /* Các hàm tiện ích */
@@ -57,7 +55,6 @@ npm run dev
         ├── Default.vue
         │
         └── OnlyView.vue
-    │
     ├── pages /* Các trang */
     │
     ├── router /* Cấu hình routing */
@@ -72,5 +69,5 @@ npm run dev
     │
     ├── App.vue /* Gốc ứng dụng */
     │
-    └── main.js /* Entry point 
+    └── main.js /* Entry point
 
