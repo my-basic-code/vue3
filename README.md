@@ -33,7 +33,7 @@ npm run dev
 ## Cấu trúc thư mục
 
 ├── src
-    │
+    
     ├── assets
         │
         ├── css /* Các file css */
