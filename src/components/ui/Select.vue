@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, onMounted, onUnmounted } from "vue"
+import { ref, computed, onMounted, onUnmounted } from "vue"
 
 const props = defineProps({
   options: {
@@ -7,45 +7,84 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Array],
+  },
+  disabled: Boolean,
+  multiple: Boolean,
+  placeholder: {
+    type: String,
+    default: "Select...",
+  },
+  placement: {
+    type: String,
+    default: "bottomLeft",
   },
 })
 
-const emit = defineEmits(["update:modelValue"])
+const emits = defineEmits(["update:modelValue"])
 
-const selected = ref(props.modelValue)
-
-const isOpen = ref(false)
+const selected = ref(
+  !props.multiple ? props.modelValue || "" : props.modelValue || []
+)
 const element = ref(null)
-
-const selectedOption = computed(() => {
-  return props.options.find(option => option.value === selected.value)
-})
-
-watch(selected, () => {
-  emit("update:modelValue", selected.value)
-})
-
-const iconComponent = computed(() => {
-  if (!isOpen.value) {
-    return "ArrowDownIcon"
+const isOpen = ref(false)
+const positionOption = computed(() => {
+  switch (props.placement) {
+    case "bottomLeft":
+      return "left-0 top-[100%]"
+    case "bottomRight":
+      return "right-0 top-[100%]"
+    case "topLeft":
+      return "left-0 top-[-100%]"
+    case "topRight":
+      return "right-0 top-[-100%]"
+    default:
+      return ""
   }
-
-  return "ArrowUpIcon"
 })
 
-function toggle() {
+const toggle = () => {
+  if (props.disabled) return
+
   isOpen.value = !isOpen.value
 }
 
+const toggleValue = value => {
+  if (selected.value.includes(value)) {
+    return selected.value.filter(v => v !== value)
+  } else {
+    return selected.value.concat(value)
+  }
+}
+
+const selectedText = computed(() => {
+  if (props.multiple) {
+    if (!selected.value.length) {
+      return props.placeholder
+    }
+    return selected.value
+      .map(value => props.options.find(o => o.value === value).label)
+      .join(", ")
+  } else {
+    if (!selected.value) {
+      return props.placeholder
+    }
+    return props.options.find(o => o.value === selected.value)?.label
+  }
+})
+
+function updateValue(newValue) {
+  selected.value = newValue
+  emits("update:modelValue", newValue)
+}
+
 function close() {
-  console.log("closing")
   isOpen.value = false
 }
 
 function handleClickOutside(event) {
   if (!element.value.contains(event.target)) {
-    isOpen.value = false
+    close()
   }
 }
 
@@ -59,26 +98,41 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="element" class="relative select" @click="toggle">
-    <div
-      class="flex items-center px-4 py-2 bg-gray-100 border border-transparent rounded cursor-pointer value"
-    >
-      <component :is="iconComponent" class="mr-2" />
-      <span>{{ selectedOption.label }}</span>
-    </div>
+  <div
+    ref="element"
+    @click="toggle"
+    :class="`${disabled ? 'opacity-50' : ''} relative`"
+  >
+    <span class="text-3xl">{{ selectedText }}</span>
 
-    <div
-      v-show="isOpen"
-      class="absolute w-full overflow-auto bg-white rounded shadow-lg options max-h-60"
-    >
-      <div
-        v-for="option in options"
-        :key="option.value"
-        class="px-4 py-2 cursor-pointer option hover:bg-gray-100"
-        @click="selected = option.value"
-      >
-        {{ option.label }}
-      </div>
+    <slot name="icon"> </slot>
+
+    <div v-if="isOpen" :class="`absolute ${positionOption}`">
+      <slot name="options">
+        <div
+          v-for="option in options"
+          :key="option.value"
+          @click="
+            updateValue(multiple ? toggleValue(option.value) : option.value)
+          "
+        >
+          <input
+            type="checkbox"
+            v-if="multiple"
+            :checked="(selected || []).includes(option.value)"
+            @change="updateValue(toggleValue(option.value))"
+          />
+
+          <input
+            type="radio"
+            v-else
+            :checked="option.value === selected"
+            @change="updateValue(option.value)"
+          />
+
+          {{ option.label }}
+        </div>
+      </slot>
     </div>
   </div>
 </template>

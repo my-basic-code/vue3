@@ -12,7 +12,7 @@ const router = createRouter({
       path: "/login",
       name: "Login",
       meta: {
-        layout: "auth",
+        layout: "only-view",
       },
       component: () => import("@/pages/Login.vue"),
     },

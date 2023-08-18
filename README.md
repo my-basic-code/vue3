@@ -1,49 +1,76 @@
-# vue3
+# Project of Hoang Hiéu
+custom by Hoang Hiéu
 
-This template should help get you started developing with Vue 3 in Vite.
+## Mục lục
 
-## Recommended IDE Setup
+- [Giới thiệu](#giới-thiệu)
+- [Hướng dẫn cài đặt](#hướng-dẫn-cài-đặt)
+- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
+## Giới thiệu
+Vue 3 basic code
+Để thay đổi layout trong route thêm 
+```sh
+      meta: {
+        layout: "name-layout",
+      }
+```
+## Hướng dẫn cài đặt
+Để chạy ứng dụng trên máy local:
+Clone repository này về máy
+```sh
+git clone https://github.com/my-basic-code/vue3.git
+```
+Cài đặt các dependency
 ```sh
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
+Khởi động server dev
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Cấu trúc thư mục
 
-```sh
-npm run build
-```
+├── src
+    │
+    ├── assets
+        │
+        ├── css /* Các file css */
+        │
+        └── images /* Các file ảnh */
+        
+    ├── components
+        │
+        ├── layout /* Các layout component */
+        │
+        └── ui /* Các component UI tái sử dụng */
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+    ├── constants /* Các hằng số */
+    │
+    ├── helper /* Các hàm tiện ích */
+    │
+    ├── hooks /* Custom hooks */
+    │
+    ├── layouts /* Các layout wrapper */
+        │
+        ├── Default.vue
+        │
+        └── OnlyView.vue
+     
+    ├── pages /* Các trang */
+    │
+    ├── router /* Cấu hình routing */
+    │
+    ├── stores /* Quản lý state */
+    │ 
+    ├── utils /* Các tiện ích khác */
+    │   │
+    │   ├── import.js /* import layout */
+    │   │
+    │   └── customClass.js /* custom classes dùng chung */
+    │
+    ├── App.vue /* Gốc ứng dụng */
+    │
+    └── main.js /* Entry point 
 
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run build
-npm run test:e2e # or `npm run test:e2e:ci` for headless testing
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-# vue3

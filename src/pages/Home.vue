@@ -6,7 +6,8 @@
       </template>
       21423
     </Button>
-    <CheckBox
+    <CheckboxRadio
+      type="checkbox"
       label="Checkbox"
       className="relative"
       inputClass="w-6 h-6 transition-all duration-300 bg-gray-400 rounded-full appearance-none checked:scale-150 checked:opacity-0 peer mr-3"
@@ -15,7 +16,7 @@
       :errors="['sdafasd']"
       v-model="valueCheckBox"
     >
-    </CheckBox>
+    </CheckboxRadio>
 
     <Input
       name="frame18249"
@@ -35,14 +36,14 @@
 <script setup>
 import { ref } from "vue"
 import Button from "@/components/ui/Button.vue"
-import CheckBox from "@/components/ui/CheckBox.vue"
+import CheckboxRadio from "@/components/ui/CheckboxRadio.vue"
 import Input from "@/components/ui/Input.vue"
 import SeLectBox from "@/components/ui/Select.vue"
 import { classButtonCustom } from "@/utils/customClass"
 
 const valueCheckBox = ref(true)
 const valueInput = ref("")
-const valueSelect = ref(1)
+const valueSelect = ref()
 const optionSelect = ref([
   { label: "ádfdsa", value: 1 },
   { label: "1234123", value: 2 },
