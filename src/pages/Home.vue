@@ -30,41 +30,6 @@
       </template>
     </Input>
     <Select :options="optionSelect" v-model="valueSelect" />
-
-    <Select
-      :options="optionSelect"
-      v-model="valueSelect"
-      :disabled="false"
-      :multiple="true"
-      placeholder="Select an option"
-      placement="bottomLeft"
-    >
-      <template #icon>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 12a2 2 0 100-4 2 2 0 000 4z"
-            clip-rule="evenodd"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M10 2a8 8 0 100 16 8 8 0 000-16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </template>
-      <template #options>
-        <div v-for="option in optionSelect" :key="option.value">
-          <input type="checkbox" />
-          {{ option.label }}
-        </div>
-      </template>
-    </Select>
   </div>
 </template>
 
