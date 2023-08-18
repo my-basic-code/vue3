@@ -1,6 +1,10 @@
 <script setup>
 import ErrorMessages from "@/components/ui/ErrorMessage.vue"
 const props = defineProps({
+  className: {
+    type: String,
+    default: "",
+  },
   inputClass: {
     type: String,
     default: "",
@@ -43,7 +47,7 @@ const handleChange = e => {
 </script>
 
 <template>
-  <div>
+  <div :class="className">
     <input
       :class="inputClass"
       :name="name"

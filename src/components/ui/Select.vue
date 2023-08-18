@@ -105,7 +105,7 @@ onUnmounted(() => {
   >
     <span class="text-3xl">{{ selectedText }}</span>
 
-    <slot name="icon"> </slot>
+    <slot name="icon"></slot>
 
     <div v-if="isOpen" :class="`absolute ${positionOption}`">
       <slot name="options">

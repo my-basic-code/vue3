@@ -187,6 +187,8 @@ Component `CheckboxInput` là một thành phần Vue được sử dụng để
 
 ## Props
 
+- **className** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho phần bao bọc của trường checkbox.
+
 - **inputClass** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường checkbox.
 
 - **type** (kiểu: `String`, mặc định: `'checkbox'`): Prop này chỉ định kiểu của trường input : checkbox hoặc radio.
@@ -218,7 +220,7 @@ Dưới đây là một ví dụ về cách sử dụng component `CheckboxInput
 ```vue
 <template>
     <CheckboxInput
-      class="checkbox-container"
+      className="checkbox-container"
       inputClass="checkbox-field"
       name="agree_terms"
       id="agree_terms"
@@ -235,4 +237,90 @@ const agreeTerms = ref(false)
 </script>
 ```
 
+# Component SelectInput
+
+Component `SelectInput` là một thành phần Vue được sử dụng để tạo ra một trường chọn đơn giản với các tùy chọn và tính năng như lựa chọn đa giá trị, đóng mở dropdown, và xử lý sự kiện.
+
+## Props
+
+- **options** (kiểu: `Array`, bắt buộc): Prop này chỉ định danh sách các tùy chọn cho trường chọn. Mỗi tùy chọn là một đối tượng có hai thuộc tính: `value` (giá trị của tùy chọn) và `label` (nhãn hiển thị cho tùy chọn).
+
+- **modelValue** (kiểu: `String`, `Number`, `Array`): Prop này chỉ định giá trị hiện tại của trường chọn. Nếu `multiple` được đặt thành `true`, giá trị có thể là một mảng các giá trị.
+
+- **disabled** (kiểu: `Boolean`): Prop này chỉ định trạng thái vô hiệu hóa của trường chọn.
+
+- **multiple** (kiểu: `Boolean`): Prop này chỉ định xem trường chọn có cho phép lựa chọn đa giá trị hay không.
+
+- **placeholder** (kiểu: `String`, mặc định: `"Select..."`): Prop này chỉ định văn bản mặc định hiển thị khi không có tùy chọn nào được chọn.
+
+- **placement** (kiểu: `String`, mặc định: `"bottomLeft"`): Prop này chỉ định vị trí hiển thị dropdown của trường chọn. Các giá trị hợp lệ bao gồm `"bottomLeft"`, `"bottomRight"`, `"topLeft"` và `"topRight"`.
+
+## Sự kiện
+
+- **update:modelValue**: Sự kiện này được phát ra khi giá trị của trường chọn thay đổi. Bạn có thể lắng nghe sự kiện này để cập nhật giá trị của trường chọn trong component cha.
+
+## Slots
+
+- **icon**: Slot này cho phép bạn tùy chỉnh biểu tượng hiển thị bên trong trường chọn.
+
+- **options**: Slot này cho phép bạn tùy chỉnh giao diện của dropdown và các tùy chọn. Bên trong slot, bạn có thể sử dụng vòng lặp `v-for` để tạo các tùy chọn dựa trên danh sách `options`.
+
+## Sử dụng
+
+Dưới đây là một ví dụ về cách sử dụng component `SelectInput` trong code của bạn:
+
+```vue
+
+<template>
+    <SelectInput
+      :options="selectOptions"
+      :modelValue="selectedValue"
+      :disabled="isDisabled"
+      :multiple="isMultiple"
+      placeholder="Select an option"
+      placement="bottomLeft"
+      @update:modelValue="handleSelect"
+    >
+      <template #icon>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 12a2 2 0 100-4 2 2 0 000 4z"
+            clip-rule="evenodd"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M10 2a8 8 0 100 16 8 8 0 000-16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </template>
+
+      <template #options>
+        <div v-for="option in selectOptions" :key="option.value">
+          <input type="checkbox" />
+          {{ option.label }}
+        </div>
+      </template>
+    </SelectInput>
+</template>
+
+<script setup>
+import Select from "@/components/ui/Select.vue"
+
+const selectOptions = ref([
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' }
+])
+const selectedValue = ref()
+const isDisabled = ref(false)
+const isMultiple = ref(false)
+</script>
+```
 
