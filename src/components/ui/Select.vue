@@ -101,7 +101,7 @@ onUnmounted(() => {
   <div
     ref="element"
     @click="toggle"
-    :class="`${disabled ? 'opacity-50' : ''} relative`"
+    :class="`${disabled ? 'opacity-50' : ''} relative flex justify-between items-center`"
   >
     <span class="text-3xl">{{ selectedText }}</span>
 
