@@ -25,9 +25,7 @@
           <strong class="text-xs font-bold text-[#3D3D3D]"
             >고객센터 1833-9133</strong
           >
-          <Button
-            class="py-[6px] w-[200px] border border-[#DFDFDF] flex items-center justify-center"
-          >
+          <Button class="py-[6px] w-[200px] border border-[#DFDFDF]">
             이용약관
           </Button>
         </div>
