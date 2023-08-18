@@ -108,23 +108,7 @@ Dưới đây là một ví dụ về cách sử dụng component `Button` trong
   </div>
 </template>
 
-<script>
-import Button from './components/Button.vue';
-
-export default {
-  components: {
-    Button,
-  },
-  data() {
-    return {
-      leftIcon: {
-        // Đối tượng biểu tượng bên trái
-      },
-      rightIcon: {
-        // Đối tượng biểu tượng bên phải
-      },
-    };
-  },
-};
+<script setup>
+import Button from "@/components/ui/Button.vue"
 </script>
 ```
