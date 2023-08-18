@@ -46,9 +46,9 @@ npm run dev
         │
         └── ui /* Các component UI tái sử dụng */
 
-    ├── constants /* Các hằng số */
+    ├── constants /* Khi có quá nhiều import hãy tạo file và lưu vào đây. ex : images.js file import tất cả các ảnh */
     │
-    ├── helper /* Các hàm tiện ích */
+    ├── helper /* Các hàm tiện ích của library */
     │
     ├── hooks /* Custom hooks */
     │
