@@ -25,12 +25,16 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  classLabel: {
+    type: String,
+    default: "",
+  },
   errors: {
     type: Array,
     default: () => [],
   },
   checkmarkClass: {
-    type: Object,
+    type: String,
     default: null,
   },
   modelValue: {
@@ -44,20 +48,18 @@ const emit = defineEmits(["update:modelValue"])
 const handleChange = e => {
   emit("update:modelValue", e.target.checked)
 }
+const clickCheckmark = (e) => {
+  emit('update:modelValue', e)
+}
 </script>
 
 <template>
   <div :class="className">
-    <input
-      :class="inputClass"
-      :name="name"
-      :id="id"
-      :type="type"
-      :checked="modelValue"
-      @input="handleChange"
-    />
-    <span :class="checkmarkClass"></span>
-    <label :for="id">{{ label }}</label>
+    <input :class="inputClass" :name="name" :id="id" :type="type" :checked="modelValue" @input="handleChange" />
+    <span @click="clickCheckmark(!modelValue)" :class="checkmarkClass"></span>
+    <slot name="label">
+      <label :class="classLabel" :for="id">{{ label }}</label>
+    </slot>
   </div>
   <ErrorMessages :errors="errors" />
 </template>

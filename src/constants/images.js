@@ -1,12 +1,18 @@
+import Line from '@/assets/images/line.svg'
+import btnApple from '@/assets/images/button/apple.svg'
+import btnGoogle from '@/assets/images/button/google.png'
+import btnKakaotalk from '@/assets/images/button/kakaotalk.svg'
 import iconBar3 from '@/assets/images/icon/icon-bar3.svg'
 import iconBest from '@/assets/images/icon/best.svg'
 import iconCart from '@/assets/images/icon/cart.svg'
 import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
+import iconDown from '@/assets/images/icon/down.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
 import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
+import iconUp from '@/assets/images/icon/up.svg'
 import iconUser from '@/assets/images/icon/user.svg'
 import logo from '@/assets/images/logo.png'
 
@@ -54,6 +60,30 @@ const Images = {
   iconBest: {
     src: iconBest,
     alt: 'iconBest'
+  },
+  iconUp: {
+    src: iconUp,
+    alt: 'iconUp'
+  },
+  iconDown: {
+    src: iconDown,
+    alt: 'iconDown'
+  },
+  btnApple: {
+    src: btnApple,
+    alt: 'btnApple'
+  },
+  btnGoogle: {
+    src: btnGoogle,
+    alt: 'btnGoogle'
+  },
+  btnKakaotalk: {
+    src: btnKakaotalk,
+    alt: 'btnKakaotalk'
+  },
+  Line: {
+    src: Line,
+    alt: 'Line'
   },
 
 }

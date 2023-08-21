@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  classLabel: {
+    type: String,
+    default: "",
+  },
   name: {
     type: String,
     required: true,
@@ -47,7 +51,7 @@ const handleChange = e => {
 
 <template>
   <div :class="wrapClass">
-    <label v-if="label">{{ label }}</label>
+    <label :class="classLabel" v-if="label">{{ label }}</label>
     <slot name="prefix"></slot>
     <input
       :class="className"
