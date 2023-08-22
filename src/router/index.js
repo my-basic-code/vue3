@@ -18,6 +18,16 @@ const router = createRouter({
       name: "Register",
       component: () => import("@/pages/Register.vue"),
     },
+    {
+      path: "/find-id",
+      name: "FindId",
+      component: () => import("@/pages/FindId.vue"),
+    },
+    {
+      path: "/find-password",
+      name: "FindPassword",
+      component: () => import("@/pages/FindPassword.vue"),
+    },
   ]
 })
 

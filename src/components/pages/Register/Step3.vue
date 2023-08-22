@@ -6,7 +6,6 @@
       placeholder="이메일을 입력해주세요"
       classLabel="block text-base font-bold"
       :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      :disabled="isCheckCertification"
       v-model="store.information.email"
     >
       <template #sub-label>
@@ -20,7 +19,6 @@
       wrapClass="mt-7"
       classLabel="block text-base font-bold"
       :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      :disabled="isCheckCertification"
       v-model="store.information.password"
     >
       <template #sub-label>
@@ -33,7 +31,6 @@
       wrapClass="mt-3"
       classLabel="block text-base font-bold"
       :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      :disabled="isCheckCertification"
       v-model="store.information.repeatPassword"
     >
     </Input>

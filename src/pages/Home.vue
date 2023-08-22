@@ -1,54 +1,69 @@
 <template>
-  <div>
-    <Button class="border border-[#DFDFDF]" @click="handleClick">
-      <template v-slot:right-icon>
-        <div>abcv</div>
-      </template>
-      21423
-    </Button>
-    <CheckboxRadio
-      type="checkbox"
-      label="Checkbox"
-      className="relative"
-      inputClass="w-6 h-6 transition-all duration-300 bg-gray-400 rounded-full appearance-none checked:scale-150 checked:opacity-0 peer mr-3"
-      id="check-box"
-      checkmarkClass="absolute left-0 w-6 h-6 transition-all duration-300 rounded-full transparent peer-checked:bg-green-300"
-      :errors="['sdafasd']"
-      v-model="valueCheckBox"
-    >
-    </CheckboxRadio>
+  <main class="bg-white">
+    <CarouselWithProgress :carouselItems="carouselItems" />
+    <section class="flex justify-center py-20 space-x-16">
+      <div v-for="(item, index) in menuItems" :key="index">
+        <div class="p-[22px] bg-[#F9F9F9]">
+          <img class="w-9 h-9" :src="item.icon" :alt="item.alt" />
+        </div>
+        <p class="mt-2 text-sm font-normal text-center">
+          {{ item.text }}
+        </p>
+      </div>
+    </section>
+    <section class="container mx-auto space-y-10">
+      <SimpleBanner :type="1" :img="Images.landingCoupon.src" subTitle="한정수량 임박" title="재구매 회원 할인쿠폰 지급"
+        time="23.07.23 - 23.07.28" />
+      <SimpleBanner :type="2" :img="Images.landingCameras.src" subTitle="단 4일간 제공되는 특별 쿠폰" title="재구매 베스트 아이템 모음"
+        time="23.07.23 - 23.07.28" />
+    </section>
 
-    <Input
-      name="frame18249"
-      placeholder="Sam"
-      className="font-semibold p-0 placeholder:text-bluegray-800 sm:pr-5 text-base text-bluegray-800 text-left w-full"
-      wrapClassName="bg-white border border-indigo-50 border-solid pl-5 pr-[35px] py-[17px] rounded w-full flex space-x-4"
-      v-model="valueInput"
-    >
-      <template v-slot:prefix>
-        <div>1243</div>
-      </template>
-    </Input>
-    <Select :options="optionSelect" v-model="valueSelect" />
-  </div>
+    <section></section>
+
+    <section class="container mx-auto">
+      <SimpleBanner :type="3" :img="Images.landingGifts.src" subTitle="지금 바로 PICK!" title="재구매 베스트 아이템 모음"
+        time="23.07.23 - 23.07.28" />
+    </section>
+  </main>
 </template>
-
 <script setup>
-import { ref } from "vue"
-import Button from "@/components/ui/Button.vue"
-import CheckboxRadio from "@/components/ui/Checkbox.vue"
-import Input from "@/components/ui/Input.vue"
-import Select from "@/components/ui/Select.vue"
+import { ref, computed } from "vue"
+import CarouselWithProgress from "@/components/pages/Home/CarouselWithProgress.vue"
+import ImgSlide from "@/assets/images/img.png"
+import Images from "@/constants/images"
+import SimpleBanner from "@/components/element/SimpleBanner.vue"
 
-const valueCheckBox = ref(true)
-const valueInput = ref("")
-const valueSelect = ref()
-const optionSelect = ref([
-  { label: "ádfdsa", value: 1 },
-  { label: "1234123", value: 2 },
+const carouselItems = ref([
+  { image: ImgSlide, alt: "Image 1" },
+  { image: ImgSlide, alt: "Image 2" },
+  { image: ImgSlide, alt: "Image 3" },
 ])
 
-const handleClick = () => {
-  console.log(123)
-}
+const menuItems = ref([
+  {
+    icon: Images.iconShipping.src,
+    alt: Images.iconShipping.alt,
+    text: "무료배송",
+  },
+  {
+    icon: Images.iconDiscount.src,
+    alt: Images.iconDiscount.alt,
+    text: "할인특가",
+  },
+  {
+    icon: Images.iconMembership.src,
+    alt: Images.iconMembership.alt,
+    text: "멤버십",
+  },
+  {
+    icon: Images.iconBest.src,
+    alt: Images.iconBest.alt,
+    text: "베스트",
+  },
+  {
+    icon: Images.iconGift.src,
+    alt: Images.iconGift.alt,
+    text: "선물하기",
+  },
+])
 </script>

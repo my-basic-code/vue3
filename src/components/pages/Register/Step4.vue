@@ -26,16 +26,14 @@
         </template>
       </Input>
     </div>
-    <div class="mt-4">
-      <Radio
-        class="grid grid-cols-2 space-x-[11px]"
-        classInput="hidden"
-        className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm font-normal"
-        classActive="border-blue-500"
-        v-model="store.information.gender"
-        :options="options"
-      ></Radio>
-    </div>
+    <Radio
+      class="mt-4 grid grid-cols-2 space-x-[11px]"
+      classInput="hidden"
+      className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm font-normal"
+      classActive="border-blue-500"
+      v-model="store.information.gender"
+      :options="options"
+    ></Radio>
     <Input
       wrapClass="mt-7"
       label="주소"
@@ -58,7 +56,7 @@
     >
     </Input>
     <Input
-      wrapClass="mt-3"
+      wrapClass="mt-7"
       type="number"
       label="생년월일"
       classLabel="block text-base font-bold"

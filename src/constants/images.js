@@ -15,6 +15,9 @@ import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
 import iconUp from '@/assets/images/icon/up.svg'
 import iconUser from '@/assets/images/icon/user.svg'
+import landingCameras from '@/assets/images/landing/cameras.svg'
+import landingCoupon from '@/assets/images/landing/coupon.svg'
+import landingGifts from '@/assets/images/landing/gifts.svg'
 import logo from '@/assets/images/logo.png'
 
 const Images = {
@@ -90,7 +93,18 @@ const Images = {
     src: Line,
     alt: 'Line'
   },
-
+  landingCoupon: {
+    src: landingCoupon,
+    alt: 'landingCoupon'
+  },
+  landingCameras: {
+    src: landingCameras,
+    alt: 'landingCameras'
+  },
+  landingGifts: {
+    src: landingGifts,
+    alt: 'landingGifts'
+  },
 }
 
 export default Images;
