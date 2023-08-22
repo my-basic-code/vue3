@@ -36,7 +36,7 @@
 <script setup>
 import { ref } from "vue"
 import Button from "@/components/ui/Button.vue"
-import CheckboxRadio from "@/components/ui/CheckboxRadio.vue"
+import CheckboxRadio from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
 import Select from "@/components/ui/Select.vue"
 
