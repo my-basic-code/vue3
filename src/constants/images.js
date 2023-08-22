@@ -4,6 +4,7 @@ import btnGoogle from '@/assets/images/button/google.png'
 import btnKakaotalk from '@/assets/images/button/kakaotalk.svg'
 import iconBar3 from '@/assets/images/icon/icon-bar3.svg'
 import iconBest from '@/assets/images/icon/best.svg'
+import iconCamera from '@/assets/images/icon/camera.png'
 import iconCart from '@/assets/images/icon/cart.svg'
 import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
@@ -68,6 +69,10 @@ const Images = {
   iconDown: {
     src: iconDown,
     alt: 'iconDown'
+  },
+  iconCamera: {
+    src: iconCamera,
+    alt: 'iconCamera'
   },
   btnApple: {
     src: btnApple,

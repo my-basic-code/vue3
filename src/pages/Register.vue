@@ -7,6 +7,9 @@
     </article>
     <section class="mt-5">
       <Step1 v-if="currentStep === 0" />
+      <Step2 v-if="currentStep === 1" />
+      <Step3 v-if="currentStep === 2" />
+      <Step4 v-if="currentStep === 3" />
     </section>
   </main>
 </template>
@@ -16,6 +19,9 @@ import { ref } from 'vue'
 import Images from "@/constants/images.js"
 import Steps from "@/components/element/Steps.vue"
 import Step1 from "@/components/Register/Step1.vue"
+import Step2 from "@/components/Register/Step2.vue"
+import Step3 from "@/components/Register/Step3.vue"
+import Step4 from "@/components/Register/Step4.vue"
 
 const currentStep = ref(0)
 </script>

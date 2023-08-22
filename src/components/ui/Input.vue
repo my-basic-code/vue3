@@ -32,6 +32,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   errors: {
     type: Array,
     default: () => [],
@@ -47,11 +51,20 @@ const emit = defineEmits(["update:modelValue"])
 const handleChange = e => {
   emit("update:modelValue", e.target.value)
 }
+
+const handleKeyDown = event => {
+  // Prevent input of "e" on input of type "number"
+  if (props.type === "number" && event.key === "e") {
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
   <div :class="wrapClass">
-    <label :class="classLabel" v-if="label">{{ label }}</label>
+    <label :class="classLabel" v-if="label"
+      >{{ label }} <slot name="sub-label"></slot
+    ></label>
     <slot name="prefix"></slot>
     <input
       :class="className"
@@ -60,8 +73,24 @@ const handleChange = e => {
       :placeholder="placeholder"
       :value="modelValue"
       @input="handleChange"
+      @keydown="handleKeyDown"
+      :disabled="disabled"
     />
     <slot name="suffix"></slot>
   </div>
   <ErrorMessages v-if="errors.length" :errors="errors" />
 </template>
+
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>

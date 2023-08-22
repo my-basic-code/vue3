@@ -16,7 +16,9 @@ export const classInputCustom = {
 
 export const classBtn = {
   //Login
-  1: 'text-white bg-black'
+  1: 'text-white bg-black',
+  2: 'text-white bg-[#A5A5A5]',
+  3: 'text-[#A5A5A5] border border-[#A5A5A5]',
 }
 
 export const classText = {

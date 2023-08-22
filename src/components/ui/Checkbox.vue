@@ -48,14 +48,21 @@ const emit = defineEmits(["update:modelValue"])
 const handleChange = e => {
   emit("update:modelValue", e.target.checked)
 }
-const clickCheckmark = (e) => {
-  emit('update:modelValue', e)
+const clickCheckmark = e => {
+  emit("update:modelValue", e)
 }
 </script>
 
 <template>
   <div :class="className">
-    <input :class="inputClass" :name="name" :id="id" :type="type" :checked="modelValue" @input="handleChange" />
+    <input
+      :class="inputClass"
+      :name="name"
+      :id="id"
+      :type="type"
+      :checked="modelValue"
+      @input="handleChange"
+    />
     <span @click="clickCheckmark(!modelValue)" :class="checkmarkClass"></span>
     <slot name="label">
       <label :class="classLabel" :for="id">{{ label }}</label>
