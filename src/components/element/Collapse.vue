@@ -12,7 +12,7 @@ function toggle() {
 }
 
 // function handleClickOutside() {
-//   if (!element.value.contains(event.target)) {
+//   if (element.value && !element.value.contains(event.target)) {
 //     isOpen.value = false
 //   }
 // }
@@ -29,12 +29,12 @@ function toggle() {
 
 <template>
   <div ref="element">
-    <div class="flex space-x-2" @click="toggle">
+    <div class="flex justify-start w-full space-x-2" @click.stop="toggle">
       <span class="text-sm font-normal text-[#6F6F6F]"> {{ title }} </span>
       <img v-if="!isOpen" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
       <img v-else :src="Images.iconUp.src" :alt="Images.iconUp.alt">
     </div>
-    <div v-show="isOpen">
+    <div v-if="isOpen">
       <slot />
     </div>
   </div>

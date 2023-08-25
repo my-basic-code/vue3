@@ -10,15 +10,13 @@ import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
 import iconDown from '@/assets/images/icon/down.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
+import iconLatest from '@/assets/images/icon/latest.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
 import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
 import iconUp from '@/assets/images/icon/up.svg'
 import iconUser from '@/assets/images/icon/user.svg'
-import landingCameras from '@/assets/images/landing/cameras.svg'
-import landingCoupon from '@/assets/images/landing/coupon.svg'
-import landingGifts from '@/assets/images/landing/gifts.svg'
-import logo from '@/assets/images/logo.png'
+import logo from '@/assets/images/logo.svg'
 
 const Images = {
   logo: {
@@ -77,6 +75,10 @@ const Images = {
     src: iconCamera,
     alt: 'iconCamera'
   },
+  iconLatest: {
+    src: iconLatest,
+    alt: 'iconLatest'
+  },
   btnApple: {
     src: btnApple,
     alt: 'btnApple'
@@ -92,19 +94,7 @@ const Images = {
   Line: {
     src: Line,
     alt: 'Line'
-  },
-  landingCoupon: {
-    src: landingCoupon,
-    alt: 'landingCoupon'
-  },
-  landingCameras: {
-    src: landingCameras,
-    alt: 'landingCameras'
-  },
-  landingGifts: {
-    src: landingGifts,
-    alt: 'landingGifts'
-  },
+  }
 }
 
 export default Images;

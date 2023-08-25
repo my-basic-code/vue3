@@ -11,6 +11,14 @@ module.exports = {
         xl: '1200px'
       },
     },
+    extend: {
+      gridTemplateRows: {
+        '9': 'repeat(9, minmax(0, 1fr))',
+      },
+      gridRow: {
+        'span-9': 'span 9 / span 9',
+      }
+    }
   },
   variants: {
     extend: {},
