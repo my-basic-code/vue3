@@ -1,10 +1,29 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import Images from "@/constants/images.js"
 
-const props = defineProps(['title'])
+const props = defineProps({
+  title: {
+    type: String,
+  },
+  classTitle: {
+    type: String,
+    default: "text-sm font-normal text-[#6F6F6F]"
+  },
+  iconDown: {
+    type: Object,
+    require: true
+  },
+  iconUp: {
+    type: Object,
+    require: true
+  },
+  isOpen: {
+    type: Boolean,
+    require: false
+  },
+})
 
-const isOpen = ref(false)
+const isOpen = ref(props.isOpen)
 const element = ref(null)
 
 function toggle() {
@@ -29,10 +48,10 @@ function toggle() {
 
 <template>
   <div ref="element">
-    <div class="flex justify-start w-full space-x-2" @click.stop="toggle">
-      <span class="text-sm font-normal text-[#6F6F6F]"> {{ title }} </span>
-      <img v-if="!isOpen" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
-      <img v-else :src="Images.iconUp.src" :alt="Images.iconUp.alt">
+    <div :class="`flex justify-start w-full space-x-2 cursor-pointer ${classTitle}`" @click.stop="toggle">
+      <span> {{ title }} </span>
+      <img v-if="!isOpen" :src="iconDown.src" :alt="iconDown.alt">
+      <img v-else :src="iconUp.src" :alt="iconUp.alt">
     </div>
     <div v-if="isOpen">
       <slot />

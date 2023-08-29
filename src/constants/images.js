@@ -9,12 +9,15 @@ import iconCart from '@/assets/images/icon/cart.svg'
 import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
 import iconDown from '@/assets/images/icon/down.svg'
+import iconDownBlack from '@/assets/images/icon/down-black.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
 import iconLatest from '@/assets/images/icon/latest.svg'
+import iconLinkSimple from '@/assets/images/icon/link-simple.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
 import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
 import iconUp from '@/assets/images/icon/up.svg'
+import iconUpBlack from '@/assets/images/icon/up-black.svg'
 import iconUser from '@/assets/images/icon/user.svg'
 import logo from '@/assets/images/logo.svg'
 
@@ -71,6 +74,14 @@ const Images = {
     src: iconDown,
     alt: 'iconDown'
   },
+  iconUpBlack: {
+    src: iconUpBlack,
+    alt: 'iconUpBlack'
+  },
+  iconDownBlack: {
+    src: iconDownBlack,
+    alt: 'iconDownBlack'
+  },
   iconCamera: {
     src: iconCamera,
     alt: 'iconCamera'
@@ -78,6 +89,10 @@ const Images = {
   iconLatest: {
     src: iconLatest,
     alt: 'iconLatest'
+  },
+  iconLinkSimple: {
+    src: iconLinkSimple,
+    alt: 'iconLinkSimple'
   },
   btnApple: {
     src: btnApple,

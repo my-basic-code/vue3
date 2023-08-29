@@ -11,6 +11,7 @@ const props = defineProps({
   },
   disabled: Boolean,
   multiple: Boolean,
+  isShowInput: Boolean,
   placeholder: {
     type: String,
     default: "Select...",
@@ -18,6 +19,18 @@ const props = defineProps({
   placement: {
     type: String,
     default: "bottomLeft",
+  },
+  classSelected: {
+    type: String,
+    default: "flex items-center justify-between text-2xl"
+  },
+  classWrapOption: {
+    type: String,
+    default: ""
+  },
+  classOption: {
+    type: String,
+    default: ""
   },
 })
 
@@ -98,41 +111,21 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    ref="element"
-    @click="toggle"
-    :class="`${disabled ? 'opacity-50' : ''} relative flex justify-between items-center`"
-  >
-    <span class="text-3xl">{{ selectedText }}</span>
-
-    <slot name="icon"></slot>
-
-    <div v-if="isOpen" :class="`absolute ${positionOption}`">
-      <slot name="options">
-        <div
-          v-for="option in options"
-          :key="option.value"
-          @click="
-            updateValue(multiple ? toggleValue(option.value) : option.value)
-          "
-        >
-          <input
-            type="checkbox"
-            v-if="multiple"
-            :checked="(selected || []).includes(option.value)"
-            @change="updateValue(toggleValue(option.value))"
-          />
-
-          <input
-            type="radio"
-            v-else
-            :checked="option.value === selected"
-            @change="updateValue(option.value)"
-          />
-
-          {{ option.label }}
-        </div>
-      </slot>
+  <div ref="element" @click="toggle" :class="`${disabled ? 'opacity-50' : ''} relative`">
+    <div :class="classSelected">
+      <span>{{ selectedText }}</span>
+      <slot name="icon"></slot>
+    </div>
+    <div v-if="isOpen" :class="`absolute ${positionOption} ${classWrapOption}`">
+      <div :class="classOption" v-for="option in options" :key="option.value" @click="
+        updateValue(multiple ? toggleValue(option.value) : option.value)
+        ">
+        <input :class="isShowInput ? 'block' : 'hidden'" type="checkbox" v-if="multiple"
+          :checked="(selected || []).includes(option.value)" @change="updateValue(toggleValue(option.value))" />
+        <input :class="isShowInput ? 'block' : 'hidden'" type="radio" v-else :checked="option.value === selected"
+          @change="updateValue(option.value)" />
+        {{ option.label }}
+      </div>
     </div>
   </div>
 </template>
