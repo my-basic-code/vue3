@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import("@/pages/Auth/Home.vue"),
+      component: () => import("@/pages/Home.vue"),
     },
     {
       path: "/login",
@@ -36,12 +36,17 @@ const router = createRouter({
     {
       path: "/search-detail/:slug",
       name: "SearchDetail",
-      component: () => import("@/pages/SearchDetail.vue"),
+      component: () => import("@/pages/Product/SearchDetail.vue"),
     },
     {
       path: "/product-detail/:id",
       name: "ProductDetail",
       component: () => import("@/pages/Product/Detail.vue"),
+    },
+    {
+      path: "/cart",
+      name: "Cart",
+      component: () => import("@/pages/Product/Cart.vue"),
     },
   ]
 })

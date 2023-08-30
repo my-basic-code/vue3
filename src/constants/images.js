@@ -10,6 +10,7 @@ import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
 import iconDown from '@/assets/images/icon/down.svg'
 import iconDownBlack from '@/assets/images/icon/down-black.svg'
+import iconExit from '@/assets/images/icon/exit.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
 import iconLatest from '@/assets/images/icon/latest.svg'
 import iconLinkSimple from '@/assets/images/icon/link-simple.svg'
@@ -93,6 +94,10 @@ const Images = {
   iconLinkSimple: {
     src: iconLinkSimple,
     alt: 'iconLinkSimple'
+  },
+  iconExit: {
+    src: iconExit,
+    alt: 'iconExit'
   },
   btnApple: {
     src: btnApple,

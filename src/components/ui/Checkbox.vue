@@ -55,14 +55,7 @@ const clickCheckmark = e => {
 
 <template>
   <div :class="className">
-    <input
-      :class="inputClass"
-      :name="name"
-      :id="id"
-      :type="type"
-      :checked="modelValue"
-      @input="handleChange"
-    />
+    <input :class="inputClass" :name="name" :id="id" :type="type" :checked="modelValue" @input="handleChange" />
     <span @click="clickCheckmark(!modelValue)" :class="checkmarkClass"></span>
     <slot name="label">
       <label :class="classLabel" :for="id">{{ label }}</label>
