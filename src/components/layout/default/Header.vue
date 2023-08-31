@@ -17,15 +17,15 @@
       <ul class="menu">
         <li class="flex space-x-[28px]">
           <a href="#" class="flex flex-col items-center space-y-1">
-            <img :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
+            <img class="w-[20px] h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
             <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
           </a>
           <a href="#" class="flex flex-col items-center space-y-1">
-            <img :src="Images.iconCustomerService.src" :alt="Images.iconCustomerService.alt" />
+            <img class="w-[20px] h-[20px]" :src="Images.iconCustomerService.src" :alt="Images.iconCustomerService.alt" />
             <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
           </a>
           <a href="#" class="flex flex-col items-center space-y-1">
-            <img :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
+            <img class="w-[20px] h-[20px]" :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
             <span class="text-[10px] text-[#242424] font-normal">마이</span>
           </a>
         </li>

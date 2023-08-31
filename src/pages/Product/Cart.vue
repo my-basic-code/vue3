@@ -154,7 +154,6 @@ import Checkbox from '@/components/ui/Checkbox.vue';
 import ImagesProd from '@/constants/imagesProd'
 import Images from '@/constants/images'
 
-
 const valueCheckBoxAll = ref(false);
 
 </script>

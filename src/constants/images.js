@@ -15,6 +15,7 @@ import iconGift from '@/assets/images/icon/gift.svg'
 import iconLatest from '@/assets/images/icon/latest.svg'
 import iconLinkSimple from '@/assets/images/icon/link-simple.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
+import iconRight from '@/assets/images/icon/right.svg'
 import iconSearch from '@/assets/images/icon/search.svg'
 import iconShipping from '@/assets/images/icon/shipping.svg'
 import iconUp from '@/assets/images/icon/up.svg'
@@ -74,6 +75,10 @@ const Images = {
   iconDown: {
     src: iconDown,
     alt: 'iconDown'
+  },
+  iconRight: {
+    src: iconRight,
+    alt: 'iconRight'
   },
   iconUpBlack: {
     src: iconUpBlack,

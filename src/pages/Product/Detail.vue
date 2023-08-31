@@ -32,7 +32,7 @@
               <strong class="text-[24px] inline-block">18,500</strong>
             </div>
           </div>
-          <Collapse :isOpen="true" title="등급별 마일리지" classTitle="text-[14px] font-bold text-[#3D3D3D]"
+          <!-- <Collapse :isOpen="true" title="등급별 마일리지" classTitle="text-[14px] font-bold text-[#3D3D3D]"
             :iconDown="Images.iconDownBlack" :iconUp="Images.iconUpBlack">
             <div class="border border-[#DFDFDF] py-[18px] px-[20px] space-y-3 mt-4">
               <div class="pb-3 border-b border-[#DFDFDF] flex justify-between">
@@ -52,7 +52,7 @@
                 </p>
               </div>
             </div>
-          </Collapse>
+          </Collapse> -->
           <Select classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between"
             classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsQuantity"

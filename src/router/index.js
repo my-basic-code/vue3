@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: () => import("@/pages/Home.vue"),
     },
     {
@@ -47,6 +47,56 @@ const router = createRouter({
       path: "/cart",
       name: "Cart",
       component: () => import("@/pages/Product/Cart.vue"),
+    },
+    {
+      path: "/payment",
+      name: "Payment",
+      component: () => import("@/pages/Payment/Payment.vue"),
+    },
+    {
+      path: "/order",
+      name: "Order",
+      component: () => import("@/pages/Payment/Order.vue"),
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: () => import("@/pages/Profile/index.vue"),
+      beforeEnter: (to, from, next) => {
+        if (to.matched.length === 1) { next({ name: "Home" }); } else { next(); }
+      },
+      children: [
+        {
+          path: "information",
+          name: "Information",
+          component: () => import("@/pages/Profile/Information/index.vue"),
+          beforeEnter: (to, from, next) => {
+            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
+          },
+          children: [
+            {
+              path: "edit-profile",
+              name: "EditProfile",
+              component: () => import("@/pages/Profile/Information/EditProfile.vue"),
+            },
+            {
+              path: "show-information",
+              name: "ShowInformation",
+              component: () => import("@/pages/Profile/Information/ShowInformation.vue"),
+            },
+          ]
+        },
+        {
+          path: "rating",
+          name: "Rating",
+          component: () => import("@/pages/Profile/Rating.vue"),
+        },
+        {
+          path: "order-detail",
+          name: "OrderDetail",
+          component: () => import("@/pages/Profile/OrderDetail.vue"),
+        },
+      ]
     },
   ]
 })

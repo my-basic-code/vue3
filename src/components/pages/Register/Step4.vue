@@ -13,9 +13,12 @@
       </template>
       </Input>
     </div>
-    <Radio class="mt-4 grid grid-cols-2 space-x-[11px]" classInput="hidden"
-      className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm font-normal"
-      classActive="border-blue-500" v-model="store.information.gender" :options="options"></Radio>
+    <div class="mt-7">
+      <div class="block text-base font-bold">성별 <span class="text-xs text-[#FF3609] font-normal">*</span></div>
+      <Radio class="mt-4 grid grid-cols-2 space-x-[11px]" classInput="hidden"
+        className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm font-normal"
+        classActive="border-blue-500" v-model="store.information.gender" :options="options"></Radio>
+    </div>
     <Input wrapClass="mt-7" label="주소" type="text" classLabel="block text-base font-bold" placeholder="주소를 선택해주세요"
       :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="store.information.address">
     <template #sub-label>
