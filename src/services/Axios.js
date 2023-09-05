@@ -7,7 +7,7 @@ function getInstance() {
         return axiosInstance
     }
     axiosInstance = axios.create({
-        baseURL: import.meta.env.VITE_SOME_KEY,
+        baseURL: import.meta.env.VITE_API_KEY,
         headers: {
             'Content-Type': 'application/json'
         }
@@ -60,8 +60,6 @@ function patch(endpointApiUrl, payload = {}, config = {}) {
 
 export const Axios = {
     axiosInstance,
-    getHeaders,
-    setHeaders,
     get,
     post,
     put,

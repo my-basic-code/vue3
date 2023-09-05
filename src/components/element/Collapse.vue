@@ -49,7 +49,9 @@ function toggle() {
 <template>
   <div ref="element">
     <div :class="`flex justify-start w-full space-x-2 cursor-pointer ${classTitle}`" @click.stop="toggle">
-      <span> {{ title }} </span>
+      <slot name="title">
+        <span> {{ title }} </span>
+      </slot>
       <img v-if="!isOpen" :src="iconDown.src" :alt="iconDown.alt">
       <img v-else :src="iconUp.src" :alt="iconUp.alt">
     </div>

@@ -98,6 +98,85 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: "/customer-service",
+      name: "CustomerService",
+      component: () => import("@/pages/CustomerService/index.vue"),
+      beforeEnter: (to, from, next) => {
+        if (to.matched.length === 1) { next({ name: "Home" }); } else { next(); }
+      },
+      children: [
+        {
+          path: "how-to-use",
+          name: "HowToUse",
+          component: () => import("@/pages/CustomerService/HowToUse.vue"),
+        },
+        {
+          path: "qa",
+          name: "QA",
+          component: () => import("@/pages/CustomerService/QA/index.vue"),
+          beforeEnter: (to, from, next) => {
+            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
+          },
+          children: [
+            {
+              path: "list",
+              name: "List",
+              component: () => import("@/pages/CustomerService/QA/List.vue"),
+            },
+            {
+              path: "detail/:id",
+              name: "Detail",
+              component: () => import("@/pages/CustomerService/QA/Detail.vue"),
+            },
+          ]
+        },
+        {
+          path: "notification",
+          name: "Notification",
+          component: () => import("@/pages/CustomerService/Notification/index.vue"),
+          beforeEnter: (to, from, next) => {
+            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
+          },
+          children: [
+            {
+              path: "list",
+              name: "List",
+              component: () => import("@/pages/CustomerService/Notification/List.vue"),
+            },
+            {
+              path: "detail/:id",
+              name: "Detail",
+              component: () => import("@/pages/CustomerService/Notification/Detail.vue"),
+            },
+          ]
+        },
+        {
+          path: "rules",
+          name: "Rules",
+          component: () => import("@/pages/CustomerService/Rules/index.vue"),
+          beforeEnter: (to, from, next) => {
+            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
+          },
+          children: [
+            {
+              path: "list",
+              name: "List",
+              component: () => import("@/pages/CustomerService/Rules/List.vue"),
+            },
+            {
+              path: "detail/:id",
+              name: "Detail",
+              component: () => import("@/pages/CustomerService/Rules/Detail.vue"),
+            },
+          ]
+        },
+      ]
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: 'Home' }
+    },
   ]
 })
 
