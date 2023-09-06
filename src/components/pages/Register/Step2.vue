@@ -125,22 +125,15 @@ const checkCertification = async () => {
 
 const verifyCode = async () => {
   if (!store.information.certification.value) return
-  const { data: res } = await authService.verifyCodeRegister({
-    phoneNumber: formatPhone(store.information.phone),
-    smsCode: store.information.certification.value,
-  })
-  if (res.code >= 300) {
-    alert(res.message)
-    return
-  }
-  store.information.certification.status = true
-  clearCountdownInterval()
-}
-
-const handleValueVerifyCode = e => {
-  const regex = /^[0-9\-\/.\b]+$/
-  if (!regex.test(e.key) && e.key != "Backspace") {
-    e.preventDefault()
+  try {
+    const { data: res } = await authService.verifyCodeRegister({
+      phoneNumber: formatPhone(store.information.phone),
+      smsCode: store.information.certification.value,
+    })
+    store.information.certification.status = true
+    clearCountdownInterval()
+  } catch (error) {
+    alert(error.response.data.message)
   }
 }
 

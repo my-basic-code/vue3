@@ -11,9 +11,22 @@
       <img class="mt-5" :src="Images.Line.src" :alt="Images.Line.alt" />
     </article>
     <section class="mt-5">
-      <Step1 v-if="currentStep === 0" />
-      <Step2 v-if="currentStep === 1" />
-      <Step3 v-if="currentStep === 2" />
+      <Step1
+        v-if="currentStep === 0"
+        @value-phone="value => (phoneNumber = value)"
+        @complete-step1="() => (currentStep = 1)"
+      />
+      <Step2
+        v-if="currentStep === 1"
+        :phoneNumber="phoneNumber"
+        @complete-step2="
+          value => {
+            email = value
+            currentStep = 2
+          }
+        "
+      />
+      <Step3 v-if="currentStep === 2" :email="email" />
     </section>
   </main>
 </template>
@@ -27,4 +40,6 @@ import Step2 from "@/components/pages/FindId/Step2.vue"
 import Step3 from "@/components/pages/FindId/Step3.vue"
 
 const currentStep = ref(0)
+const phoneNumber = ref("")
+const email = ref("")
 </script>

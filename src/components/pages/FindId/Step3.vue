@@ -10,10 +10,11 @@
         :disabled="true"
       >
       </Input>
-      <p class="mt-5 text-sm font-normal text-center">1234@naver.com</p>
+      <p class="mt-5 text-sm font-normal text-center">{{ email }}</p>
     </div>
     <Button
       :class="`w-full py-4 px-9 mt-10 ${true ? classBtn[1] : classBtn[2]}`"
+      @click="router.push('/login')"
       >로그인</Button
     >
   </article>
@@ -25,10 +26,12 @@ import Radio from "@/components/ui/Radio.vue"
 import InputImgReview from "@/components/ui/InputImgReview.vue"
 import { useRegisterStore } from "@/stores/register.js"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
+import { useRouter } from "vue-router"
 
-const store = useRegisterStore()
-const options = [
-  { label: "남성", value: "male" },
-  { label: "여성", value: "female" },
-]
+const router = useRouter()
+const props = defineProps({
+  email: {
+    type: Text,
+  },
+})
 </script>

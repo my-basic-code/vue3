@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue"
+import ErrorMessage from "@/components/ui/ErrorMessage.vue"
 const props = defineProps({
   wrapClass: {
     type: String,
@@ -94,7 +95,7 @@ const handleKeyDown = event => {
     />
     <slot name="suffix"></slot>
   </div>
-  <ErrorMessages v-if="errors.length" :errors="errors" />
+  <ErrorMessages v-if="errors.length > 0" :errors="errors" />
 </template>
 
 <style>

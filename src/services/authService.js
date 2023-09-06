@@ -24,6 +24,16 @@ function login(payload) {
     return Axios.post(url, payload);
 }
 
+function sendCodeFindAccount(payload) {
+    const url = "public/api/user/send-code-find-account";
+    return Axios.post(url, payload);
+}
+
+function verifyCodeFindAccount(payload) {
+    const url = "public/api/user/verify-code-find-account";
+    return Axios.post(url, payload);
+}
+
 export const authService = {
-    sendCodeRegister, verifyCodeRegister, register, login
+    sendCodeRegister, verifyCodeRegister, register, login, sendCodeFindAccount, verifyCodeFindAccount
 };
