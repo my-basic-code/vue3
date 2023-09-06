@@ -1,0 +1,8 @@
+export function formatPhone(phone) {
+  // Xóa dấu "-"
+  phone = phone.replace(/\D/g, '');
+  phone = phone.replace(/^0/, function (match) {
+    return match.replace('0', '84');
+  });
+  return phone
+}

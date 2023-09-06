@@ -13,7 +13,7 @@ export const useRegisterStore = defineStore('myRegister', () => {
   })
   const information = ref({
     name: "",
-    contact: "",
+    phone: "",
     certification: {
       value: "",
       status: false,
@@ -22,11 +22,11 @@ export const useRegisterStore = defineStore('myRegister', () => {
     password: '',
     repeatPassword: '',
     image: null,
-    useName: '',
+    nickName: '',
     gender: null,
     address: '',
     detailedAddress: '',
-    DateBirth: '',
+    dateBirth: null,
   })
   watch(
     () => valueCheckBox.value.all,

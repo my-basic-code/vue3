@@ -1,12 +1,17 @@
 import { Axios } from "./Axios";
 
-function checkEmail(payload) {
-    const url = "signup/check-email";
+function sendCodeRegister(payload) {
+    const url = "public/api/user/send-code-register";
+    return Axios.post(url, payload);
+}
+
+function verifyCodeRegister(payload) {
+    const url = "public/api/user/verify-code-register";
     return Axios.post(url, payload);
 }
 
 function register(payload) {
-    const url = "signup";
+    const url = "public/api/user/register";
     return Axios.post(url, payload);
 }
 
@@ -15,23 +20,6 @@ function login(payload) {
     return Axios.post(url, payload);
 }
 
-
-function findEmail(payload) {
-    const url = "find-email";
-    return Axios.post(url, payload);
-}
-
-function resetPassword(payload) {
-    const url = "reset-password";
-    return Axios.post(url, payload)
-}
-
-
-function getUser() {
-    const url = "user/info";
-    return Axios.get(url)
-}
-
 export const authService = {
-    checkEmail, register, resetPassword, login, findEmail, getUser
+    sendCodeRegister, verifyCodeRegister, register, login
 };

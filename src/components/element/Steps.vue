@@ -1,31 +1,25 @@
 <script setup>
-import { ref, onMounted } from "vue"
-
+import { ref, computed } from "vue"
 const props = defineProps({
   steps: {
     type: Array,
     require: true,
   },
+  currentStep: {
+    type: Number,
+    require: true,
+  },
 })
-
 const emit = defineEmits(["current-step"])
-
 // Dữ liệu
 const steps = ref(props.steps)
-
-const currentStep = ref(0)
-
-// Methods
-function setStep(index) {
-  currentStep.value = index
-  emit("current-step", currentStep.value)
-}
+const currentStep = computed(() => props.currentStep)
 </script>
 
 <template>
   <div class="flex justify-start space-x-3">
     <div v-for="(step, index) in steps" :key="index">
-      <div class="flex justify-start" @click="setStep(index)">
+      <div class="flex justify-start">
         <h3
           :class="[
             'w-6 h-6  rounded-full flex justify-center items-center text-xs font-bold cursor-pointer',

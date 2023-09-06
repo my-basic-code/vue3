@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router"
 import { computed } from "vue"
+import Loading from "./components/element/Loading.vue"
 const currentRoute = useRoute()
 const layout = computed(
   () => (currentRoute.meta.layout || "default") + "-layout"

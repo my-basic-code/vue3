@@ -1,8 +1,5 @@
-// Input.vue
-
 <script setup>
 import { computed } from "vue"
-
 const props = defineProps({
   wrapClass: {
     type: String,
@@ -32,13 +29,21 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  maxLength: {
+    type: Number,
+    default: 100,
+  },
   disabled: {
     type: Boolean,
     default: false,
   },
+  handleValue: {
+    type: Function,
+    default: () => {},
+  },
   errors: {
     type: Array,
-    default: () => [],
+    default: [],
   },
   modelValue: {
     type: String,
@@ -49,12 +54,23 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"])
 
 const handleChange = e => {
-  emit("update:modelValue", e.target.value)
+  // emit("update:modelValue", e.target.value)
+  const value = e.target.value
+  if (value.length > props.maxLength) {
+    e.target.value = value.slice(0, props.maxLength)
+    emit("update:modelValue", value.slice(0, props.maxLength))
+  } else {
+    emit("update:modelValue", value)
+  }
 }
 
 const handleKeyDown = event => {
+  props.handleValue(event)
   // Prevent input of "e" on input of type "number"
-  if (props.type === "number" && event.key === "e") {
+  if (
+    props.type === "number" &&
+    (event.key === "e" || event.key === "E" || event.key === "-")
+  ) {
     event.preventDefault()
   }
 }
