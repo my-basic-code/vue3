@@ -44,15 +44,17 @@
       </article> -->
     </form>
     <article class="flex justify-center space-x-6 mt-7">
-      <p class="relative text-sm font-normal">
+      <router-link to="/register" class="relative text-sm font-normal">
         회원가입
         <span class="absolute inset-y-0 -right-3 w-[1px] bg-[#F2F4F6]"></span>
-      </p>
-      <p class="relative text-sm font-normal">
+      </router-link>
+      <router-link to="/find-password" class="relative text-sm font-normal">
         비밀번호 찾기
         <span class="absolute inset-y-0 -right-3 w-[1px] bg-[#F2F4F6]"></span>
-      </p>
-      <p class="relative text-sm font-normal">이메일 찾기</p>
+      </router-link>
+      <router-link to="/find-id" class="relative text-sm font-normal"
+        >이메일 찾기</router-link
+      >
     </article>
   </main>
 </template>

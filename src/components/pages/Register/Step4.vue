@@ -102,7 +102,9 @@ import { useRegisterStore } from "@/stores/register.js"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { authService } from "@/services/authService.js"
 import { formatPhone } from "@/utils/formatPhone.js"
+import { useRouter } from "vue-router"
 
+const router = useRouter()
 const store = useRegisterStore()
 const options = [
   { label: "남성", value: "male" },
@@ -110,20 +112,23 @@ const options = [
 ]
 
 const callApiRegister = async () => {
+  const formData = new FormData()
+  formData.append("username", store.information.email)
+  formData.append("nickname", store.information.nickName)
+  formData.append("name", store.information.name)
+  formData.append("password", store.information.password)
+  formData.append("phone", formatPhone(store.information.phone))
+  formData.append("fileThumbnail", store.information.image)
+  formData.append("gender", store.information.gender === "male" ? 0 : 1)
+  formData.append("address1", store.information.address)
+  formData.append("address2", store.information.detailedAddress)
+  formData.append("birthday", store.information.dateBirth)
   try {
-    await authService.register({
-      username: store.information.email,
-      nickname: store.information.nickName,
-      name: store.information.name,
-      password: store.information.password,
-      phone: formatPhone(store.information.phone),
-      fileThumbnail: store.information.image,
-      gender: store.information.gender === "male" ? 0 : 1,
-      address1: store.information.address,
-      address2: store.information.detailedAddress,
-      birthday: store.information.dateBirth,
-    })
-  } catch (error) {}
+    await authService.register(formData)
+    router.push("/login")
+  } catch (error) {
+    alert(error.response.data.message)
+  }
 }
 
 const handleValueDateBirth = e => {

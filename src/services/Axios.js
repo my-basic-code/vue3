@@ -63,5 +63,6 @@ export const Axios = {
     get,
     post,
     put,
-    del
+    del,
+    patch
 }

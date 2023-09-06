@@ -62,7 +62,10 @@
       <Button
         :class="`w-1/4 py-5 px-4 h-fit whitespace-nowrap ${classBtn[1]}`"
         @click="verifyCode"
-        :disabled="store.information.certification.status"
+        :disabled="
+          store.information.certification.status ||
+          store.information.certification.value.length === 0
+        "
         >인증받기</Button
       >
     </div>

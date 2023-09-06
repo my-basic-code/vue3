@@ -12,7 +12,11 @@ function verifyCodeRegister(payload) {
 
 function register(payload) {
     const url = "public/api/user/register";
-    return Axios.post(url, payload);
+    return Axios.post(url, payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }
 
 function login(payload) {
