@@ -34,6 +34,20 @@ function verifyCodeFindAccount(payload) {
     return Axios.post(url, payload);
 }
 
+function sendMailForgotPass(payload) {
+    const url = "public/api/user/send-mail-forgot-password";
+    return Axios.post(url, payload);
+}
+
+function changePassword(payload, token) {
+    const url = "public/api/user/change-password";
+    return Axios.post(url, payload, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 export const authService = {
-    sendCodeRegister, verifyCodeRegister, register, login, sendCodeFindAccount, verifyCodeFindAccount
+    sendCodeRegister, verifyCodeRegister, register, login, sendCodeFindAccount, verifyCodeFindAccount, sendMailForgotPass, changePassword
 };

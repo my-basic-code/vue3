@@ -78,14 +78,14 @@
     <Button
       :class="`w-full py-4 px-9 mt-7 ${
         !store.information.nickName ||
-        !store.information.gender ||
+        typeof store.information.gender === 'undefined' ||
         !store.information.address
           ? classBtn[2]
           : classBtn[1]
       }`"
       :disabled="
         !store.information.nickName ||
-        !store.information.gender ||
+        typeof store.information.gender === 'undefined' ||
         !store.information.address
       "
       @click="callApiRegister"
@@ -107,8 +107,8 @@ import { useRouter } from "vue-router"
 const router = useRouter()
 const store = useRegisterStore()
 const options = [
-  { label: "남성", value: "male" },
-  { label: "여성", value: "female" },
+  { label: "남성", value: 0 },
+  { label: "여성", value: 1 },
 ]
 
 const callApiRegister = async () => {
@@ -119,7 +119,7 @@ const callApiRegister = async () => {
   formData.append("password", store.information.password)
   formData.append("phone", formatPhone(store.information.phone))
   formData.append("fileThumbnail", store.information.image)
-  formData.append("gender", store.information.gender === "male" ? 0 : 1)
+  formData.append("gender", store.information.gender)
   formData.append("address1", store.information.address)
   formData.append("address2", store.information.detailedAddress)
   formData.append("birthday", store.information.dateBirth)

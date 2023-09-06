@@ -22,7 +22,7 @@ const currentStep = computed(() => props.currentStep)
       <div class="flex justify-start">
         <h3
           :class="[
-            'w-6 h-6  rounded-full flex justify-center items-center text-xs font-bold cursor-pointer',
+            'w-6 h-6  rounded-full flex justify-center items-center text-xs font-bold cursor-default',
             currentStep === index
               ? 'bg-[#3D3D3D] text-white'
               : 'bg-[#F2F4F6] text-[#A5A5A5]',

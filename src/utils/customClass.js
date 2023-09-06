@@ -26,5 +26,5 @@ export const classText = {
 }
 
 export const classErrorMessage = {
-  1: 'text-red-500 text-left text-xs w-full mt-1'
+  1: 'text-[#F00] text-left text-[16px] w-full mt-1'
 }

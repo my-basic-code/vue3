@@ -81,7 +81,7 @@ const handleLogin = async event => {
       username: email.value,
       password: password.value,
     })
-    localStorage.setItem("token", res.data.accessToken)
+    localStorage.setItem("token", res.accessToken)
     router.push("/")
   } catch (error) {
     console.log("🚀 ~ file: Login.vue:62 ~ handleLogin ~ error:", error)

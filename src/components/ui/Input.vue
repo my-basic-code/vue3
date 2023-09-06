@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue"
 import ErrorMessage from "@/components/ui/ErrorMessage.vue"
+
 const props = defineProps({
   wrapClass: {
     type: String,
@@ -40,7 +41,7 @@ const props = defineProps({
   },
   handleValue: {
     type: Function,
-    default: () => {},
+    default: () => { },
   },
   errors: {
     type: Array,
@@ -79,23 +80,13 @@ const handleKeyDown = event => {
 
 <template>
   <div :class="wrapClass">
-    <label :class="classLabel" v-if="label"
-      >{{ label }} <slot name="sub-label"></slot
-    ></label>
+    <label :class="classLabel" v-if="label">{{ label }} <slot name="sub-label"></slot></label>
     <slot name="prefix"></slot>
-    <input
-      :class="className"
-      :type="type"
-      :name="name"
-      :placeholder="placeholder"
-      :value="modelValue"
-      @input="handleChange"
-      @keydown="handleKeyDown"
-      :disabled="disabled"
-    />
+    <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
+      @input="handleChange" @keydown="handleKeyDown" :disabled="disabled" />
     <slot name="suffix"></slot>
   </div>
-  <ErrorMessages v-if="errors.length > 0" :errors="errors" />
+  <ErrorMessage v-if="errors.length > 0" :errors="errors" />
 </template>
 
 <style>

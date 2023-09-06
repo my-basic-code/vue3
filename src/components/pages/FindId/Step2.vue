@@ -123,6 +123,7 @@ function startCountdown() {
       formattedTime.value = formatTime(countdownTime.value)
     } else {
       clearCountdownInterval()
+      isSendCodeAgain.value = true
     }
   }, 1000)
 }
@@ -130,7 +131,6 @@ const clearCountdownInterval = () => {
   clearInterval(countdownInterval)
   countdownTime.value = 3 * 60
   isShowCountdown.value = false
-  isSendCodeAgain.value = true
 }
 
 // Xóa interval khi component bị hủy

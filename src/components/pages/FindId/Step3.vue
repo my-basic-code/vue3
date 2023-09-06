@@ -20,11 +20,7 @@
   </article>
 </template>
 <script setup>
-import Images from "@/constants/images.js"
 import Input from "@/components/ui/Input.vue"
-import Radio from "@/components/ui/Radio.vue"
-import InputImgReview from "@/components/ui/InputImgReview.vue"
-import { useRegisterStore } from "@/stores/register.js"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { useRouter } from "vue-router"
 
