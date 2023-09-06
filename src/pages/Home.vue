@@ -112,11 +112,7 @@
       <section class="relative">
         <div class="container relative z-20 mx-auto bg-transparent pt-[60px]">
           <div class="flex items-center gap-x-4">
-            <h4
-              class="text-[40px] font-bold whitespace-nowrap whitespace-nowrap"
-            >
-              gift shop
-            </h4>
+            <h4 class="text-[40px] font-bold whitespace-nowra">gift shop</h4>
             <div class="h-[6px] w-full bg-black"></div>
           </div>
           <div class="flex gap-x-[30px] mt-[60px]">
@@ -134,9 +130,7 @@
       <section class="relative">
         <div class="container relative z-20 mx-auto bg-transparent pt-[60px]">
           <div class="flex items-center gap-x-4">
-            <h4
-              class="text-[40px] font-bold whitespace-nowrap whitespace-nowrap"
-            >
+            <h4 class="text-[40px] font-bold whitespace-nowrap">
               photoism story
             </h4>
             <div class="h-[6px] w-full bg-black"></div>
