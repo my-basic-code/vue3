@@ -4,7 +4,7 @@
   "scripts": {
     "prod": "cp env.production .env && vite",
     "sta": "cp env.stage .env && vite",
-    "dev": "env.development .env && vite",
+    "dev": "cp env.development .env && vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",

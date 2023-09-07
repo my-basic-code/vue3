@@ -47,7 +47,11 @@ const props = defineProps({
 })
 
 const changePassword = async () => {
-  if (password.value !== repeatPassword.value) {
+  if (
+    password.value !== repeatPassword.value ||
+    password.value.length === 0 ||
+    repeatPassword.value.length === 0
+  ) {
     errors.value = ["비밀번호가 일치하지 않습니다."]
     return
   }

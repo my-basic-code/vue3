@@ -45,6 +45,7 @@ onMounted(() => {
     currentStep.value = Number(route.query.step - 1)
   }
   if (route.query.token) {
+    !!localStorage.getItem("token") && localStorage.removeItem("token")
     token.value = route.query.token
   }
 })
