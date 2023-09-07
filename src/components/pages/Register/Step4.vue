@@ -113,16 +113,25 @@ const options = [
 
 const callApiRegister = async () => {
   const formData = new FormData()
-  formData.append("username", store.information.email)
-  formData.append("nickname", store.information.nickName)
-  formData.append("name", store.information.name)
-  formData.append("password", store.information.password)
-  formData.append("phone", formatPhone(store.information.phone))
-  formData.append("fileThumbnail", store.information.image)
-  formData.append("gender", store.information.gender)
-  formData.append("address1", store.information.address)
-  formData.append("address2", store.information.detailedAddress)
-  formData.append("birthday", store.information.dateBirth)
+  !!store.information.email &&
+    formData.append("username", store.information.email)
+  !!store.information.nickName &&
+    formData.append("nickname", store.information.nickName)
+  !!store.information.name && formData.append("name", store.information.name)
+  !!store.information.password &&
+    formData.append("password", store.information.password)
+  !!store.information.phone &&
+    formData.append("phone", formatPhone(store.information.phone))
+  !!store.information.image &&
+    formData.append("fileThumbnail", store.information.image)
+  typeof store.information.gender !== "undefined" &&
+    formData.append("gender", store.information.gender)
+  !!store.information.address &&
+    formData.append("address1", store.information.address)
+  !!store.information.detailedAddress &&
+    formData.append("address2", store.information.detailedAddress)
+  !!store.information.dateBirth &&
+    formData.append("birthday", store.information.dateBirth)
   try {
     await authService.register(formData)
     router.push("/login")
