@@ -9,7 +9,8 @@
         <span class="px-4 py-1 text-white bg-[#414141] rounded-full">Colored</span>
       </div>
     </div>
-    <button class="w-[318px] px-9 py-[10px] text-[14px] font-bold border border-[#DFDFDF]">
+    <button class="w-[318px] px-9 py-[10px] text-[14px] font-bold border border-[#DFDFDF]"
+      @click="router.push('/profile/information/edit-profile')">
       개인정보 수정
     </button>
   </section>
@@ -84,5 +85,8 @@
 <script setup>
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 </script>
 <style scoped></style>

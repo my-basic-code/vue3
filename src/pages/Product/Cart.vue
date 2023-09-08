@@ -143,7 +143,8 @@
           <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
           <strong class="text-[24px] text-[#FF2618]">23,500원</strong>
         </article>
-        <button class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">결제하기</button>
+        <button class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold"
+          @click="router.push('/payment')">결제하기</button>
       </div>
     </section>
   </main>
@@ -153,7 +154,9 @@ import { ref } from 'vue'
 import Checkbox from '@/components/ui/Checkbox.vue';
 import ImagesProd from '@/constants/imagesProd'
 import Images from '@/constants/images'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const valueCheckBoxAll = ref(false);
 
 </script>

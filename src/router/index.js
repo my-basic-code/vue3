@@ -113,20 +113,20 @@ const router = createRouter({
         },
         {
           path: "qa",
-          name: "QA",
+          name: "Qa",
           component: () => import("@/pages/CustomerService/QA/index.vue"),
           beforeEnter: (to, from, next) => {
             if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
           },
           children: [
             {
-              path: "list",
+              path: "listQa",
               name: "List",
               component: () => import("@/pages/CustomerService/QA/List.vue"),
             },
             {
               path: "detail/:id",
-              name: "Detail",
+              name: "DetailQa",
               component: () => import("@/pages/CustomerService/QA/Detail.vue"),
             },
           ]
@@ -141,12 +141,12 @@ const router = createRouter({
           children: [
             {
               path: "list",
-              name: "List",
+              name: "ListNotification",
               component: () => import("@/pages/CustomerService/Notification/List.vue"),
             },
             {
               path: "detail/:id",
-              name: "Detail",
+              name: "DetailNotification",
               component: () => import("@/pages/CustomerService/Notification/Detail.vue"),
             },
           ]
@@ -161,22 +161,22 @@ const router = createRouter({
           children: [
             {
               path: "list",
-              name: "List",
+              name: "ListRules",
               component: () => import("@/pages/CustomerService/Rules/List.vue"),
             },
             {
               path: "detail/:id",
-              name: "Detail",
+              name: "DetailRules",
               component: () => import("@/pages/CustomerService/Rules/Detail.vue"),
             },
           ]
         },
       ]
     },
-    {
-      path: "/:pathMatch(.*)*",
-      redirect: { name: 'Home' }
-    },
+    // {
+    //   path: "/:pathMatch(.*)*",
+    //   redirect: { name: 'Home' }
+    // },
   ]
 })
 

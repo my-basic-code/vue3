@@ -71,7 +71,8 @@
           </Select>
         </article>
         <article class="mt-[18px] flex justify-between space-x-[20px]">
-          <button class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">장바구니</button>
+          <button @click="router.push('/cart')"
+            class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">장바구니</button>
           <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white">장바구니</button>
         </article>
       </div>
@@ -129,13 +130,15 @@
   </main>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd.js'
 import Collapse from '@/components/element/Collapse.vue'
 import Select from "@/components/ui/Select.vue"
 import Button from '@/components/ui/Button.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const selectOptionsQuantity = ref([
   { value: 1, label: 1 },
   { value: 2, label: 2 },
@@ -173,6 +176,9 @@ const toggleImage = () => {
   isImageVisible.value = !isImageVisible.value;
 };
 
+onMounted(() => {
+  window.scroll(0, 0)
+})
 </script>
 <style scoped>
 figure {

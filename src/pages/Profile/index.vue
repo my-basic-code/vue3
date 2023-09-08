@@ -3,9 +3,14 @@
     <aside class="col-span-2">
       <h3 class="text-[#555555] text-[14px] font-normal">마이페이지</h3>
       <ul class="space-y-[28px] mt-[40px]">
-        <li class="text-[14px] font-normal text-[#242424]">홈</li>
-        <li class="text-[14px] font-normal text-[#A5A5A5]">내 등급</li>
-        <li class="text-[14px] font-normal text-[#A5A5A5]">주문상세</li>
+        <li class="text-[14px] font-normal text-[#242424] cursor-pointer"
+          @click="router.push('/profile/information/show-information')">홈</li>
+        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/profile/rating')">내 등급
+        </li>
+        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/profile/order-detail')">
+          주문상세</li>
+        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/login')">
+          Logout</li>
       </ul>
     </aside>
     <div class="col-span-10">
@@ -13,3 +18,9 @@
     </div>
   </main>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+</script>

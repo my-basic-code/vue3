@@ -19,6 +19,11 @@ function register(payload) {
     });
 }
 
+function checkEmail(payload) {
+    const url = "public/api/user/check-username-exist";
+    return Axios.get(url, payload);
+}
+
 function login(payload) {
     const url = "auth/signin";
     return Axios.post(url, payload);
@@ -49,5 +54,5 @@ function changePassword(payload, token) {
 }
 
 export const authService = {
-    sendCodeRegister, verifyCodeRegister, register, login, sendCodeFindAccount, verifyCodeFindAccount, sendMailForgotPass, changePassword
+    sendCodeRegister, verifyCodeRegister, register, login, sendCodeFindAccount, verifyCodeFindAccount, sendMailForgotPass, changePassword, checkEmail
 };

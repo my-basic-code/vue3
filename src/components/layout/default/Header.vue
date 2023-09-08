@@ -7,27 +7,32 @@
         </router-link>
         <Input :wrapClass="classInputCustom[1].wrapper"
           :className="`pt-1 pb-[10px] w-[300px] ${classInputCustom[1].input}`" name="search" placeholder="썸머 마지막 50% 세일"
-          v-model="search" @click="handleSearch">
+          v-model="search" @enter="handleSearch">
         <template #suffix>
-          <img :src="Images.iconSearch.src" :alt="Images.iconSearch.alt" />
+          <img @click="handleSearch" :src="Images.iconSearch.src" :alt="Images.iconSearch.alt" />
         </template>
         </Input>
       </div>
 
       <ul class="menu">
         <li class="flex space-x-[28px]">
-          <a href="#" class="flex flex-col items-center space-y-1">
+          <router-link to="/cart" class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
             <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
-          </a>
-          <a href="#" class="flex flex-col items-center space-y-1">
+          </router-link>
+          <router-link to="/customer-service/how-to-use" class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconCustomerService.src" :alt="Images.iconCustomerService.alt" />
             <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
-          </a>
-          <a href="#" class="flex flex-col items-center space-y-1">
+          </router-link>
+          <router-link v-if="isLogin" to="/profile/information/show-information"
+            class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
             <span class="text-[10px] text-[#242424] font-normal">마이</span>
-          </a>
+          </router-link>
+          <router-link v-else to="/login" class="flex flex-col items-center space-y-1">
+            <img class="w-[20px] h-[20px]" :src="Images.iconLogin.src" :alt="Images.iconLogin.alt" />
+            <span class="text-[10px] text-[#242424] font-normal">마이</span>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -57,44 +62,48 @@ import Button from "@/components/ui/Button.vue"
 import Dropdown from "@/components/element/Dropdown.vue"
 import { classInputCustom } from "@/utils/customClass.js"
 import { ref } from "vue"
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useRouter } from "vue-router"
+const router = useRouter()
 
 const menuItems = ref([
   {
     iconLeft: Images.iconShipping.src,
     alt: Images.iconShipping.alt,
     text: "무료배송",
-    link: '/search-detail/shipping'
+    link: "/search-detail/shipping",
   },
   {
     iconLeft: Images.iconMembership.src,
     alt: Images.iconMembership.alt,
     text: "멤버십",
-    link: '/search-detail/membership'
+    link: "/search-detail/membership",
   },
   {
     iconLeft: Images.iconDiscount.src,
     alt: Images.iconDiscount.alt,
     text: "할인특가",
-    link: '/search-detail/discount'
+    link: "/search-detail/discount",
   },
   {
     iconLeft: Images.iconGift.src,
     alt: Images.iconGift.alt,
     text: "선물하기",
-    link: '/search-detail/gift'
+    link: "/search-detail/gift",
   },
   {
     iconLeft: Images.iconBest.src,
     alt: Images.iconBest.alt,
     text: "베스트",
-    link: '/search-detail/best'
+    link: "/search-detail/best",
   },
 ])
 const search = ref()
+const isLogin = !!localStorage.getItem("token")
 
-const handleSearch = () => { }
+const handleSearch = () => {
+  router.push({ path: '/search-detail/prod', query: { search: search.value } })
+  search.value = ''
+}
 const handleItemMenuClick = resp => {
   const { item } = resp
   router.push(item.link)

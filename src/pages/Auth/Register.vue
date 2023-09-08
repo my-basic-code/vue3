@@ -2,27 +2,14 @@
   <main class="mt-[60px] my-[117px] mx-auto max-w-[335px]">
     <article>
       <h1 class="text-[28px] font-normal uppercase text-left">회원가입</h1>
-      <Steps
-        class="mt-5"
-        :steps="Array(4).fill(null)"
-        :currentStep="currentStep"
-        @current-step="step => (currentStep = step)"
-      />
+      <Steps class="mt-5" :steps="Array(4).fill(null)" :currentStep="currentStep"
+        @current-step="step => (currentStep = step)" />
       <img class="mt-5" :src="Images.Line.src" :alt="Images.Line.alt" />
     </article>
     <section class="mt-5">
-      <Step1
-        v-if="currentStep === 0"
-        @complete-step1="() => (currentStep = 1)"
-      />
-      <Step2
-        v-if="currentStep === 1"
-        @complete-step2="() => (currentStep = 2)"
-      />
-      <Step3
-        v-if="currentStep === 2"
-        @complete-step3="() => (currentStep = 3)"
-      />
+      <Step1 v-if="currentStep === 0" @complete-step1="() => (currentStep = 1)" />
+      <Step2 v-if="currentStep === 1" @complete-step2="() => (currentStep = 2)" />
+      <Step3 v-if="currentStep === 2" @complete-step3="() => (currentStep = 3)" />
       <Step4 v-if="currentStep === 3" />
     </section>
   </main>

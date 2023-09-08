@@ -14,6 +14,7 @@ import iconExit from '@/assets/images/icon/exit.svg'
 import iconGift from '@/assets/images/icon/gift.svg'
 import iconLatest from '@/assets/images/icon/latest.svg'
 import iconLinkSimple from '@/assets/images/icon/link-simple.svg'
+import iconLogin from '@/assets/images/icon/login.svg'
 import iconMembership from '@/assets/images/icon/membership.svg'
 import iconRight from '@/assets/images/icon/right.svg'
 import iconRightGray from '@/assets/images/icon/right-gray.svg'
@@ -44,6 +45,10 @@ const Images = {
   iconUser: {
     src: iconUser,
     alt: 'iconUser'
+  },
+  iconLogin: {
+    src: iconLogin,
+    alt: 'iconLogin'
   },
   iconBar3: {
     src: iconBar3,

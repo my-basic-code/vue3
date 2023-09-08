@@ -41,7 +41,7 @@ const props = defineProps({
   },
   handleValue: {
     type: Function,
-    default: () => { },
+    default: () => {},
   },
   errors: {
     type: Array,
@@ -76,14 +76,29 @@ const handleKeyDown = event => {
     event.preventDefault()
   }
 }
+
+const handleEnter = () => {
+  emit("enter")
+}
 </script>
 
 <template>
   <div :class="wrapClass">
-    <label :class="classLabel" v-if="label">{{ label }} <slot name="sub-label"></slot></label>
+    <label :class="classLabel" v-if="label"
+      >{{ label }} <slot name="sub-label"></slot
+    ></label>
     <slot name="prefix"></slot>
-    <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
-      @input="handleChange" @keydown="handleKeyDown" :disabled="disabled" />
+    <input
+      :class="className"
+      :type="type"
+      :name="name"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="handleChange"
+      @keydown="handleKeyDown"
+      :disabled="disabled"
+      @keydown.enter="handleEnter"
+    />
     <slot name="suffix"></slot>
   </div>
   <ErrorMessage v-if="errors.length > 0" :errors="errors" />

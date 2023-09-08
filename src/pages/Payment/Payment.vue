@@ -180,7 +180,8 @@
           <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
           <strong class="text-[24px] text-[#FF2618]">23,500원</strong>
         </article>
-        <button class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
+        <button @click="router.push('/order')"
+          class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
           23,500원 결제하기
         </button>
       </div>
@@ -193,7 +194,9 @@ import ImagesProd from "@/constants/imagesProd"
 import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const data = ref({
   address: "",
 })
