@@ -34,7 +34,12 @@ const router = createRouter({
       component: () => import("@/pages/Story/ListStory.vue"),
     },
     {
-      path: "/search-detail/:slug",
+      path: "/category/:id",
+      name: "Category",
+      component: () => import("@/pages/Product/Category.vue"),
+    },
+    {
+      path: "/search-detail",
       name: "SearchDetail",
       component: () => import("@/pages/Product/SearchDetail.vue"),
     },
@@ -112,22 +117,22 @@ const router = createRouter({
           component: () => import("@/pages/CustomerService/HowToUse.vue"),
         },
         {
-          path: "qa",
-          name: "Qa",
-          component: () => import("@/pages/CustomerService/QA/index.vue"),
+          path: "question-answer",
+          name: "QuestionAnswer",
+          component: () => import("@/pages/CustomerService/QuestionAnswer/index.vue"),
           beforeEnter: (to, from, next) => {
             if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
           },
           children: [
             {
-              path: "listQa",
+              path: "listQuestionAnswer",
               name: "List",
-              component: () => import("@/pages/CustomerService/QA/List.vue"),
+              component: () => import("@/pages/CustomerService/QuestionAnswer/List.vue"),
             },
             {
               path: "detail/:id",
-              name: "DetailQa",
-              component: () => import("@/pages/CustomerService/QA/Detail.vue"),
+              name: "DetailQuestionAnswer",
+              component: () => import("@/pages/CustomerService/QuestionAnswer/Detail.vue"),
             },
           ]
         },

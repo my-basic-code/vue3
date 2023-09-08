@@ -7,15 +7,10 @@
 
     <!-- Dropdown menu -->
     <ul :class="classMenu" v-if="isOpen">
-      <li
-        v-for="(item, index) in menuItems"
-        :key="index"
-        :class="classItem"
-        @click="handleItemClick(item, index)"
-      >
-        <img v-if="item.iconLeft" :src="item.iconLeft" :alt="item.alt" />
+      <li v-for="(item, index) in menuItems" :key="index" :class="classItem" @click="handleItemClick(item, index)">
+        <img v-if="item.iconLeft && !!isIcon" :class="classIcon" :src="item.iconLeft" :alt="item.alt" />
         <span>{{ item.text }}</span>
-        <img v-if="item.iconRight" :src="item.iconRight" :alt="item.alt" />
+        <img v-if="item.iconRight && !!isIcon" :class="classIcon" :src="item.iconRight" :alt="item.alt" />
       </li>
     </ul>
   </div>
@@ -31,6 +26,14 @@ const props = defineProps({
   classItem: {
     type: String,
     default: "",
+  },
+  classIcon: {
+    type: String,
+    default: "",
+  },
+  isIcon: {
+    type: Boolean,
+    default: true,
   },
   menuItems: {
     type: Array,

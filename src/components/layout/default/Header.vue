@@ -40,7 +40,7 @@
     <div class="container mx-auto">
       <Dropdown classMenu="absolute left-0 z-20 w-[335px] origin-top-right bg-white shadow-xl dark:bg-gray-800"
         classItem="flex justify-start space-x-3 px-5 py-3 text-sm text-[#242424] capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 cursor-pointer text-[16px] text-[#242424] font-normal"
-        :menuItems="menuItems" @item-clicked="handleItemMenuClick">
+        classIcon="w-6 h-6" :menuItems="categoryStore.valueCategory" @item-clicked="handleItemMenuClick">
         <template v-slot:toggle>
           <Button
             class="relative py-3 px-[18px] z-10 flex text-[#242424] space-x-[10px] border border-transparent dark:text-white">
@@ -61,51 +61,25 @@ import Input from "@/components/ui/Input.vue"
 import Button from "@/components/ui/Button.vue"
 import Dropdown from "@/components/element/Dropdown.vue"
 import { classInputCustom } from "@/utils/customClass.js"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 const router = useRouter()
+import { useCategoryStore } from '@/stores/category';
 
-const menuItems = ref([
-  {
-    iconLeft: Images.iconShipping.src,
-    alt: Images.iconShipping.alt,
-    text: "무료배송",
-    link: "/search-detail/shipping",
-  },
-  {
-    iconLeft: Images.iconMembership.src,
-    alt: Images.iconMembership.alt,
-    text: "멤버십",
-    link: "/search-detail/membership",
-  },
-  {
-    iconLeft: Images.iconDiscount.src,
-    alt: Images.iconDiscount.alt,
-    text: "할인특가",
-    link: "/search-detail/discount",
-  },
-  {
-    iconLeft: Images.iconGift.src,
-    alt: Images.iconGift.alt,
-    text: "선물하기",
-    link: "/search-detail/gift",
-  },
-  {
-    iconLeft: Images.iconBest.src,
-    alt: Images.iconBest.alt,
-    text: "베스트",
-    link: "/search-detail/best",
-  },
-])
+const categoryStore = useCategoryStore();
 const search = ref()
 const isLogin = !!localStorage.getItem("token")
 
 const handleSearch = () => {
-  router.push({ path: '/search-detail/prod', query: { search: search.value } })
+  router.push({ path: '/search-detail', query: { search: search.value } })
   search.value = ''
 }
 const handleItemMenuClick = resp => {
   const { item } = resp
-  router.push(item.link)
+  router.push(`/category/${item.id}`)
 }
+
+onMounted(async () => {
+  await categoryStore.fetchData();
+})
 </script>
