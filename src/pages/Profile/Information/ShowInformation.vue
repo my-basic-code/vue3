@@ -2,11 +2,11 @@
   <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
     <div class="flex justify-start gap-x-[28px]">
       <div class="w-[80px] h-[80px] rounded-full overflow-hidden">
-        <img class="object-cover w-full h-full" src="" alt="">
+        <img class="object-cover w-full h-full" :src="user?.thumbnail" alt="user">
       </div>
       <div class="flex flex-col justify-between">
-        <h5 class="text-[28px] font-bold text-[#111]">김포토</h5>
-        <span class="px-4 py-1 text-white bg-[#414141] rounded-full">Colored</span>
+        <h5 class="text-[28px] font-bold text-[#111]">{{ user?.nickName }}</h5>
+        <span class="px-4 py-1 text-white bg-[#414141] rounded-full w-fit">Colored</span>
       </div>
     </div>
     <button class="w-[318px] px-9 py-[10px] text-[14px] font-bold border border-[#DFDFDF]"
@@ -85,8 +85,20 @@
 <script setup>
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd'
+import { userService } from '@/services/userService'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const user = ref()
+
+onMounted(async () => {
+  try {
+    const { data: res } = await userService.getProfile()
+    user.value = res.data
+  } catch (error) {
+    alert(error.response.data.message)
+  }
+})
 </script>
 <style scoped></style>

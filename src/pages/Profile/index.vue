@@ -3,13 +3,18 @@
     <aside class="col-span-2">
       <h3 class="text-[#555555] text-[14px] font-normal">마이페이지</h3>
       <ul class="space-y-[28px] mt-[40px]">
-        <li class="text-[14px] font-normal text-[#242424] cursor-pointer"
+        <li
+          :class="['text-[14px] font-normal cursor-pointer', route.name === 'ShowInformation' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/information/show-information')">홈</li>
-        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/profile/rating')">내 등급
+        <li
+          :class="['text-[14px] font-normal cursor-pointer', route.name === 'Rating' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
+          @click="router.push('/profile/rating')">내 등급
         </li>
-        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/profile/order-detail')">
+        <li
+          :class="['text-[14px] font-normal cursor-pointer', route.name === 'OrderDetail' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
+          @click="router.push('/profile/order-detail')">
           주문상세</li>
-        <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer" @click="router.push('/login')">
+        <li class='text-[14px] font-normal cursor-pointer text-[#A5A5A5]' @click="handleLogout">
           Logout</li>
       </ul>
     </aside>
@@ -20,7 +25,17 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/user';
 
+const userStore = useUserStore();
 const router = useRouter()
+const route = useRoute()
+
+const handleLogout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('refreshToken')
+  userStore.updateLoginStatus()
+  router.push('/login')
+}
 </script>

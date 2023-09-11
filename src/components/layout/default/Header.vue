@@ -24,7 +24,7 @@
             <img class="w-[20px] h-[20px]" :src="Images.iconCustomerService.src" :alt="Images.iconCustomerService.alt" />
             <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
           </router-link>
-          <router-link v-if="isLogin" to="/profile/information/show-information"
+          <router-link v-if="userStore.state.isLogin" to="/profile/information/show-information"
             class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
             <span class="text-[10px] text-[#242424] font-normal">마이</span>
@@ -61,14 +61,15 @@ import Input from "@/components/ui/Input.vue"
 import Button from "@/components/ui/Button.vue"
 import Dropdown from "@/components/element/Dropdown.vue"
 import { classInputCustom } from "@/utils/customClass.js"
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 const router = useRouter()
 import { useCategoryStore } from '@/stores/category';
+import { useUserStore } from '@/stores/user';
 
 const categoryStore = useCategoryStore();
+const userStore = useUserStore();
 const search = ref()
-const isLogin = !!localStorage.getItem("token")
 
 const handleSearch = () => {
   router.push({ path: '/search-detail', query: { search: search.value } })

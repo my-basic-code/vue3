@@ -4,16 +4,19 @@
       <div class="relative flex items-center justify-center px-[86px] py-[175px]"
         style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
         <figure class="w-full h-[237px]">
-          <img class="object-cover object-center w-full h-full" src="https://dummyimage.com/720x400" alt="blog">
+          <img class="object-fill object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
         </figure>
       </div>
 
       <div>
         <article class="pb-[20px] border-b-[4px] border-black flex justify-between items-center">
           <div>
-            <span class="text-[14px] font-normal text-[#555555]">베스트 (카테고리 명)</span>
-            <strong class="block text-xl font-bold uppercase mt-[8px] mb-3">EDITION FILM CAMERA</strong>
-            <small class="py-[2px] px-[6px] text-xs font-normal bg-[#FFF6F2] text-[#FF3609]">여름한정</small>
+            <span class="text-[14px] font-normal text-[#555555]">{{ product.category?.name }}</span>
+            <strong class="block text-xl font-bold uppercase mt-[8px] mb-3">{{ product.name }}</strong>
+            <div class="space-x-2">
+              <small class="py-[2px] px-[6px] text-xs font-normal bg-[#FFF6F2] text-[#FF3609]" v-for="tag in product.tags"
+                :key="tag.id">{{ tag.name }}</small>
+            </div>
           </div>
           <figure class="w-6 h-6">
             <img class="object-cover object-center w-full h-full" :src="Images.iconLinkSimple.src"
@@ -23,13 +26,15 @@
         <article class="mt-4 space-y-4">
           <div class="flex items-center justify-between">
             <strong class="text-[14px] text-black">정가</strong>
-            <del class="text-[14px] font-normal text-[#6F6F6F]">24,000원</del>
+            <del class="text-[14px] font-normal text-[#6F6F6F]">{{ formatMoney(product.purchasePrice) }}원</del>
           </div>
           <div class="flex items-center justify-between">
             <strong class="text-[14px] text-black">구매가</strong>
             <div class="space-x-[6px]">
-              <sub class="inline-block text-[#FF2618] text-base font-bold">35%</sub>
-              <strong class="text-[24px] inline-block">18,500</strong>
+              <sub class="inline-block text-[#FF2618] text-base font-bold">{{ product.discount }}%</sub>
+              <strong class="text-[24px] inline-block">{{ formatMoney(product.purchasePrice - product.purchasePrice *
+                product.discount / 100)
+              }}</strong>
             </div>
           </div>
           <!-- <Collapse :isOpen="true" title="등급별 마일리지" classTitle="text-[14px] font-bold text-[#3D3D3D]"
@@ -78,17 +83,18 @@
       </div>
     </section>
 
-    <section class="mt-[120px]">
-      <h2 class="text-center">제목</h2>
-      <p class="text-center">본문글</p>
-      <figure class="mt-[30px] relative" :class="{ 'show': isImageVisible }">
-        <img class="w-full h-full" :src="ImagesProd.Product.src" :alt="ImagesProd.Product.alt">
+    <section class="mt-[120px]" v-for="(prod, iProd) in product.descriptionsProductDtos" :key="prod.id">
+      <h2 class="text-center text-[16px] font-bold">{{ prod.title }}</h2>
+      <p class="text-center text-[16px] font-bold">{{ prod.content }}</p>
+      <figure class="mt-[30px] relative w-full h-full" :class="{ 'show': isImageVisible[iProd] }">
+        <img class="object-cover object-center w-full h-full" :src="prod.path
+          " alt="Product">
       </figure>
-      <Button @click="toggleImage"
+      <Button @click="toggleImage(iProd)"
         class="border py-[19px] w-full text-base font-bold text-[#242424] flex justify-center items-center space-x-2 border-[#DFDFDF] mt-[96px]">
         <span>상품 설명 접기</span>
         <template #right-icon>
-          <img v-if="!isImageVisible" class="w-6 h-6" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
+          <img v-if="!isImageVisible[iProd]" class="w-6 h-6" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
           <img v-else class="w-6 h-6" :src="Images.iconUp.src" :alt="Images.iconUp.alt">
         </template>
       </Button>
@@ -99,30 +105,12 @@
         classTitle="text-[20px] font-bold text-[#242424] flex justify-between py-[18px] border-b border-[#000]"
         :iconDown="Images.iconDownBlack" :iconUp="Images.iconUpBlack">
         <div class="mt-10 overflow-hidden border-t border-b">
-          <div class="flex items-start justify-start h-fit bg-[#FAFBFD] relative">
-            <strong class="text-[12px] px-[20px] py-[20px]">품명 및 모델명</strong>
-            <p class="bg-white py-[20px] px-7 grow">EDITION FILM CAMERA</p>
-            <div class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
-          </div>
-          <div class="flex items-start justify-start h-fit bg-[#FAFBFD] relative">
-            <strong class="text-[12px] px-[20px] py-[20px]">품명 및 모델명</strong>
-            <p class="bg-white py-[20px] px-7 grow">EDITION FILM CAMERA</p>
-            <div class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
-          </div>
-          <div class="flex items-start justify-start h-fit bg-[#FAFBFD] relative">
-            <strong class="text-[12px] px-[20px] py-[20px]">품명 및 모델명</strong>
-            <p class="bg-white py-[20px] px-7 grow">EDITION FILM CAMERA</p>
-            <div class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
-          </div>
-          <div class="flex items-start justify-start h-fit bg-[#FAFBFD] relative">
-            <strong class="text-[12px] px-[20px] py-[20px]">품명 및 모델명</strong>
-            <p class="bg-white py-[20px] px-7 grow">EDITION FILM CAMERA</p>
-            <div class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
-          </div>
-          <div class="flex items-start justify-start h-fit bg-[#FAFBFD] relative">
-            <strong class="text-[12px] px-[20px] py-[20px]">품명 및 모델명</strong>
-            <p class="bg-white py-[20px] px-7 grow">EDITION FILM CAMERA</p>
-            <!-- <div class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div> -->
+          <div class="grid grid-cols-12 h-fit bg-[#FAFBFD] relative"
+            v-for="(specification, iSpecification) in product.specifications" :key="iSpecification">
+            <strong class="text-[12px] px-[20px] py-[20px] col-span-2">{{ specification.title }}</strong>
+            <p class="bg-white py-[20px] px-7 grow col-span-10">{{ specification.content }}</p>
+            <div v-if="iSpecification !== product.specifications.length - 1"
+              class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
           </div>
         </div>
       </Collapse>
@@ -136,48 +124,42 @@ import ImagesProd from '@/constants/imagesProd.js'
 import Collapse from '@/components/element/Collapse.vue'
 import Select from "@/components/ui/Select.vue"
 import Button from '@/components/ui/Button.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { productService } from '@/services/productService'
+import { formatMoney } from '@/utils/formatMoney'
 
 const router = useRouter()
-const selectOptionsQuantity = ref([
-  { value: 1, label: 1 },
-  { value: 2, label: 2 },
-  { value: 3, label: 3 },
-  { value: 4, label: 4 },
-  { value: 5, label: 5 },
-  { value: 6, label: 6 },
-  { value: 7, label: 7 },
-  { value: 8, label: 8 },
-  { value: 9, label: 9 },
-  { value: 10, label: 10 },
-  { value: 11, label: 11 },
-  { value: 12, label: 12 },
-  { value: 13, label: 13 },
-  { value: 14, label: 14 },
-  { value: 15, label: 15 },
-  { value: 16, label: 16 },
-  { value: 17, label: 17 },
-  { value: 18, label: 18 },
-  { value: 19, label: 19 },
-  { value: 20, label: 20 },
-])
+const route = useRoute()
+const product = ref({})
+const selectOptionsQuantity = ref([])
 const selectedQuantity = ref(1)
-const selectOptionsColor = ref([
-  { value: "Red", label: "Red" },
-  { value: "Yellow", label: "Yellow" },
-  { value: "Green", label: "Green" },
-  { value: "Blue", label: "Blue" },
-  { value: "Black", label: "Black" },
-])
+const selectOptionsColor = ref([])
 const selectedColor = ref()
-const isImageVisible = ref(false);
+const isImageVisible = ref([]);
 
-const toggleImage = () => {
-  isImageVisible.value = !isImageVisible.value;
+const toggleImage = (index) => {
+  isImageVisible.value[index] = !isImageVisible.value[index];
 };
 
-onMounted(() => {
+onMounted(async () => {
   window.scroll(0, 0)
+  console.log(route.params.id);
+  try {
+    const { data: res } = await productService.getDetail(route.params.id)
+    product.value = res.data
+    for (let iQuantity = 0; iQuantity < Number(res.data.stockQuantity); iQuantity++) {
+      selectOptionsQuantity.value.push({
+        label: iQuantity + 1, value: iQuantity + 1
+      })
+    }
+    for (let iColor = 0; iColor < res.data.options.length; iColor++) {
+      selectOptionsColor.value.push({
+        label: res.data.options[iColor], value: res.data.options[iColor]
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
 })
 </script>
 <style scoped>

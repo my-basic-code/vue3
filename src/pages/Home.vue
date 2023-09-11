@@ -1,6 +1,6 @@
 <template>
   <main class="bg-white pb-[167px]">
-    <CarouselWithProgress :carouselItems="carouselItems" />
+    <CarouselWithProgress :carouselItems="listBanner" />
     <section class="flex justify-center py-20 space-x-16">
       <div class="cursor-pointer" v-for="(item, index) in categoryStore.valueCategory" :key="index"
         @click="router.push(`/category/${item.id}`)">
@@ -27,7 +27,7 @@
             Best item
           </h4>
           <div class="flex gap-x-[30px] mt-[60px]">
-            <CardPrd :type="2" v-for="prod in listBest" :key="prod.id" :item="prod" />
+            <CardPrd :type="2" v-for="(prod, iProd) in listBest" :key="prod.id" :item="prod" :index="iProd + 1" />
           </div>
           <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold"
             @click="router.push('/category/3')">베스트 카테고리 바로가기</Button>
@@ -169,7 +169,7 @@ import { productService } from "@/services/productService"
 
 const router = useRouter()
 const categoryStore = useCategoryStore();
-const carouselItems = ref([])
+const listBanner = ref([])
 const listBest = ref([])
 const listMembership = ref([])
 const listGiftShop = ref([])
@@ -181,7 +181,7 @@ const getAllBanner = async () => {
       "size": 3,
       "sort": 'displayOrder,desc'
     })
-    carouselItems.value = res.data.content
+    return res.data.content
   } catch (error) {
     alert(error.response.data.message)
   }
@@ -203,20 +203,17 @@ const handleGetProd = async (key, size) => {
 
 onMounted(async () => {
   try {
-    await getAllBanner();
-
-    const [listBestRes, listMembershipRes, listGiftShopRes] = await Promise.all([
+    const [ListBannerRes, listBestRes, listMembershipRes, listGiftShopRes] = await Promise.all([
+      getAllBanner(),
       handleGetProd(3, 3), // Best
       handleGetProd(2, 4), // Membership
       handleGetProd(4, 4)  // Gift shop
     ]);
-
-    // Sử dụng listBest, listMembership, listGiftShop ở đây
+    listBanner.value = ListBannerRes
     listBest.value = listBestRes
     listMembership.value = listMembershipRes
     listGiftShop.value = listGiftShopRes
   } catch (error) {
-    // Xử lý lỗi nếu có
     console.error("Đã xảy ra lỗi:", error);
   }
 })

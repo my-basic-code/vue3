@@ -5,6 +5,11 @@ function searchProduct(payload) {
   return Axios.get(url, payload);
 }
 
+function getDetail(id) {
+  const url = `public/api/product/${id}`;
+  return Axios.get(url);
+}
+
 export const productService = {
-  searchProduct
+  searchProduct, getDetail
 };

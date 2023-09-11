@@ -3,29 +3,49 @@
     <article
       class="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF] cursor-pointer">
       <div class="flex items-center justify-start gap-x-3">
-        <div class="text-[14px] font-normal text-[#FF4F27] px-[10px] border border-[#FF4F27] rounded-full">답변완료</div>
-        <time class="text-[14px] font-normal text-[#8B8B8B]">23.08.12</time>
-        <p class="text-[16px] font-normal text-[#3D3D3D]">상품이 잘못왔어요</p>
+        <div
+          :class="['text-[14px] font-normal px-[10px] border rounded-full', question?.status === 1 ? 'text-[#FF4F27] border-[#FF4F27]' : 'text-[#A5A5A5] border-[#A5A5A5]']">
+          {{ question?.status === 1 ? '답변완료' : '답변대기' }}
+        </div>
+        <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(question?.createdDate) }}</time>
+        <p class="text-[16px] font-normal text-[#3D3D3D]">{{ question.title }}</p>
       </div>
       <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
     </article>
     <article class="py-[40px] space-y-[40px] border-b border-[#DFDFDF]">
-      <div class="text-[16px] font-normal text-[#242424]"> 전혀 다른 상품이 왔는데 처리 부탁드려요</div>
-      <div class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
-        <strong class="text-[#8B8B8B] text-[16px]">A.</strong>
+      <div class="text-[16px] font-normal text-[#242424]">{{ question?.questContent }}</div>
+      <div v-if="question?.replyContent" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
+        <!-- <strong class="text-[#8B8B8B] text-[16px]">A.</strong>
         <p class="text-[16px] font-normal text-[#8B8B8B]">주문상품 배송확인은 마이페이지 > 상세 내역 에서 확인 하실 수 있습니다 더미 텍스트 입니다. <br>
           더 필요하신 내용은 1:1 문의를 이용해주세요<br><br>
-          감사합니다</p>
+          감사합니다</p> -->
+        {{ question?.replyContent }}
       </div>
     </article>
     <article class="mt-[20px] flex justify-end">
-      <button
-        class="w-[140px] py-[10px] flex justify-center items-center bg-black text-white text-[14px] font-bold ">목록</button>
+      <button class="w-[140px] py-[10px] flex justify-center items-center bg-black text-white text-[14px] font-bold"
+        @click="router.push('/customer-service/question-answer/list')">목록</button>
     </article>
   </section>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Images from "@/constants/images.js"
+import { customerService } from '@/services/customerService'
+import { useRoute, useRouter } from 'vue-router'
+import { formatDate } from '@/utils/formatDate.js'
+
+const route = useRoute()
+const router = useRouter()
+const question = ref({})
+
+onMounted(async () => {
+  try {
+    const { data: res } = await customerService.getDetailQuestion(route.params.id)
+    question.value = res.data
+  } catch (error) {
+    alert(error.response.data.message)
+  }
+})
 </script>
 <style scoped></style>

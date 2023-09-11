@@ -5,7 +5,7 @@
     <div :class="`flex justify-center items-center relative ${type === 2 ? 'h-[380px]' : 'h-[280px]'}`"
       style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
       <div v-if="type === 2" class="absolute top-0 left-0 flex items-center justify-center w-12 h-12 text-white bg-black">
-        1</div>
+        {{ index }}</div>
       <div :class="`${type === 2 ? 'w-[266px] h-[153px]' : 'w-[196px] h-[113px]'} `">
         <img class="object-cover object-center w-full " :src="item?.thumbnail" alt="blog">
       </div>
@@ -36,6 +36,11 @@ const props = defineProps({
   },
   item: {
     type: Object,
+  },
+  index: {
+    type: Number,
+    default: 1,
+    required: false,
   }
 })
 </script>

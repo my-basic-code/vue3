@@ -6,33 +6,15 @@
         <img :src="Images.Line.src" :alt="Images.Line.alt" />
       </div>
       <article class="mt-7">
-        <Input
-          label="이메일"
-          type="text"
-          name="email"
-          placeholder="이메일을 입력해주세요"
-          classLabel="block text-base font-bold"
-          :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-          v-model="email"
-        ></Input>
-        <Input
-          label="비밀번호"
-          type="password"
-          name="password"
-          placeholder="비밀번호를 입력해주세요"
-          wrapClass="mt-7"
-          classLabel="block text-base font-bold"
-          :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-          v-model="password"
-        ></Input>
+        <Input label="이메일" type="text" name="email" placeholder="이메일을 입력해주세요" classLabel="block text-base font-bold"
+          :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="email"></Input>
+        <Input label="비밀번호" type="password" name="password" placeholder="비밀번호를 입력해주세요" wrapClass="mt-7"
+          classLabel="block text-base font-bold" :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
+          v-model="password"></Input>
       </article>
       <div class="mt-10">
-        <Button
-          :class="`w-full py-4 px-9 ${classBtn[1]} ${
-            !email || !password ? 'cursor-default' : 'cursor-pointer'
-          }`"
-          >로그인</Button
-        >
+        <Button :class="`w-full py-4 px-9 ${classBtn[1]} ${!email || !password ? 'cursor-default' : 'cursor-pointer'
+          }`">로그인</Button>
       </div>
       <!-- <article class="flex justify-center mt-10 space-x-5">
         <Button class="w-[52px] h-[52px] rounded-full bg-white">
@@ -52,9 +34,7 @@
         비밀번호 찾기
         <span class="absolute inset-y-0 -right-3 w-[1px] bg-[#F2F4F6]"></span>
       </router-link>
-      <router-link to="/find-id" class="relative text-sm font-normal"
-        >이메일 찾기</router-link
-      >
+      <router-link to="/find-id" class="relative text-sm font-normal">이메일 찾기</router-link>
     </article>
   </main>
 </template>
@@ -67,9 +47,10 @@ import { classInputCustom, classBtn } from "@/utils/customClass.js"
 import Images from "@/constants/images.js"
 import { authService } from "@/services/authService.js"
 import { useRouter } from "vue-router"
+import { useUserStore } from '@/stores/user';
 
 const router = useRouter()
-
+const userStore = useUserStore();
 const email = ref("")
 const password = ref("")
 
@@ -82,6 +63,7 @@ const handleLogin = async event => {
       password: password.value,
     })
     localStorage.setItem("token", res.accessToken)
+    userStore.updateLoginStatus()
     router.push("/")
   } catch (error) {
     alert(error.response.data.message)

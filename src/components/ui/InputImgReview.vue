@@ -1,21 +1,11 @@
 <template>
   <div>
-    <input
-      class="hidden"
-      type="file"
-      ref="fileInput"
-      @change="handleFileChange"
-      id="img"
-    />
+    <input class="hidden" type="file" ref="fileInput" @change="handleFileChange" id="img" />
     <label for="img">
-      <div :class="`${classImgReview} overflow-hidden`" v-if="imagePreview">
-        <img
-          class="object-cover w-full h-full"
-          :src="imagePreview"
-          alt="Image Preview"
-        />
+      <div :class="`${classImgReview} overflow-hidden`" v-if="imagePreview || modelValue">
+        <img class="object-cover w-full h-full" :src="imagePreview || modelValue" alt="Image Preview" />
       </div>
-      <div v-else>
+      <div :class="`${classImgReview} overflow-hidden`" v-else>
         <slot name="imgInput" />
       </div>
     </label>
