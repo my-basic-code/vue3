@@ -2,7 +2,7 @@
   <main class="container mx-auto mt-[60px] mb-[150px]">
     <div class="pb-[28px] border-b-[4px] border-black w-full text-center">
       <div class="flex items-center justify-center space-x-1">
-        <span class="text-[24px] font-bold">‘카메라’</span>
+        <span class="text-[24px] font-bold">‘{{ route.query.search || 'all' }}’</span>
         <p class="text-[16px] font-normal">에대한 검색 결과 입니다 </p>
       </div>
     </div>
