@@ -1,6 +1,6 @@
 <template>
   <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
-    <h5 class="text-[28px] font-bold text-[#111]">공지사항</h5>
+    <h5 class="text-[28px] font-bold text-[#111]">약관 및 서비스 정책</h5>
   </section>
   <section class="space-y-[28px] pt-[28px]">
     <div
