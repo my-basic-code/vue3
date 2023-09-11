@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-white pb-[329px]">
+  <main class="bg-white pb-[167px]">
     <CarouselWithProgress :carouselItems="carouselItems" />
     <section class="flex justify-center py-20 space-x-16">
       <div class="cursor-pointer" v-for="(item, index) in categoryStore.valueCategory" :key="index"
@@ -96,65 +96,58 @@
         <div class="container relative z-20 mx-auto bg-transparent pt-[60px]">
           <div class="flex items-center gap-x-4">
             <h4 class="text-[40px] font-bold whitespace-nowrap">
-              photoism story
+              Photoism story
             </h4>
             <div class="h-[6px] w-full bg-black"></div>
           </div>
-          <div class="grid grid-cols-2 gap-4 grid-rows-9 gap-x-6 h-[440px] mt-7">
-            <div class="relative overflow-hidden row-span-9">
-              <img :src="ImagesLanding.Story1.src" :alt="ImagesLanding.Story1.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8" style="
-                  background: linear-gradient(
-                    359deg,
-                    rgba(0, 0, 0, 0.6) 3.04%,
-                    rgba(0, 0, 0, 0) 100%
-                  );
-                ">
-                <span class="w-10 h-1 bg-white"></span>
-                <p class="text-[28px] text-white font-bold">
+          <div class="grid grid-cols-2 gap-4 gap-x-6 mt-7">
+            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
+              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
+              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
+                <span class="w-[32px] h-[4px] bg-white"></span>
+                <p class="text-[24px] text-white font-bold">
                   프라이빗한 부스에서<br />
                   여름을 즐기는 방법
                 </p>
               </div>
             </div>
-            <div class="relative w-full row-span-4 overflow-hidden">
-              <img :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8" style="
-                  background: linear-gradient(
-                    359deg,
-                    rgba(0, 0, 0, 0.6) 3.04%,
-                    rgba(0, 0, 0, 0) 100%
-                  );
-                ">
-                <span class="w-[32px] h-[2px] bg-white"></span>
-                <p class="text-[16px] text-white font-bold">
+            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
+              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
+              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
+                <span class="w-[32px] h-[4px] bg-white"></span>
+                <p class="text-[24px] text-white font-bold">
                   프라이빗한 부스에서<br />
                   여름을 즐기는 방법
                 </p>
               </div>
             </div>
-            <div class="relative w-full row-span-4 overflow-hidden">
-              <img :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8" style="
-                  background: linear-gradient(
-                    359deg,
-                    rgba(0, 0, 0, 0.6) 3.04%,
-                    rgba(0, 0, 0, 0) 100%
-                  );
-                ">
-                <span class="w-[32px] h-[2px] bg-white"></span>
-                <p class="text-[16px] text-white font-bold">
+            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
+              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
+              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
+                <span class="w-[32px] h-[4px] bg-white"></span>
+                <p class="text-[24px] text-white font-bold">
                   프라이빗한 부스에서<br />
                   여름을 즐기는 방법
                 </p>
               </div>
             </div>
-            <div class="w-full h-full row-span-1">
-              <button
-                class="w-full h-full border border-[#DFDFDF] flex justify-center items-center text-[14px] font-bold">
-                포스트 목록
-              </button>
+            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
+              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
+              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
+                <span class="w-[32px] h-[4px] bg-white"></span>
+                <p class="text-[24px] text-white font-bold">
+                  프라이빗한 부스에서<br />
+                  여름을 즐기는 방법
+                </p>
+              </div>
             </div>
+          </div>
+          <div class="w-full h-full mt-4">
+            <button
+              class="border border-[#DFDFDF] flex justify-center items-center text-[14px] font-bold py-4 px-9 w-1/2 mx-auto"
+              @click="router.push('/list-story')">
+              포스트 목록 바로가기
+            </button>
           </div>
         </div>
       </section>
@@ -228,3 +221,4 @@ onMounted(async () => {
   }
 })
 </script>
+ 
