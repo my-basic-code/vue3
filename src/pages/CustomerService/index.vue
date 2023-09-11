@@ -6,7 +6,7 @@
         <li class="text-[14px] font-bold text-[#242424] cursor-pointer"
           @click="router.push('/customer-service/how-to-use')">이용방법</li>
         <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer"
-          @click="router.push('/customer-service/qa/list')">문의내역</li>
+          @click="router.push('/customer-service/question-answer/list')">문의내역</li>
         <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer"
           @click="router.push('/customer-service/notification/list')">공지사항</li>
         <li class="text-[14px] font-normal text-[#A5A5A5] cursor-pointer"

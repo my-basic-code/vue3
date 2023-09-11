@@ -125,7 +125,7 @@ const router = createRouter({
           },
           children: [
             {
-              path: "listQuestionAnswer",
+              path: "list",
               name: "List",
               component: () => import("@/pages/CustomerService/QuestionAnswer/List.vue"),
             },
