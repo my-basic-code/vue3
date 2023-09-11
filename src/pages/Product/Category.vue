@@ -7,7 +7,7 @@
       <div class="flex justify-between mt-[16px]">
         <strong class="space-x-1">
           <span class="text-[14px] font-normal text-[#555555]">상품</span>
-          <em class="text-[14px]">12건</em>
+          <em class="text-[14px]">{{ listProd.length }}건</em>
         </strong>
         <button class="flex items-center justify-center">
           <img :src="Images.iconLatest.src" :alt="Images.iconLatest.alt">

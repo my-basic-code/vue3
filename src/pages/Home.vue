@@ -27,11 +27,10 @@
             Best item
           </h4>
           <div class="flex gap-x-[30px] mt-[60px]">
-            <CardPrd :type="2" />
-            <CardPrd :type="2" />
-            <CardPrd :type="2" />
+            <CardPrd :type="2" v-for="prod in listBest" :key="prod.id" :item="prod" />
           </div>
-          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold">베스트 카테고리 바로가기</Button>
+          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold"
+            @click="router.push('/category/3')">베스트 카테고리 바로가기</Button>
         </div>
       </section>
 
@@ -47,12 +46,10 @@
             <div class="h-[6px] w-full bg-black"></div>
           </div>
           <div class="flex gap-x-[30px] mt-[60px]">
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
+            <CardPrd v-for="prod in listMembership" :key="prod.id" :item="prod" />
           </div>
-          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold">베스트 카테고리 바로가기</Button>
+          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold"
+            @click="router.push('/category/2')">베스트 카테고리 바로가기</Button>
         </div>
       </section>
       <section class="bg-black">
@@ -76,12 +73,10 @@
             <div class="h-[6px] w-full bg-black"></div>
           </div>
           <div class="flex gap-x-[30px] mt-[60px]">
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
+            <CardPrd v-for="prod in listMembership" :key="prod.id" :item="prod" />
           </div>
-          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold">베스트 카테고리 바로가기</Button>
+          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold"
+            @click="router.push('/category/2')">베스트 카테고리 바로가기</Button>
         </div>
       </section>
       <section class="relative">
@@ -91,12 +86,10 @@
             <div class="h-[6px] w-full bg-black"></div>
           </div>
           <div class="flex gap-x-[30px] mt-[60px]">
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
-            <CardPrd />
+            <CardPrd v-for="prod in listGiftShop" :key="prod.id" :item="prod" />
           </div>
-          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold">베스트 카테고리 바로가기</Button>
+          <Button class="mt-8 border border-[#DFDFDF] px-9 py-4 w-1/2 mx-auto text-base font-bold"
+            @click="router.push('/category/4')">베스트 카테고리 바로가기</Button>
         </div>
       </section>
       <section class="relative">
@@ -171,7 +164,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue"
 import CarouselWithProgress from "@/components/pages/Home/CarouselWithProgress.vue"
-import ImgSlide from "@/assets/images/img.png"
 import ImagesLanding from "@/constants/imagesLanding"
 import Images from "@/constants/images"
 import SimpleBanner from "@/components/element/SimpleBanner.vue"
@@ -180,10 +172,14 @@ import Button from "@/components/ui/Button.vue"
 import { bannerService } from "@/services/bannerService"
 import { useRouter } from 'vue-router'
 import { useCategoryStore } from '@/stores/category';
+import { productService } from "@/services/productService"
 
 const router = useRouter()
 const categoryStore = useCategoryStore();
 const carouselItems = ref([])
+const listBest = ref([])
+const listMembership = ref([])
+const listGiftShop = ref([])
 
 const getAllBanner = async () => {
   try {
@@ -198,7 +194,37 @@ const getAllBanner = async () => {
   }
 }
 
+const handleGetProd = async (key, size) => {
+  try {
+    const { data: res } = await productService.searchProduct({
+      categoryId: key,
+      page: 0,
+      size: size,
+      sort: 'createDate,desc'
+    })
+    return res.data.content
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 onMounted(async () => {
-  await getAllBanner()
+  try {
+    await getAllBanner();
+
+    const [listBestRes, listMembershipRes, listGiftShopRes] = await Promise.all([
+      handleGetProd(3, 3), // Best
+      handleGetProd(2, 4), // Membership
+      handleGetProd(4, 4)  // Gift shop
+    ]);
+
+    // Sử dụng listBest, listMembership, listGiftShop ở đây
+    listBest.value = listBestRes
+    listMembership.value = listMembershipRes
+    listGiftShop.value = listGiftShopRes
+  } catch (error) {
+    // Xử lý lỗi nếu có
+    console.error("Đã xảy ra lỗi:", error);
+  }
 })
 </script>
