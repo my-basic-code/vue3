@@ -34,18 +34,22 @@ import Images from "@/constants/images.js"
 import { customerService } from '@/services/customerService'
 import { useRoute, useRouter } from 'vue-router'
 import { formatDate } from '@/utils/formatDate.js'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const route = useRoute()
 const router = useRouter()
 const question = ref({})
 
 onMounted(async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await customerService.getDetailQuestion(route.params.id)
     question.value = res.data
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 })
 </script>
 <style scoped></style>

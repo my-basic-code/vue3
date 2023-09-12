@@ -34,6 +34,8 @@ import Images from "@/constants/images.js"
 import { customerService } from '@/services/customerService'
 import { formatDate } from '@/utils/formatDate.js'
 import { useRouter } from 'vue-router'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const pagination = ref({
@@ -44,6 +46,7 @@ const pagination = ref({
 const listQuestion = ref([])
 
 const handleGetQuestion = async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await customerService.getALlQuestion({
       page: 0,
@@ -55,6 +58,7 @@ const handleGetQuestion = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 const showPopupAddQuestion = () => {

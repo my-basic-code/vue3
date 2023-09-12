@@ -63,10 +63,12 @@ import Dropdown from "@/components/element/Dropdown.vue"
 import { classInputCustom } from "@/utils/customClass.js"
 import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
-const router = useRouter()
 import { useCategoryStore } from '@/stores/category';
 import { useUserStore } from '@/stores/user';
+import { useLoadingStore } from '@/stores/loading';
 
+const router = useRouter()
+const loadingStore = useLoadingStore();
 const categoryStore = useCategoryStore();
 const userStore = useUserStore();
 const search = ref()
@@ -81,6 +83,8 @@ const handleItemMenuClick = resp => {
 }
 
 onMounted(async () => {
+  loadingStore.updateLoading(true)
   await categoryStore.fetchData();
+  loadingStore.updateLoading(false)
 })
 </script>

@@ -32,8 +32,11 @@ import { useRegisterStore } from "@/stores/register.js"
 const store = useRegisterStore()
 const emit = defineEmits(["complete-step3"])
 import { authService } from "@/services/authService.js"
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const handleRegisterStep3 = async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await authService.checkEmail({
       username: store.information.email
@@ -47,5 +50,6 @@ const handleRegisterStep3 = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 </script>

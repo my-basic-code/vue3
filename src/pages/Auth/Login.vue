@@ -48,6 +48,8 @@ import Images from "@/constants/images.js"
 import { authService } from "@/services/authService.js"
 import { useRouter } from "vue-router"
 import { useUserStore } from '@/stores/user';
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const userStore = useUserStore();
@@ -57,6 +59,7 @@ const password = ref("")
 const handleLogin = async event => {
   event.preventDefault()
   if (!email.value || !password.value) return
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await authService.login({
       username: email.value,
@@ -68,5 +71,6 @@ const handleLogin = async event => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 </script>

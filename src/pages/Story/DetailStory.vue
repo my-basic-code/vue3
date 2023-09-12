@@ -17,17 +17,22 @@
 import { onMounted, ref } from 'vue'
 import { storyService } from '@/services/storyService'
 import { useRoute, useRouter } from 'vue-router'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const route = useRoute()
 const router = useRouter()
 const story = ref({})
 const handleGetStory = async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await storyService.getDetailStory(route.params.id)
     story.value = res.data
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+
+  loadingStore.updateLoading(false)
 }
 
 onMounted(async () => {

@@ -28,11 +28,14 @@ import { useRoute } from 'vue-router';
 import Button from '@/components/ui/Button.vue';
 import CardPrd from '@/components/element/CardPrd.vue'
 import { productService } from '@/services/productService';
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const route = useRoute();
 const listProd = ref([])
 
 const handleSearchProd = async (key) => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await productService.searchProduct({
       categoryId: key,
@@ -44,6 +47,7 @@ const handleSearchProd = async (key) => {
   } catch (error) {
     console.log(error);
   }
+  loadingStore.updateLoading(false)
 }
 
 watch(() => route.params.id, async () => {

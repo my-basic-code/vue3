@@ -22,11 +22,14 @@ import ImagesLanding from "@/constants/imagesLanding"
 import { storyService } from '@/services/storyService'
 import { formatDate } from '@/utils/formatDate.js'
 import { useRouter } from 'vue-router'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const listStory = ref([])
 
 const handleGetStory = async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await storyService.getAllStory({
       page: 0,
@@ -37,6 +40,7 @@ const handleGetStory = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 onMounted(async () => {

@@ -26,18 +26,22 @@ import Images from "@/constants/images.js"
 import { customerService } from '@/services/customerService'
 import { useRoute, useRouter } from 'vue-router'
 import { formatDate } from '@/utils/formatDate.js'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const route = useRoute()
 const router = useRouter()
 const notification = ref({})
 
 onMounted(async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await customerService.getDetailNotification(route.params.id)
     notification.value = res.data
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 })
 </script>
 <style scoped></style>

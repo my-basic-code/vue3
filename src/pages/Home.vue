@@ -137,11 +137,13 @@ import Button from "@/components/ui/Button.vue"
 import { bannerService } from "@/services/bannerService"
 import { useRouter } from 'vue-router'
 import { useCategoryStore } from '@/stores/category';
+import { useLoadingStore } from '@/stores/loading';
 import { productService } from "@/services/productService"
 import { storyService } from "@/services/storyService"
 
 const router = useRouter()
 const categoryStore = useCategoryStore();
+const loadingStore = useLoadingStore();
 const listBanner = ref([])
 const listBest = ref([])
 const listMembership = ref([])
@@ -189,6 +191,7 @@ const handleGetStory = async () => {
 }
 
 onMounted(async () => {
+  loadingStore.updateLoading(true)
   try {
     const [ListBannerRes, listBestRes, listMembershipRes, listGiftShopRes, listStoryRes] = await Promise.all([
       getAllBanner(),
@@ -205,6 +208,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Đã xảy ra lỗi:", error);
   }
+  loadingStore.updateLoading(false)
 })
 </script>
  

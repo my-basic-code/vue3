@@ -20,6 +20,8 @@ import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { ref } from "vue"
 import { authService } from "@/services/authService"
 import { useRouter } from "vue-router"
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const password = ref("")
@@ -40,6 +42,7 @@ const changePassword = async () => {
     return
   }
   errors.value = []
+  loadingStore.updateLoading(true)
   try {
     await authService.changePassword(
       {
@@ -52,5 +55,6 @@ const changePassword = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 </script>

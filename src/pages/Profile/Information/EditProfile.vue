@@ -103,6 +103,8 @@ import { formatPhone, formatPhone2 } from "@/utils/formatPhone"
 import Button from "@/components/ui/Button.vue"
 import Notification from "@/components/element/Notification.vue"
 import { formatTime } from "@/utils/formatTime"
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const options = [
   { label: "남성", value: 0 },
@@ -162,12 +164,14 @@ const handleEditProfile = async () => {
     formData.append("address2", user.value.detailedAddress)
   !!user.value.dateBirth &&
     formData.append("birthDate", user.value.dateBirth)
+  loadingStore.updateLoading(true)
   try {
     await userService.editProfile(formData)
     getProfile()
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 const checkPhone = () => {
@@ -176,11 +180,13 @@ const checkPhone = () => {
 }
 
 const handleVerifyCode = async () => {
+  loadingStore.updateLoading(true)
   try {
     await userService.getSmsCode()
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 const handleValueDateBirth = e => {
@@ -191,6 +197,7 @@ const handleValueDateBirth = e => {
 }
 
 const getProfile = async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await userService.getProfile()
     user.value.name = res.data.name
@@ -206,6 +213,7 @@ const getProfile = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 function startCountdown() {

@@ -32,6 +32,8 @@ import Collapse from "@/components/element/Collapse.vue"
 import Pagination from "@/components/element/Pagination.vue"
 import Images from "@/constants/images.js"
 import { customerService } from '@/services/customerService'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const pagination = ref({
   currentPage: 1,
@@ -39,6 +41,7 @@ const pagination = ref({
 })
 const listContent = ref([])
 const handleGetContent = async (currentPage) => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await customerService.getNotify({
       type: 0,
@@ -50,6 +53,7 @@ const handleGetContent = async (currentPage) => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 onMounted(async () => {

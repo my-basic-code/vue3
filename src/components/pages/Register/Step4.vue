@@ -36,10 +36,10 @@
       :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="store.information.dateBirth">
     </Input>
     <Button :class="`w-full py-4 px-9 mt-7 ${!store.information.nickName ||
-        typeof store.information.gender === 'undefined' ||
-        !store.information.address
-        ? classBtn[2]
-        : classBtn[1]
+      typeof store.information.gender === 'undefined' ||
+      !store.information.address
+      ? classBtn[2]
+      : classBtn[1]
       }`" :disabled="!store.information.nickName ||
     typeof store.information.gender === 'undefined' ||
     !store.information.address
@@ -56,6 +56,8 @@ import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { authService } from "@/services/authService.js"
 import { formatPhone } from "@/utils/formatPhone.js"
 import { useRouter } from "vue-router"
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const store = useRegisterStore()
@@ -85,12 +87,14 @@ const callApiRegister = async () => {
     formData.append("address2", store.information.detailedAddress)
   !!store.information.dateBirth &&
     formData.append("birthday", store.information.dateBirth)
+  loadingStore.updateLoading(true)
   try {
     await authService.register(formData)
     router.push("/login")
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 const handleValueDateBirth = e => {

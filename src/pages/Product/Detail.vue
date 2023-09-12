@@ -127,6 +127,8 @@ import Button from '@/components/ui/Button.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { productService } from '@/services/productService'
 import { formatMoney } from '@/utils/formatMoney'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const route = useRoute()
@@ -143,7 +145,7 @@ const toggleImage = (index) => {
 
 onMounted(async () => {
   window.scroll(0, 0)
-  console.log(route.params.id);
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await productService.getDetail(route.params.id)
     product.value = res.data
@@ -160,6 +162,7 @@ onMounted(async () => {
   } catch (error) {
     console.log(error);
   }
+  loadingStore.updateLoading(false)
 })
 </script>
 <style scoped>

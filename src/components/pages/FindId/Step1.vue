@@ -20,12 +20,15 @@ import { ref, watch } from "vue"
 import { authService } from "@/services/authService"
 import { formatPhone } from "@/utils/formatPhone"
 import Notification from "@/components/element/Notification.vue"
+import { useLoadingStore } from '@/stores/loading';
 
+const loadingStore = useLoadingStore();
 const phone = ref("")
 const notification = ref()
 const emit = defineEmits(["valuePhone", "complete-step1"])
 
 const sendCode = async () => {
+  loadingStore.updateLoading(true)
   try {
     await authService.sendCodeFindAccount({
       phoneNumber: formatPhone(phone.value),
@@ -36,6 +39,7 @@ const sendCode = async () => {
     notification.value.title = "아이디 찾기"
     notification.value.content = "일치하는 정보가 없습니다."
   }
+  loadingStore.updateLoading(false)
 }
 
 watch(phone, () => {

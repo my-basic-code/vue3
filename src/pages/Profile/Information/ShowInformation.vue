@@ -88,17 +88,21 @@ import ImagesProd from '@/constants/imagesProd'
 import { userService } from '@/services/userService'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const user = ref()
 
 onMounted(async () => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await userService.getProfile()
     user.value = res.data
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 })
 </script>
 <style scoped></style>

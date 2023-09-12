@@ -34,11 +34,11 @@
         ">인증받기</Button>
     </div>
     <Button v-if="isCheckCertification" :class="`w-full py-4 px-9 mt-12 ${store.information.name &&
-        store.information.phone &&
-        store.information.certification.value &&
-        store.information.certification.status
-        ? classBtn[1]
-        : classBtn[2]
+      store.information.phone &&
+      store.information.certification.value &&
+      store.information.certification.status
+      ? classBtn[1]
+      : classBtn[2]
       }`" :disabled="!store.information.name ||
     !store.information.phone ||
     !store.information.certification.value ||
@@ -55,6 +55,9 @@ import { formatTime } from "@/utils/formatTime.js"
 import { formatPhone } from "@/utils/formatPhone.js"
 import { authService } from "@/services/authService.js"
 import { useRegisterStore } from "@/stores/register.js"
+import { useLoadingStore } from '@/stores/loading';
+
+const loadingStore = useLoadingStore();
 const store = useRegisterStore()
 
 const isCheckCertification = ref(false)
@@ -67,6 +70,7 @@ const emit = defineEmits(["complete-step2"])
 
 const checkCertification = async () => {
   if (isCheckCertification.value) return
+  loadingStore.updateLoading(true)
   try {
     await authService.sendCodeRegister({
       name: store.information.name,
@@ -77,10 +81,12 @@ const checkCertification = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 const verifyCode = async () => {
   if (!store.information.certification.value) return
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await authService.verifyCodeRegister({
       phoneNumber: formatPhone(store.information.phone),
@@ -91,6 +97,7 @@ const verifyCode = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 function startCountdown() {

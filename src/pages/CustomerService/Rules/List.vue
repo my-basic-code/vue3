@@ -30,6 +30,8 @@ import Images from "@/constants/images.js"
 import { customerService } from '@/services/customerService'
 import { formatDate } from '@/utils/formatDate'
 import { useRouter } from 'vue-router'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const pagination = ref({
@@ -38,6 +40,7 @@ const pagination = ref({
 })
 const listContent = ref([])
 const handleGetContent = async (currentPage) => {
+  loadingStore.updateLoading(true)
   try {
     const { data: res } = await customerService.getNotify({
       type: 2,
@@ -49,6 +52,7 @@ const handleGetContent = async (currentPage) => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 }
 
 onMounted(async () => {

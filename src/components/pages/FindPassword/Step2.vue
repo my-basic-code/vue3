@@ -19,6 +19,8 @@ import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { authService } from "@/services/authService"
 import Notification from "@/components/element/Notification.vue"
 import { ref } from "vue"
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
 const props = defineProps({
   email: Text,
@@ -29,6 +31,7 @@ const isCheckEmail = ref(false)
 const isSendEmail = ref(false)
 
 const findEmail = async () => {
+  loadingStore.updateLoading(true)
   try {
     await authService.sendMailForgotPass({
       username: emailValue.value,
@@ -44,5 +47,6 @@ const findEmail = async () => {
     notification.value.title = '이메일 전송'
     notification.value.content = error.response.data.message
   }
+  loadingStore.updateLoading(false)
 }
 </script>
