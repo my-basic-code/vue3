@@ -3,15 +3,15 @@
     <article
       class="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF] cursor-pointer">
       <div class="flex items-center justify-start gap-x-3">
-        <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(question?.createdDate) }}</time>
-        <p class="text-[16px] font-normal text-[#3D3D3D]">{{ question?.title }}</p>
+        <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(rules?.createdDate) }}</time>
+        <p class="text-[16px] font-normal text-[#3D3D3D]">{{ rules?.title }}</p>
       </div>
       <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
     </article>
     <article class="py-[40px] space-y-[40px] border-b border-[#DFDFDF]">
-      <div class="text-[16px] font-normal text-[#242424]">{{ question?.questContent }}</div>
-      <div v-if="question?.replyContent" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
-        {{ question?.replyContent }}
+      <div class="text-[16px] font-normal text-[#242424]">{{ rules?.questContent }}</div>
+      <div v-if="rules?.content" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
+        {{ rules?.content }}
       </div>
     </article>
     <article class="mt-[20px] flex justify-end">
@@ -36,7 +36,7 @@ onMounted(async () => {
     const { data: res } = await customerService.getDetailRules(route.params.id)
     rules.value = res.data
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 })
 </script>

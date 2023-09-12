@@ -97,7 +97,7 @@ onMounted(async () => {
     const { data: res } = await userService.getProfile()
     user.value = res.data
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 })
 </script>

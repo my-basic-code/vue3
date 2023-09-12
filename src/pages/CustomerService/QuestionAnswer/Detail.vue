@@ -44,7 +44,7 @@ onMounted(async () => {
     const { data: res } = await customerService.getDetailQuestion(route.params.id)
     question.value = res.data
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 })
 </script>

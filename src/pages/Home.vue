@@ -101,43 +101,15 @@
             <div class="h-[6px] w-full bg-black"></div>
           </div>
           <div class="grid grid-cols-2 gap-4 gap-x-6 mt-7">
-            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
-              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
+            <div class="relative w-full h-[280px] row-span-4 overflow-hidden" v-for="story in listStory" :key="story.id">
+              <picture class="object-cover w-full h-full">
+                <source media="(max-width: 768px)" :srcset="story.thumbnailMobile.path">
+                <img :src="story.thumbnailWeb.path">
+              </picture>
               <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
                 <span class="w-[32px] h-[4px] bg-white"></span>
-                <p class="text-[24px] text-white font-bold">
-                  프라이빗한 부스에서<br />
-                  여름을 즐기는 방법
-                </p>
-              </div>
-            </div>
-            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
-              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
-                <span class="w-[32px] h-[4px] bg-white"></span>
-                <p class="text-[24px] text-white font-bold">
-                  프라이빗한 부스에서<br />
-                  여름을 즐기는 방법
-                </p>
-              </div>
-            </div>
-            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
-              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
-                <span class="w-[32px] h-[4px] bg-white"></span>
-                <p class="text-[24px] text-white font-bold">
-                  프라이빗한 부스에서<br />
-                  여름을 즐기는 방법
-                </p>
-              </div>
-            </div>
-            <div class="relative w-full h-[280px] row-span-4 overflow-hidden">
-              <img class="object-cover w-full h-full" :src="ImagesLanding.Story2.src" :alt="ImagesLanding.Story2.alt" />
-              <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
-                <span class="w-[32px] h-[4px] bg-white"></span>
-                <p class="text-[24px] text-white font-bold">
-                  프라이빗한 부스에서<br />
-                  여름을 즐기는 방법
+                <p class="text-[24px] text-white font-bold w-1/2">
+                  {{ story.title }}
                 </p>
               </div>
             </div>
@@ -166,6 +138,7 @@ import { bannerService } from "@/services/bannerService"
 import { useRouter } from 'vue-router'
 import { useCategoryStore } from '@/stores/category';
 import { productService } from "@/services/productService"
+import { storyService } from "@/services/storyService"
 
 const router = useRouter()
 const categoryStore = useCategoryStore();
@@ -173,6 +146,7 @@ const listBanner = ref([])
 const listBest = ref([])
 const listMembership = ref([])
 const listGiftShop = ref([])
+const listStory = ref([])
 
 const getAllBanner = async () => {
   try {
@@ -183,7 +157,7 @@ const getAllBanner = async () => {
     })
     return res.data.content
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 
@@ -197,22 +171,37 @@ const handleGetProd = async (key, size) => {
     })
     return res.data.content
   } catch (error) {
-    console.log(error);
+    alert(error.response?.data?.message || error)
+  }
+}
+
+const handleGetStory = async () => {
+  try {
+    const { data: res } = await storyService.getAllStory({
+      page: 0,
+      size: 4,
+      sort: 'createDate,desc'
+    })
+    return res.data.content
+  } catch (error) {
+    alert(error.response?.data?.message || error)
   }
 }
 
 onMounted(async () => {
   try {
-    const [ListBannerRes, listBestRes, listMembershipRes, listGiftShopRes] = await Promise.all([
+    const [ListBannerRes, listBestRes, listMembershipRes, listGiftShopRes, listStoryRes] = await Promise.all([
       getAllBanner(),
       handleGetProd(3, 3), // Best
       handleGetProd(2, 4), // Membership
-      handleGetProd(4, 4)  // Gift shop
+      handleGetProd(4, 4),  // Gift shop
+      handleGetStory()
     ]);
     listBanner.value = ListBannerRes
     listBest.value = listBestRes
     listMembership.value = listMembershipRes
     listGiftShop.value = listGiftShopRes
+    listStory.value = listStoryRes
   } catch (error) {
     console.error("Đã xảy ra lỗi:", error);
   }

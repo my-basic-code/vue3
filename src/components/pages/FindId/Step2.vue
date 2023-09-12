@@ -96,7 +96,7 @@ const sendCodeAgain = async () => {
     isSendCodeAgain.value = false
     startCountdown()
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 
@@ -110,7 +110,7 @@ const verifyCode = async () => {
     statusVerifyCode.value = true
     clearCountdownInterval()
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 

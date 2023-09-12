@@ -47,7 +47,7 @@ const handleGetContent = async (currentPage) => {
     listContent.value = res.data.content
     pagination.value.totalPages = res.data.totalPages
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 

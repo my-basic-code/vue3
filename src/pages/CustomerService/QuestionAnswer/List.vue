@@ -1,7 +1,7 @@
 <template>
   <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
     <h5 class="text-[28px] font-bold text-[#111]">문의내역</h5>
-    <button class="py-[5px] px-[54px] bg-black text-white">문의하기</button>
+    <button class="py-[5px] px-[54px] bg-black text-white" @click="showPopupAddQuestion">문의하기</button>
   </section>
   <section class="space-y-[28px] pt-[28px]">
     <div v-if="listQuestion.length > 0">
@@ -53,8 +53,12 @@ const handleGetQuestion = async () => {
     listQuestion.value = res.data.content
     pagination.value.totalPages = res.data.totalPages
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
+}
+
+const showPopupAddQuestion = () => {
+
 }
 
 onMounted(async () => {

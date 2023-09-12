@@ -45,7 +45,7 @@ const handleRegisterStep3 = async () => {
       emit('complete-step3')
     }
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 </script>

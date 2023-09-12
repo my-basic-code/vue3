@@ -66,7 +66,7 @@ const handleLogin = async event => {
     userStore.updateLoginStatus()
     router.push("/")
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 </script>

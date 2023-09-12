@@ -166,7 +166,7 @@ const handleEditProfile = async () => {
     await userService.editProfile(formData)
     getProfile()
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 
@@ -179,7 +179,7 @@ const handleVerifyCode = async () => {
   try {
     await userService.getSmsCode()
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 
@@ -204,7 +204,7 @@ const getProfile = async () => {
     user.value.detailedAddress = res.data.address2
     user.value.dateBirth = res.data.birthDate
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 

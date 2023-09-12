@@ -1,96 +1,49 @@
 <template>
   <article>
     <div class="flex space-x-4">
-      <InputImgReview
-        classImgReview="w-20 h-20 rounded-full"
-        v-model="store.information.image"
-      >
+      <InputImgReview classImgReview="w-20 h-20 rounded-full" v-model="store.information.image">
         <template #imgInput>
-          <img
-            class="w-20 h-20"
-            :src="Images.iconCamera.src"
-            :alt="Images.iconCamera.alt"
-          />
+          <img class="w-20 h-20" :src="Images.iconCamera.src" :alt="Images.iconCamera.alt" />
         </template>
       </InputImgReview>
-      <Input
-        label="닉네임"
-        type="text"
-        name="nickName"
-        placeholder="닉네임을 입력해주세요 "
-        classLabel="block text-base font-bold"
-        :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-        v-model="store.information.nickName"
-      >
-        <template #sub-label>
-          <span class="text-xs text-[#FF3609] font-normal">*</span>
-        </template>
+      <Input label="닉네임" type="text" name="nickName" placeholder="닉네임을 입력해주세요 " classLabel="block text-base font-bold"
+        :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="store.information.nickName">
+      <template #sub-label>
+        <span class="text-xs text-[#FF3609] font-normal">*</span>
+      </template>
       </Input>
     </div>
     <div class="mt-7">
       <div class="block text-base font-bold">
         성별 <span class="text-xs text-[#FF3609] font-normal">*</span>
       </div>
-      <Radio
-        class="mt-4 grid grid-cols-2 space-x-[11px]"
-        classInput="hidden"
+      <Radio class="mt-4 grid grid-cols-2 space-x-[11px]" classInput="hidden"
         className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm font-normal"
-        classActive="border-gray-700 text-stone-950"
-        v-model="store.information.gender"
-        :options="options"
-      ></Radio>
+        classActive="border-gray-700 text-stone-950" v-model="store.information.gender" :options="options"></Radio>
     </div>
-    <Input
-      wrapClass="mt-7"
-      label="주소"
-      type="text"
-      name="address"
-      classLabel="block text-base font-bold"
-      placeholder="주소를 선택해주세요"
-      :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      v-model="store.information.address"
-    >
-      <template #sub-label>
-        <span class="text-xs text-[#FF3609] font-normal">*</span>
-      </template>
+    <Input wrapClass="mt-7" label="주소" type="text" name="address" classLabel="block text-base font-bold"
+      placeholder="주소를 선택해주세요" :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
+      v-model="store.information.address">
+    <template #sub-label>
+      <span class="text-xs text-[#FF3609] font-normal">*</span>
+    </template>
     </Input>
-    <Input
-      wrapClass="mt-3"
-      type="text"
-      name="detailedAddress"
-      placeholder="세부 주소를 입력해주세요"
-      :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      v-model="store.information.detailedAddress"
-    >
+    <Input wrapClass="mt-3" type="text" name="detailedAddress" placeholder="세부 주소를 입력해주세요"
+      :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="store.information.detailedAddress">
     </Input>
-    <Input
-      wrapClass="mt-7"
-      type="text"
-      :handleValue="handleValueDateBirth"
-      name="dateBirth"
-      label="생년월일"
-      classLabel="block text-base font-bold"
-      placeholder="생년월일 8자리를 입력해주세요"
-      :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
-      v-model="store.information.dateBirth"
-    >
+    <Input wrapClass="mt-7" type="text" :handleValue="handleValueDateBirth" name="dateBirth" label="생년월일"
+      classLabel="block text-base font-bold" placeholder="생년월일 8자리를 입력해주세요"
+      :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="store.information.dateBirth">
     </Input>
-    <Button
-      :class="`w-full py-4 px-9 mt-7 ${
-        !store.information.nickName ||
+    <Button :class="`w-full py-4 px-9 mt-7 ${!store.information.nickName ||
         typeof store.information.gender === 'undefined' ||
         !store.information.address
-          ? classBtn[2]
-          : classBtn[1]
-      }`"
-      :disabled="
-        !store.information.nickName ||
-        typeof store.information.gender === 'undefined' ||
-        !store.information.address
-      "
-      @click="callApiRegister"
-      >다음</Button
-    >
+        ? classBtn[2]
+        : classBtn[1]
+      }`" :disabled="!store.information.nickName ||
+    typeof store.information.gender === 'undefined' ||
+    !store.information.address
+    " @click="callApiRegister">다음</Button>
   </article>
 </template>
 <script setup>
@@ -136,7 +89,7 @@ const callApiRegister = async () => {
     await authService.register(formData)
     router.push("/login")
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 }
 

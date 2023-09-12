@@ -9,10 +9,9 @@
       <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
     </article>
     <article class="py-[40px] space-y-[40px] border-b border-[#DFDFDF]">
-      <img v-if="notification?.img" :src="notification?.img" alt="content">
-      <div v-if="notification?.replyContent"
-        class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
-        {{ notification?.replyContent }}
+      <img v-if="notification?.path" class="h-[196px] w-auto" :src="notification?.path" alt="content">
+      <div v-if="notification?.content" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
+        {{ notification?.content }}
       </div>
     </article>
     <article class="mt-[20px] flex justify-end">
@@ -37,7 +36,7 @@ onMounted(async () => {
     const { data: res } = await customerService.getDetailNotification(route.params.id)
     notification.value = res.data
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message || error)
   }
 })
 </script>

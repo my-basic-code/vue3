@@ -16,12 +16,12 @@ function getNotify(payload) {
 }
 
 function getDetailNotification(id) {
-  const url = `api/notification/${id}`;
+  const url = `api/notify/${id}`;
   return Axios.get(url);
 }
 
 function getDetailRules(id) {
-  const url = `api/rules/${id}`;
+  const url = `api/notify/${id}`;
   return Axios.get(url);
 }
 
