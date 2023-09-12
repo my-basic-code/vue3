@@ -10,6 +10,21 @@ function getDetailQuestion(id) {
   return Axios.get(url);
 }
 
+function getNotify(payload) {
+  const url = `api/notify`;
+  return Axios.get(url, payload);
+}
+
+function getDetailNotification(id) {
+  const url = `api/notification/${id}`;
+  return Axios.get(url);
+}
+
+function getDetailRules(id) {
+  const url = `api/rules/${id}`;
+  return Axios.get(url);
+}
+
 export const customerService = {
-  getALlQuestion, getDetailQuestion
+  getALlQuestion, getDetailQuestion, getNotify, getDetailNotification, getDetailRules
 };
