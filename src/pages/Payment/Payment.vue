@@ -112,7 +112,7 @@
           </Input>
         </div>
       </article>
-      <article class="mt-[48px]">
+      <!-- <article class="mt-[48px]">
         <div class="pb-4 border-b border-[#3D3D3D]">
           <strong>마일리지 사용</strong>
         </div>
@@ -129,16 +129,14 @@
             잔여 마일리지 : 400P
           </p>
         </div>
-      </article>
+      </article> -->
       <article class="mt-[48px]">
         <div class="pb-4 border-b border-[#3D3D3D]">
           <strong>결제방법</strong>
         </div>
-        <div class="mt-[28px] space-x-3">
-          <button class="text-[14px] font-bold py-[10px] px-[55px] border border-[#DFDFDF] text-[#242424]">카드결제</button>
-          <button class="text-[14px] font-normal py-[10px] px-[55px] border border-[#DFDFDF] text-[#A5A5A5]">계좌이체</button>
-          <button class="text-[14px] font-normal py-[10px] px-[55px] border border-[#DFDFDF] text-[#A5A5A5]">가상계좌</button>
-        </div>
+        <Radio class="mt-4 flex justify-start space-x-[11px]" classInput="hidden"
+          className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm"
+          classActive="border-gray-700 text-stone-950 font-bold" v-model="paymentMethods" :options="options"></Radio>
       </article>
     </section>
 
@@ -160,12 +158,12 @@
             <p class="text-[12px] font-normal text-[#8B8B8B]">배송비</p>
             <strong class="text-[16px] text-[#111111]">3,500원</strong>
           </div>
-          <div class="flex justify-between">
+          <!-- <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">마일리지 사용</p>
             <strong class="text-[16px] text-[#111111]">-300원</strong>
-          </div>
+          </div> -->
         </article>
-        <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[15px]">
+        <!-- <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[15px]">
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">
               적립 예정 마일리지
@@ -175,13 +173,12 @@
               <strong class="text-[16px] text-[#111111]">+300P</strong>
             </div>
           </div>
-        </article>
+        </article> -->
         <article class="mt-[14px] flex justify-between">
           <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
           <strong class="text-[24px] text-[#FF2618]">23,500원</strong>
         </article>
-        <button @click="router.push('/order')"
-          class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
+        <button @click="completePayment" class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
           23,500원 결제하기
         </button>
       </div>
@@ -195,10 +192,34 @@ import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import { useRouter } from 'vue-router'
+import Radio from "@/components/ui/Radio.vue"
 
 const router = useRouter()
 const data = ref({
   address: "",
 })
+const cartId = 50
+const paymentMethods = ref('카드')
+const tossPaymentsForm = ref({
+  amount: 15000,
+  orderId: `billid_${cartId}_${Date.now()}`,
+  orderName: '토스 티셔츠 외 2건',
+  customerName: '박토스',
+  successUrl: window.location.origin + '/order',
+  failUrl: window.location.origin + '/payment',
+}
+)
+
+const options = [
+  { label: "카드결제", value: '카드' },
+  { label: "계좌이체", value: '계좌이체' },
+  { label: "가상계좌", value: '가상계좌' },
+]
+
+const completePayment = () => {
+  const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+  const tossPayments = TossPayments(clientKey)
+  tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm.value)
+}
 </script>
 <style scoped></style>

@@ -73,7 +73,7 @@
           <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
         </article>
         <button class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold"
-          @click="router.push('/payment')">결제하기</button>
+          @click="handlePayment">결제하기</button>
       </div>
     </section>
   </main>
@@ -143,6 +143,10 @@ const delProd = (id) => {
   cart.value = cart.value.filter((prod) => prod.id !== id)
 }
 
+const handlePayment = () => {
+  if (quantityProdChecked.value === 0) return
+  router.push('/payment')
+}
 
 watch(quantityProdChecked, () => {
   if (quantityProdChecked.value === cart.value.length) {
