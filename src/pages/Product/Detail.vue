@@ -61,7 +61,7 @@
           <Select classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between"
             classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsQuantity"
-            :modelValue="selectedQuantity" placeholder="Select an option" placement="bottomLeft">
+            v-model="selectedQuantity" placeholder="Select an option" placement="bottomLeft">
             <template #icon>
               <img :src="Images.iconDownBlack.src" :alt="Images.iconDownBlack.alt">
             </template>
@@ -69,15 +69,17 @@
           <Select classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between"
             classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsColor"
-            :modelValue="selectedColor" placeholder="COLOR" placement="bottomLeft">
+            v-model="selectedColor" placeholder="COLOR" placement="bottomLeft">
             <template #icon>
               <img :src="Images.iconDownBlack.src" :alt="Images.iconDownBlack.alt">
             </template>
           </Select>
         </article>
         <article class="mt-[18px] flex justify-between space-x-[20px]">
-          <button @click="handleAddCart"
+          <button v-if="!route.query.inCart" @click="handleAddCart"
             class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">장바구니</button>
+          <button v-else @click="handleEditCart"
+            class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">고치다</button>
           <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white">장바구니</button>
           <Notification ref="notification" />
         </article>
@@ -130,6 +132,7 @@ import { productService } from '@/services/productService'
 import { formatMoney } from '@/utils/formatMoney'
 import { useLoadingStore } from '@/stores/loading';
 import Notification from '@/components/element/Notification.vue'
+import { cartService } from '@/services/cartService'
 const loadingStore = useLoadingStore();
 
 const router = useRouter()
@@ -146,17 +149,44 @@ const toggleImage = (index) => {
   isImageVisible.value[index] = !isImageVisible.value[index];
 };
 
-const handleAddCart = () => {
-  notification.value.isOpen = true
-  notification.value.title = 'Cart'
-  notification.value.content = 'Thêm thành công'
-}
-
-onMounted(async () => {
-  window.scroll(0, 0)
+const handleAddCart = async () => {
   loadingStore.updateLoading(true)
   try {
-    const { data: res } = await productService.getDetail(route.params.id)
+    await cartService.addProd({
+      quantity: selectedQuantity.value,
+      option: selectedColor.value,
+      productId: Number(route.params.id)
+    })
+    notification.value.isOpen = true
+    notification.value.title = 'Cart'
+    notification.value.content = 'Thêm thành công'
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+const handleEditCart = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    await cartService.editProfileProd(Number(route.params.id), {
+      quantity: selectedQuantity.value,
+      option: selectedColor.value,
+      productId: Number(route.query.inCart)
+    })
+    notification.value.isOpen = true
+    notification.value.title = 'Cart'
+    notification.value.content = 'Sửa thành công'
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+const callApiGetProd = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await productService.getDetail(Number(route.params.id))
     product.value = res.data
     for (let iQuantity = 0; iQuantity < Number(res.data.stockQuantity); iQuantity++) {
       selectOptionsQuantity.value.push({
@@ -169,9 +199,42 @@ onMounted(async () => {
       })
     }
   } catch (error) {
-    console.log(error);
+    alert(error.response?.data?.message || error)
   }
   loadingStore.updateLoading(false)
+}
+
+const callApiGetProdInCart = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await cartService.getDetailProd(Number(route.params.id))
+    product.value = res.data.productDto
+    for (let iQuantity = 0; iQuantity < Number(res.data.productDto.stockQuantity); iQuantity++) {
+      selectOptionsQuantity.value.push({
+        label: iQuantity + 1, value: iQuantity + 1
+      })
+    }
+    for (let iColor = 0; iColor < res.data.productDto.options.length; iColor++) {
+      selectOptionsColor.value.push({
+        label: res.data.productDto.options[iColor], value: res.data.productDto.options[iColor]
+      })
+    }
+    selectedQuantity.value = res.data.quantity
+    selectedColor.value = res.data.option
+
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+onMounted(async () => {
+  window.scroll(0, 0)
+  if (route.query.inCart) {
+    callApiGetProdInCart()
+  } else {
+    callApiGetProd()
+  }
 })
 </script>
 <style scoped>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue"
+import { ref, computed, onMounted, onUnmounted, watch } from "vue"
 
 const props = defineProps({
   options: {
@@ -100,6 +100,13 @@ function handleClickOutside(event) {
     close()
   }
 }
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    selected.value = !props.multiple ? newValue || "" : newValue || []
+  }
+)
 
 onMounted(() => {
   document.addEventListener("click", handleClickOutside)

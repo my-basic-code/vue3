@@ -11,7 +11,7 @@
         className="mt-7 relative flex w-full justify-start gap-x-3" id="check-all" v-model="valueCheckBoxAll" />
       <div class="mt-[17px] bg-[#3D3D3D] w-full h-[1px]"></div>
       <article class="mt-7 space-y-[20px]">
-        <Checkbox v-for="(prod, iProd) in cart" :key="prod.id" type="checkbox" :name="`product${prod.id}`"
+        <Checkbox v-for="prod in cart" :key="prod.id" type="checkbox" :name="`product${prod.id}`"
           inputClass="w-6 h-6 border appearance-none checked:scale-150 checked:opacity-0 peer/all"
           checkmarkClass="absolute left-0 w-6 h-6 transparent peer-checked/all:bg-[#FF4F27] after:absolute after:left-2 after:top-[2px] after:w-2 after:h-4 after:border-[3px] after:border-white after:border-t-0 after:border-l-0 after:transform after:rotate-45"
           className="relative flex w-full justify-start items-start gap-x-3 pb-[24px] border-b border-[#DFDFDF]"
@@ -24,23 +24,23 @@
                   <img :src="ImagesProd.ProductCrop.src" :alt="ImagesProd.ProductCrop.alt">
                 </figure>
                 <div>
-                  <strong class="text-[16px] text-[#242424]">{{ prod.name }}</strong>
-                  <p class="text-[12px] font-normal text-[#6F6F6F]">옵션 - {{ prod.option }}</p>
-                  <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ prod.quantity }}</span>
+                  <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
+                  <p class="text-[12px] font-normal text-[#6F6F6F]">옵션 - {{ prod?.option }}</p>
+                  <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ prod?.quantity }}</span>
                 </div>
               </div>
               <div class="flex items-center justify-end grow">
                 <div class="space-x-[20px]">
-                  <button
-                    class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]">옵션변경</button>
-                  <button
-                    class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]">수량변경</button>
+                  <button class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]"
+                    @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">옵션변경</button>
+                  <button class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]"
+                    @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">수량변경</button>
                 </div>
                 <div class="space-x-[6px] ml-[40px]">
-                  <span class="text-[#FF4F27] font-bold text-[12px]">{{ prod.discount }}%</span>
-                  <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod.price) }}</strong>
+                  <span class="text-[#FF4F27] font-bold text-[12px]">{{ prod?.productDto?.discount }}%</span>
+                  <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod?.price) }}</strong>
                 </div>
-                <button class="w-4 h-4 ml-4 mr-[2px]" @click="delProd(prod.id)">
+                <button class="w-4 h-4 ml-4 mr-[2px]" @click="delProd(prod?.id)">
                   <img class="w-full h-full" :src="Images.iconExit.src" :alt="Images.iconExit.src">
                 </button>
               </div>
@@ -79,42 +79,17 @@
   </main>
 </template>
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import Checkbox from '@/components/ui/Checkbox.vue';
 import ImagesProd from '@/constants/imagesProd'
 import Images from '@/constants/images'
 import { useRouter } from 'vue-router'
 import { formatMoney } from '@/utils/formatMoney'
+import { cartService } from '@/services/cartService'
+import { useLoadingStore } from '@/stores/loading';
+const loadingStore = useLoadingStore();
 
-const cart = ref([
-  {
-    id: 1,
-    name: 'Forward',
-    option: 'red',
-    quantity: 1,
-    discount: 15,
-    price: 18000,
-    checkBox: false
-  },
-  {
-    id: 2,
-    name: 'Forward',
-    option: 'red',
-    quantity: 1,
-    discount: 15,
-    price: 18000,
-    checkBox: false
-  },
-  {
-    id: 3,
-    name: 'Forward',
-    option: 'red',
-    quantity: 1,
-    discount: 15,
-    price: 18000,
-    checkBox: false
-  },
-])
+const cart = ref([])
 
 const router = useRouter()
 const valueCheckBoxAll = ref(false);
@@ -139,8 +114,15 @@ const totalPaymentAmount = computed(() => {
   return totalOrderAmount.value + deliveryCharges.value
 })
 
-const delProd = (id) => {
-  cart.value = cart.value.filter((prod) => prod.id !== id)
+const delProd = async (id) => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await cartService.delProd(id)
+    callApiGetCart()
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
 }
 
 const handlePayment = () => {
@@ -158,8 +140,28 @@ watch(quantityProdChecked, () => {
 
 watch(valueCheckBoxAll, () => {
   valueCheckBoxAll.value && cart.value.forEach((prod) => {
-    prod.checkBox = valueCheckBoxAll.value
+    prod.checkBox = true
   })
+  !valueCheckBoxAll.value && quantityProdChecked.value === cart.value.length && cart.value.forEach((prod) => {
+    prod.checkBox = false
+  })
+})
+
+const callApiGetCart = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await cartService.getCart()
+    cart.value = res.data.map(item => {
+      return { ...item, checkBox: item.status, price: item.productDto.purchasePrice * item.productDto.discount / 100 }
+    })
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+onMounted(async () => {
+  callApiGetCart()
 })
 
 </script>
