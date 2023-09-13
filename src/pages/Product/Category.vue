@@ -9,7 +9,7 @@
           <span class="text-[14px] font-normal text-[#555555]">상품</span>
           <em class="text-[14px]">{{ listProd.length }}건</em>
         </strong>
-        <button class="flex items-center justify-center">
+        <button class="flex items-center justify-center" @click="handleSortPrd">
           <img :src="Images.iconLatest.src" :alt="Images.iconLatest.alt">
           <span class="text--[14px] font-normal text-[#6F6F6F]">최신순</span>
         </button>
@@ -33,15 +33,16 @@ const loadingStore = useLoadingStore();
 
 const route = useRoute();
 const listProd = ref([])
+const sort = ref('createDate,desc')
 
-const handleSearchProd = async (key) => {
+const handleSearchProd = async (key, sort) => {
   loadingStore.updateLoading(true)
   try {
     const { data: res } = await productService.searchProduct({
       categoryId: key,
       page: 0,
       size: 9999,
-      sort: 'createDate,desc'
+      sort: sort
     })
     listProd.value = res.data.content
   } catch (error) {
@@ -49,13 +50,22 @@ const handleSearchProd = async (key) => {
   }
   loadingStore.updateLoading(false)
 }
+const handleSortPrd = () => {
+  if (sort.value === 'createDate,desc') {
+    sort.value = 'createDate,asc'
+  } else {
+    sort.value = 'createDate,desc'
+  }
+  handleSearchProd(route.params.id, sort.value)
+}
 
 watch(() => route.params.id, async () => {
-  handleSearchProd(route.params.id)
+  sort.value = 'createDate,desc'
+  handleSearchProd(route.params.id, sort.value)
 })
 
 onMounted(async () => {
-  handleSearchProd(route.params.id)
+  handleSearchProd(route.params.id, sort.value)
 })
 </script>
 <style scoped></style>

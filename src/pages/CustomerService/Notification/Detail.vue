@@ -9,7 +9,9 @@
       <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
     </article>
     <article class="py-[40px] space-y-[40px] border-b border-[#DFDFDF]">
-      <img v-if="notification?.path" class="h-[196px] w-auto" :src="notification?.path" alt="content">
+      <div class="h-[196px] w-auto">
+        <img v-if="notification?.path" class="object-contain  w-full h-full" :src="notification?.path" alt="content">
+      </div>
       <div v-if="notification?.content" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
         {{ notification?.content }}
       </div>

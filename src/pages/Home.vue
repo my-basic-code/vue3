@@ -159,7 +159,7 @@ const getAllBanner = async () => {
     })
     return res.data.content
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    alert('getAllBanner', error.response?.data?.message || error)
   }
 }
 
@@ -173,7 +173,7 @@ const handleGetProd = async (key, size) => {
     })
     return res.data.content
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    alert('handleGetProd', error.response?.data?.message || error)
   }
 }
 
@@ -186,7 +186,7 @@ const handleGetStory = async () => {
     })
     return res.data.content
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    alert('handleGetStory', error.response?.data?.message || error)
   }
 }
 

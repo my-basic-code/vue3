@@ -20,7 +20,7 @@
             </Button>
           </template>
         </Dropdown>
-        <button class="flex items-center justify-center">
+        <button class="flex items-center justify-center" @click="handleSortPrd">
           <img :src="Images.iconLatest.src" :alt="Images.iconLatest.alt">
           <span class="text--[14px] font-normal text-[#6F6F6F]">최신순</span>
         </button>
@@ -48,15 +48,16 @@ const route = useRoute();
 const router = useRouter();
 const categoryStore = useCategoryStore();
 const listProd = ref([])
+const sort = ref('createDate,desc')
 
-const handleSearchProd = async (key) => {
+const handleSearchProd = async (key, sort) => {
   loadingStore.updateLoading(true)
   try {
     const { data: res } = await productService.searchProduct({
       key: key,
       page: 0,
       size: 9999,
-      sort: 'createDate,desc'
+      sort: sort
     })
     listProd.value = res.data.content
   } catch (error) {
@@ -66,17 +67,27 @@ const handleSearchProd = async (key) => {
   loadingStore.updateLoading(false)
 }
 
+const handleSortPrd = () => {
+  if (sort.value === 'createDate,desc') {
+    sort.value = 'createDate,asc'
+  } else {
+    sort.value = 'createDate,desc'
+  }
+  handleSearchProd(route.query.search, sort.value)
+}
+
 const handleItemMenuClick = resp => {
   const { item } = resp
   router.push(`/category/${item.id}`)
 }
 
 watch(() => route.query.search, async () => {
-  handleSearchProd(route.query.search)
+  sort.value = 'createDate,desc'
+  handleSearchProd(route.query.search, sort.value)
 })
 
 onMounted(async () => {
-  handleSearchProd(route.query.search)
+  handleSearchProd(route.query.search, sort.value)
 })
 </script>
 <style scoped></style>
