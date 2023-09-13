@@ -76,9 +76,10 @@
           </Select>
         </article>
         <article class="mt-[18px] flex justify-between space-x-[20px]">
-          <button @click="router.push('/cart')"
+          <button @click="handleAddCart"
             class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">장바구니</button>
           <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white">장바구니</button>
+          <Notification ref="notification" />
         </article>
       </div>
     </section>
@@ -128,11 +129,13 @@ import { useRouter, useRoute } from 'vue-router'
 import { productService } from '@/services/productService'
 import { formatMoney } from '@/utils/formatMoney'
 import { useLoadingStore } from '@/stores/loading';
+import Notification from '@/components/element/Notification.vue'
 const loadingStore = useLoadingStore();
 
 const router = useRouter()
 const route = useRoute()
 const product = ref({})
+const notification = ref()
 const selectOptionsQuantity = ref([])
 const selectedQuantity = ref(1)
 const selectOptionsColor = ref([])
@@ -142,6 +145,12 @@ const isImageVisible = ref([]);
 const toggleImage = (index) => {
   isImageVisible.value[index] = !isImageVisible.value[index];
 };
+
+const handleAddCart = () => {
+  notification.value.isOpen = true
+  notification.value.title = 'Cart'
+  notification.value.content = 'Thêm thành công'
+}
 
 onMounted(async () => {
   window.scroll(0, 0)

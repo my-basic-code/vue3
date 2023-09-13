@@ -1,6 +1,9 @@
 <template>
   <div class="container mx-auto mt-[60px] mb-[70px]">
     <div class="space-y-10">
+      <a v-for="link in story?.attachFiles" :key="link.id" class="w-full text-base text-blue-500" :href="link.path"
+        target="_blank">{{
+          link.path }}</a>
       <picture class="object-cover w-full h-full">
         <source media="(max-width: 768px)" :srcset="story?.thumbnailMobile?.path">
         <img :src="story?.thumbnailWeb?.path">

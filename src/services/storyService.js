@@ -6,7 +6,7 @@ function getAllStory(payload) {
 }
 
 function getDetailStory(id) {
-  const url = `api/post/${id}`;
+  const url = `public/api/post/${id}`;
   return Axios.get(url);
 }
 

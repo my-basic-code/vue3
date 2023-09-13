@@ -52,20 +52,17 @@
             @click="router.push('/category/2')">베스트 카테고리 바로가기</Button>
         </div>
       </section>
-      <section class="bg-black">
+      <!-- <section class="bg-black">
         <div class="container mx-auto py-[120px]">
           <h4 class="text-[40px] font-bold whitespace-nowrap text-white">
             BRAND WEEK DAY
           </h4>
           <div class="h-[6px] w-full bg-white mt-[60px]"></div>
           <div class="grid grid-cols-2 gap-8 mt-8">
-            <CardPrd :type="3" />
-            <CardPrd :type="3" />
-            <CardPrd :type="3" />
-            <CardPrd :type="3" />
+            <CardPrd :type="3" v-for="prod in listBrand" :key="prod.id" :item="prod" />
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="relative">
         <div class="container relative z-20 mx-auto bg-transparent pt-[60px]">
           <div class="flex items-center gap-x-4">
@@ -147,6 +144,7 @@ const loadingStore = useLoadingStore();
 const listBanner = ref([])
 const listBest = ref([])
 const listMembership = ref([])
+const listBrand = ref([])
 const listGiftShop = ref([])
 const listStory = ref([])
 

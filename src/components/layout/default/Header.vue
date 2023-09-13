@@ -16,11 +16,12 @@
 
       <ul class="menu">
         <li class="flex space-x-[28px]">
-          <router-link to="/cart" class="flex flex-col items-center space-y-1">
+          <router-link v-if="userStore.state.isLogin" to="/cart" class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
             <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
           </router-link>
-          <router-link to="/customer-service/how-to-use" class="flex flex-col items-center space-y-1">
+          <router-link v-if="userStore.state.isLogin" to="/customer-service/how-to-use"
+            class="flex flex-col items-center space-y-1">
             <img class="w-[20px] h-[20px]" :src="Images.iconCustomerService.src" :alt="Images.iconCustomerService.alt" />
             <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
           </router-link>
