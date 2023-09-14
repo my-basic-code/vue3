@@ -263,7 +263,7 @@ const completePayment = async () => {
       paymentMethod: paymentMethods.value === "카드" ? 0 : paymentMethods.value === "계좌이체" ? 1 : 2,
     })
     const orderId = res.data.code
-    const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+    const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
     const tossPaymentsForm = {
       amount: totalPaymentAmount.value,
@@ -278,6 +278,7 @@ const completePayment = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+
 }
 
 const getProdPayment = async () => {

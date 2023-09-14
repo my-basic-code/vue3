@@ -4,68 +4,71 @@
       <img class="w-[100px] h-[100px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
       <span class="text-[28px] font-bold">주문/결제</span>
     </h1>
+
     <article class="mt-[48px]">
       <div class="pb-4 border-b border-[#3D3D3D] flex justify-between w-full">
         <strong>주문상품</strong>
         <p class="text-xs font-bold text-[#3D3D3D]">
-          총 <span class="text-[#FF4F27]">1</span>개
+          총 <span class="text-[#FF4F27]">{{ quantityProdChecked }}</span>개
         </p>
       </div>
-      <div class="mt-5">
-        <div class="relative flex items-center justify-between w-full gap-x-[40px]">
+      <div class="mt-5 space-y-4">
+        <div class="relative flex items-center justify-between w-full gap-x-[40px]" v-for="product in listOrder"
+          :key="product.id">
           <div class="flex items-center gap-x-[20px]">
-            <figure class="w-[80px] h-[80px] flex justify-center items-center" style="
+            <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center" style="
                   background: linear-gradient(
                     155deg,
                     #f2f4f6 0%,
                     rgba(255, 255, 255, 0.81) 100%
                   );
                 ">
-              <img :src="ImagesProd.ProductCrop.src" :alt="ImagesProd.ProductCrop.alt" />
+              <img class="object-contain w-full h-full" :src="product?.product?.thumbnail" alt="product" />
             </figure>
             <div>
-              <strong class="text-[16px] text-[#242424]">EDITION FILM CAMERA</strong>
+              <strong class="text-[16px] text-[#242424]">{{ product?.productName }}</strong>
               <div class="flex mt-[7px] space-x-4 h-full w-fit">
                 <p
                   class="text-[12px] font-normal text-[#6F6F6F] relative after:content-[''] after:block after:absolute after:top-0 after:right-0 after:mr-[-8px] after:w-[1px] after:h-full after:bg-[#DFDFDF]">
                   옵션 - 네이비
                 </p>
-                <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - 1개</span>
+                <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ product?.quantity }}개</span>
               </div>
             </div>
           </div>
           <div class="flex items-center justify-end grow">
             <div class="space-x-[6px] ml-[40px]">
-              <span class="text-[#FF4F27] font-bold text-[12px]">15%</span>
-              <strong class="text-[#111111] text-[16px]">18,500</strong>
+              <span class="text-[#FF4F27] font-bold text-[12px]">{{ product?.product?.discount }}%</span>
+              <strong class="text-[#111111] text-[16px]">{{ formatMoney(product?.price) }}</strong>
             </div>
           </div>
         </div>
       </div>
     </article>
-    <article class="pb-[20px] border-b border-[#DFDFDF] space-y-[14px] mt-[16px]">
+
+    <article class="pb-[20px] border-y border-[#DFDFDF] space-y-[14px] pt-[16px]">
       <div class="flex justify-between">
         <p class="text-[14px] font-normal text-[#8B8B8B]">총 주문 금액</p>
-        <strong class="text-[14px] text-[#111111]">18,500원</strong>
+        <strong class="text-[14px] text-[#111111]">{{ formatMoney(totalOrderAmount) }}원</strong>
       </div>
       <div class="flex justify-between">
         <p class="text-[14px] font-normal text-[#8B8B8B]">배송비</p>
-        <strong class="text-[14px] text-[#111111]">3,500원</strong>
+        <strong class="text-[14px] text-[#111111]">{{ formatMoney(deliveryCharges) }}원</strong>
       </div>
-      <div class="flex justify-between">
+      <!-- <div class="flex justify-between">
         <p class="text-[14px] font-normal text-[#8B8B8B]">마일리지 사용</p>
         <strong class="text-[14px] text-[#111111]">-200원</strong>
       </div>
       <div class="flex justify-between">
         <p class="text-[14px] font-normal text-[#8B8B8B]">적립예정 마일리지</p>
         <strong class="text-[14px] text-[#FF4F27]">200P</strong>
-      </div>
+      </div> -->
     </article>
     <article class="mt-[16px] flex justify-between">
       <p class="text-[20px] font-bold text-[#3D3D3D]">총 결제금액</p>
-      <strong class="text-[20px] text-[#FF2618]">23,500원</strong>
+      <strong class="text-[20px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
     </article>
-    <button class="mt-[60px] w-full py-4 px-9 text-white bg-[#111111]">
+    <button class="mt-[60px] w-full py-4 px-9 text-white bg-[#111111]" @click="router.push('/profile/order-detail')">
       주문 내역 보기
     </button>
   </main>
@@ -73,5 +76,41 @@
 <script setup>
 import Images from "@/constants/images"
 import ImagesProd from "@/constants/imagesProd"
+import { computed, onMounted, ref } from "vue"
+import { orderService } from "@/services/orderService"
+import { useRoute, useRouter } from "vue-router"
+import { formatMoney } from '@/utils/formatMoney'
+
+const route = useRoute()
+const router = useRouter()
+const listOrder = ref([])
+
+const quantityProdChecked = computed(() => {
+  return listOrder.value.length
+});
+const totalOrderAmount = computed(() => {
+  let total = 0
+  listOrder.value.forEach((prod) => {
+    total += prod.price * prod.quantity
+  })
+  return total
+})
+const deliveryCharges = ref(0)
+const totalPaymentAmount = computed(() => {
+  return totalOrderAmount.value + deliveryCharges.value
+})
+
+const callApiPaymentSuccess = async (code) => {
+  try {
+    const { data: res } = await orderService.paymentSuccess(code)
+    listOrder.value = res.data.list
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+}
+
+onMounted(() => {
+  callApiPaymentSuccess(route.query.orderId)
+})
 </script>
 <style scoped></style>
