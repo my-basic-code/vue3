@@ -100,13 +100,13 @@
           <div class="grid grid-cols-2 gap-4 gap-x-6 mt-7">
             <div class="relative w-full h-[280px] row-span-4 overflow-hidden" v-for="story in listStory" :key="story.id">
               <picture class="object-cover w-full h-full">
-                <source media="(max-width: 768px)" :srcset="story.thumbnailMobile.path">
-                <img :src="story.thumbnailWeb.path">
+                <source media="(max-width: 768px)" :srcset="story?.thumbnailMobile?.path">
+                <img :src="story?.thumbnailWeb?.path">
               </picture>
               <div class="absolute inset-0 z-20 flex flex-col justify-end p-8">
                 <span class="w-[32px] h-[4px] bg-white"></span>
                 <p class="text-[24px] text-white font-bold w-1/2">
-                  {{ story.title }}
+                  {{ story?.title }}
                 </p>
               </div>
             </div>

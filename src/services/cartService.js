@@ -22,6 +22,16 @@ function editProfileProd(id, payload) {
   return Axios.put(url, payload);
 }
 
+function editStatusProd(payload) {
+  const url = `api/cart/choice_product_ids`;
+  return Axios.post(url, payload);
+}
+
+function getProdPayment(payload) {
+  const url = `api/cart/get_carts_by_current_user`;
+  return Axios.get(url, payload);
+}
+
 export const cartService = {
-  getCart, getDetailProd, addProd, delProd, editProfileProd
+  getCart, getDetailProd, addProd, delProd, editProfileProd, editStatusProd, getProdPayment
 };

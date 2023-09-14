@@ -73,7 +73,7 @@
           <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
         </article>
         <button class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold"
-          @click="handlePayment">결제하기</button>
+          @click="handleEditStatusProd">결제하기</button>
       </div>
     </section>
   </main>
@@ -125,11 +125,6 @@ const delProd = async (id) => {
   loadingStore.updateLoading(false)
 }
 
-const handlePayment = () => {
-  if (quantityProdChecked.value === 0) return
-  router.push('/payment')
-}
-
 watch(quantityProdChecked, () => {
   if (quantityProdChecked.value === cart.value.length) {
     valueCheckBoxAll.value = true
@@ -137,6 +132,26 @@ watch(quantityProdChecked, () => {
     valueCheckBoxAll.value = false
   }
 })
+
+const handleEditStatusProd = async () => {
+  if (quantityProdChecked.value === 0) return
+  const ids = []
+  cart.value.forEach((prod) => {
+    if (prod.checkBox) {
+      ids.push(prod.id)
+    }
+  })
+  loadingStore.updateLoading(true)
+  try {
+    await cartService.editStatusProd({
+      ids: ids
+    })
+    router.push('/payment')
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
 
 watch(valueCheckBoxAll, () => {
   valueCheckBoxAll.value && cart.value.forEach((prod) => {

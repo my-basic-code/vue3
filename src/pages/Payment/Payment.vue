@@ -12,32 +12,33 @@
           </p>
         </div>
         <div class="mt-4">
-          <div class="relative flex items-center justify-between w-full gap-x-[40px]">
+          <div class="relative flex items-center justify-between w-full gap-x-[40px]" v-for="prod in listProdPayment"
+            :key="prod.id">
             <div class="flex items-center gap-x-[20px]">
-              <figure class="w-[80px] h-[80px] flex justify-center items-center" style="
+              <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center" style="
                   background: linear-gradient(
                     155deg,
                     #f2f4f6 0%,
                     rgba(255, 255, 255, 0.81) 100%
                   );
                 ">
-                <img :src="ImagesProd.ProductCrop.src" :alt="ImagesProd.ProductCrop.alt" />
+                <img class="object-contain w-full h-full" :src="prod?.productDto?.thumbnail" alt="product" />
               </figure>
               <div>
-                <strong class="text-[16px] text-[#242424]">EDITION FILM CAMERA</strong>
+                <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
                 <div class="flex mt-[7px] space-x-4 h-full w-fit">
                   <p
                     class="text-[12px] font-normal text-[#6F6F6F] relative after:content-[''] after:block after:absolute after:top-0 after:right-0 after:mr-[-8px] after:w-[1px] after:h-full after:bg-[#DFDFDF]">
-                    옵션 - 네이비
+                    옵션 - {{ prod?.option }}
                   </p>
-                  <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - 1개</span>
+                  <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ prod?.quantity }}개</span>
                 </div>
               </div>
             </div>
             <div class="flex items-center justify-end grow">
               <div class="space-x-[6px] ml-[40px]">
-                <span class="text-[#FF4F27] font-bold text-[12px]">15%</span>
-                <strong class="text-[#111111] text-[16px]">18,500</strong>
+                <span class="text-[#FF4F27] font-bold text-[12px]">{{ prod?.productDto?.discount }}%</span>
+                <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod?.price) }}</strong>
               </div>
             </div>
           </div>
@@ -50,13 +51,13 @@
           <Checkbox type="checkbox" label="기본배송지" classLabel="text-[14px] font-normal text-[#555555]" name="all"
             inputClass="w-6 h-6 border appearance-none checked:scale-150 checked:opacity-0 peer/all"
             checkmarkClass="absolute left-0 w-6 h-6 transparent peer-checked/all:bg-[#FF4F27] after:absolute after:left-2 after:top-[2px] after:w-2 after:h-4 after:border-[3px] after:border-white after:border-t-0 after:border-l-0 after:transform after:rotate-45"
-            className="mt-7 relative flex w-full justify-start gap-x-3" id="check-all" v-model="valueCheckBox" />
+            className="mt-7 relative flex w-full justify-start gap-x-3" id="check-all" v-model="defaultShippingAddress" />
         </div>
         <div class="mt-[26px] space-y-[24px]">
           <Input wrapClass="flex items-center" label="배송지명" type="text" placeholder="배송지명을 입력해 주세요"
             classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
             :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-            v-model="data.nameAddress">
+            v-model="formData.shippingAddress" name="shippingAddress">
           <template #sub-label>
             <span class="text-xs text-[#FF3609] font-normal">*</span>
           </template>
@@ -64,7 +65,7 @@
           <Input wrapClass="flex items-center" label="받는분 " type="text" placeholder="받으시는분을 입력해주세요"
             classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
             :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-            v-model="data.nameAddress">
+            v-model="formData.receiver" name="receiver">
           <template #sub-label>
             <span class="text-xs text-[#FF3609] font-normal">*</span>
           </template>
@@ -72,7 +73,7 @@
           <Input wrapClass="flex items-center" label="연락처 " type="number" placeholder="연락처를 입력해주세요"
             classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
             :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-            v-model="data.nameAddress">
+            v-model="formData.phone" name="phone">
           <template #sub-label>
             <span class="text-xs text-[#FF3609] font-normal">*</span>
           </template>
@@ -81,31 +82,32 @@
             <Input wrapClass="flex items-center grow" label="우편번호 " type="number" placeholder="우편번호를 검색해주세요"
               classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
               :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-              v-model="data.nameAddress">
+              v-model="formData.mailboxNumber" name="mailboxNumber">
             <template #sub-label>
               <span class="text-xs text-[#FF3609] font-normal">*</span>
             </template>
             </Input>
-            <button class="p-[17px] border border-[#F2F4F6] text-[14px] font-normal">우편번호</button>
+            <button class="p-[17px] border border-[#F2F4F6] text-[14px] font-normal"
+              @click="handlerSearchAddress">우편번호</button>
           </div>
           <div>
             <Input wrapClass="flex items-center" label="주소" type="text" placeholder="주소를 입력해주세요"
               classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
               :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-              v-model="data.nameAddress">
+              v-model="formData.address1" name="address1">
             <template #sub-label>
               <span class="text-xs text-[#FF3609] font-normal">*</span>
             </template>
             </Input>
             <Input wrapClass="flex items-center" type="text" placeholder="상세주소를 입력해주세요"
               :className="`ml-[73px] px-5 py-4 mt-[16px] w-full ${classInputCustom[2].input}`"
-              :disabled="isCheckCertification" v-model="data.nameAddress">
+              :disabled="isCheckCertification" v-model="formData.address2" name="address2">
             </Input>
           </div>
           <Input wrapClass="flex items-center" label="요청사항 " type="text" placeholder="배송시 요청사항을 입력해 주세요"
             classLabel="block text-base font-bold flex items-start whitespace-nowrap w-[82px]"
             :className="`px-5 py-4 w-full ${classInputCustom[2].input}`" :disabled="isCheckCertification"
-            v-model="data.nameAddress">
+            v-model="formData.separateRequest" name="separateRequest">
           <template #sub-label>
             <span class="text-xs text-[#FF3609] font-normal">*</span>
           </template>
@@ -148,15 +150,15 @@
         <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[24px]">
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">주문 상품 수</p>
-            <strong class="text-[16px] text-[#111111]">1개</strong>
+            <strong class="text-[16px] text-[#111111]">{{ quantityProdChecked }}개</strong>
           </div>
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">총 주문 금액</p>
-            <strong class="text-[16px] text-[#111111]">18,500원</strong>
+            <strong class="text-[16px] text-[#111111]">{{ formatMoney(totalOrderAmount) }}원</strong>
           </div>
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">배송비</p>
-            <strong class="text-[16px] text-[#111111]">3,500원</strong>
+            <strong class="text-[16px] text-[#111111]">{{ formatMoney(deliveryCharges) }}원</strong>
           </div>
           <!-- <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">마일리지 사용</p>
@@ -176,37 +178,84 @@
         </article> -->
         <article class="mt-[14px] flex justify-between">
           <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
-          <strong class="text-[24px] text-[#FF2618]">23,500원</strong>
+          <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
         </article>
         <button @click="completePayment" class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
-          23,500원 결제하기
+          {{ formatMoney(totalPaymentAmount) }}원 결제하기
         </button>
       </div>
     </section>
   </main>
 </template>
 <script setup>
-import { ref } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
+import { useRouter } from 'vue-router'
 import ImagesProd from "@/constants/imagesProd"
 import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
-import { useRouter } from 'vue-router'
 import Radio from "@/components/ui/Radio.vue"
 
+import { cartService } from "@/services/cartService"
+import { paymentService } from "@/services/paymentService"
+import { formatMoney } from '@/utils/formatMoney'
+import useGetAddress from '@/helper/getMailBoxNumber'
+
+import { useLoadingStore } from '@/stores/loading';
+
+const loadingStore = useLoadingStore();
 const router = useRouter()
-const data = ref({
-  address: "",
+const { handlerSearchAddress, dataGetAddress } = useGetAddress();
+const formData = ref({
+  shippingAddress: "",
+  receiver: "",
+  phone: "",
+  mailboxNumber: "",
+  address1: "",
+  address2: "",
+  separateRequest: "",
 })
-const cartId = 50
+const defaultShippingAddress = ref(true)
+const listProdPayment = ref([])
+const quantityProdChecked = computed(() => {
+  return listProdPayment.value.length
+});
+
+const totalOrderAmount = computed(() => {
+  let total = 0
+  listProdPayment.value.forEach((prod) => {
+    total += prod.price * prod.quantity
+  })
+  return total
+})
+
+const deliveryCharges = ref(0)
+
+const totalPaymentAmount = computed(() => {
+  return totalOrderAmount.value + deliveryCharges.value
+})
+
+const randomId = computed(() => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomString = '';
+  for (let i = 0; i < 10; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters.charAt(randomIndex);
+  }
+  return `billid_${randomString}_${Date.now()}`;
+})
+
 const paymentMethods = ref('카드')
-const tossPaymentsForm = ref({
-  amount: 15000,
-  orderId: `billid_${cartId}_${Date.now()}`,
-  orderName: '토스 티셔츠 외 2건',
-  customerName: '박토스',
-  successUrl: window.location.origin + '/order',
-  failUrl: window.location.origin + '/payment',
+
+const tossPaymentsForm = computed(() => {
+  return {
+    amount: totalPaymentAmount.value,
+    orderId: randomId.value,
+    orderName: 'order-10',
+    customerName: 'hieu',
+    successUrl: window.location.origin + '/order',
+    failUrl: window.location.origin + '/payment',
+  }
 }
 )
 
@@ -221,5 +270,45 @@ const completePayment = () => {
   const tossPayments = TossPayments(clientKey)
   tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm.value)
 }
+
+const getProdPayment = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await cartService.getProdPayment()
+    listProdPayment.value = res.data.map(item => {
+      return { ...item, price: item.productDto.purchasePrice * item.productDto.discount / 100 }
+    })
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+const getUserDeliveryAddress = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await paymentService.getDeliveryAddress()
+    formData.value = {
+      shippingAddress: res.data.deliveryAddress,
+      receiver: res.data.receiver,
+      phone: res.data.phoneNumber,
+      mailboxNumber: res.data.numberOfMailbox,
+      address1: res.data.address1,
+      address2: res.data.address2,
+      separateRequest: res.data.otherRequest,
+    }
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+watch(dataGetAddress.value, () => {
+  formData.value.mailboxNumber = dataGetAddress.value.zip
+})
+
+onMounted(async () => {
+  await Promise.all([getProdPayment(), getUserDeliveryAddress()])
+})
 </script>
 <style scoped></style>
