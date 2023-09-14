@@ -180,7 +180,8 @@
           <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
           <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
         </article>
-        <button @click="completePayment" class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold">
+        <button @click="completePayment" class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold"
+          :disabled="validateFormData">
           {{ formatMoney(totalPaymentAmount) }}원 결제하기
         </button>
       </div>
@@ -195,17 +196,16 @@ import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import Radio from "@/components/ui/Radio.vue"
-
 import { cartService } from "@/services/cartService"
 import { paymentService } from "@/services/paymentService"
 import { formatMoney } from '@/utils/formatMoney'
 import useGetAddress from '@/helper/getMailBoxNumber'
-
 import { useLoadingStore } from '@/stores/loading';
 
 const loadingStore = useLoadingStore();
 const router = useRouter()
 const { handlerSearchAddress, dataGetAddress } = useGetAddress();
+
 const formData = ref({
   shippingAddress: "",
   receiver: "",
@@ -214,6 +214,9 @@ const formData = ref({
   address1: "",
   address2: "",
   separateRequest: "",
+})
+const validateFormData = computed(() => {
+  return !formData.value.shippingAddress || !formData.value.receiver || !formData.value.phone || !formData.value.mailboxNumber || !formData.value.address1 || !formData.value.separateRequest
 })
 const defaultShippingAddress = ref(true)
 const listProdPayment = ref([])
@@ -228,47 +231,53 @@ const totalOrderAmount = computed(() => {
   })
   return total
 })
-
 const deliveryCharges = ref(0)
-
 const totalPaymentAmount = computed(() => {
   return totalOrderAmount.value + deliveryCharges.value
 })
-
-const randomId = computed(() => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let randomString = '';
-  for (let i = 0; i < 10; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomString += characters.charAt(randomIndex);
-  }
-  return `billid_${randomString}_${Date.now()}`;
-})
-
 const paymentMethods = ref('카드')
-
-const tossPaymentsForm = computed(() => {
-  return {
-    amount: totalPaymentAmount.value,
-    orderId: randomId.value,
-    orderName: 'order-10',
-    customerName: 'hieu',
-    successUrl: window.location.origin + '/order',
-    failUrl: window.location.origin + '/payment',
-  }
-}
-)
-
 const options = [
   { label: "카드결제", value: '카드' },
   { label: "계좌이체", value: '계좌이체' },
   { label: "가상계좌", value: '가상계좌' },
 ]
 
-const completePayment = () => {
-  const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
-  const tossPayments = TossPayments(clientKey)
-  tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm.value)
+const completePayment = async () => {
+  const ids = []
+  listProdPayment.value.forEach(prod => {
+    ids.push(prod.id)
+  })
+  try {
+    const { data: res } = await paymentService.postPayment({
+      cartIds: ids,
+      deliveryAddressDefault: {
+        deliveryAddress: formData.value.shippingAddress,
+        receiver: formData.value.receiver,
+        phoneNumber: formData.value.phone,
+        numberOfMailbox: formData.value.mailboxNumber,
+        address1: formData.value.address1,
+        address2: formData.value.address2,
+        otherRequest: formData.value.separateRequest,
+        default: defaultShippingAddress.value
+      },
+      paymentMethod: paymentMethods.value === "카드" ? 0 : paymentMethods.value === "계좌이체" ? 1 : 2,
+    })
+    const orderId = res.data.code
+    const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+    const tossPayments = TossPayments(clientKey)
+    const tossPaymentsForm = {
+      amount: totalPaymentAmount.value,
+      orderId: orderId,
+      orderName: `order-${orderId}`,
+      customerName: formData.value.receiver,
+      successUrl: window.location.origin + '/order',
+      failUrl: window.location.origin + '/payment',
+      _skipAuth: 'FORCE_SUCCESS'
+    }
+    tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
 }
 
 const getProdPayment = async () => {

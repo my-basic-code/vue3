@@ -158,8 +158,8 @@ const handleAddCart = async () => {
       productId: Number(route.params.id)
     })
     notification.value.isOpen = true
-    notification.value.title = 'Cart'
-    notification.value.content = 'Thêm thành công'
+    notification.value.title = '장바구니'
+    notification.value.content = '장바구니에  추가완료하였습니다.'
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
@@ -175,8 +175,8 @@ const handleEditCart = async () => {
       productId: Number(route.query.inCart)
     })
     notification.value.isOpen = true
-    notification.value.title = 'Cart'
-    notification.value.content = 'Sửa thành công'
+    notification.value.title = '장바구니'
+    notification.value.content = '장바구니 업데이트가 완료되었습니다.'
   } catch (error) {
     alert(error.response?.data?.message || error)
   }

@@ -5,6 +5,11 @@ function getDeliveryAddress(payload) {
   return Axios.get(url, payload);
 }
 
+function postPayment(payload) {
+  const url = `api/payment`;
+  return Axios.post(url, payload);
+}
+
 export const paymentService = {
-  getDeliveryAddress
+  getDeliveryAddress, postPayment
 };
