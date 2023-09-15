@@ -283,7 +283,7 @@ const completePayment = async () => {
       customerName: '박토스',
       successUrl: window.location.origin + '/order',
       failUrl: window.location.origin + '/payment',
-      _skipAuth: 'FORCE_SUCCESS'
+      // _skipAuth: 'FORCE_SUCCESS'
     })
   } catch (error) {
     console.log('🚀 ~ file: Payment.vue:289 ~ completePayment ~ error:', error)
