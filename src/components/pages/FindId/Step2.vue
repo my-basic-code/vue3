@@ -25,8 +25,8 @@
       <Button :class="`w-1/4 py-5 px-4 h-fit whitespace-nowrap ${classBtn[1]}`" @click="verifyCode"
         :disabled="isVerifyCode.length === 0">인증받기</Button>
     </div>
-    <Button :class="`w-full py-4 px-9 mt-12 ${true ? classBtn[1] : classBtn[2]}`" :disabled="!statusVerifyCode"
-      @click="() => emit('complete-step2', email)">다음</Button>
+    <Button :class="`w-full py-4 px-9 mt-12 ${statusVerifyCode ? classBtn[1] : classBtn[2]}`"
+      :disabled="!statusVerifyCode" @click="() => emit('complete-step2', email)">다음</Button>
   </article>
 </template>
 <script setup>
@@ -40,7 +40,7 @@ import { formatPhone } from "@/utils/formatPhone"
 import { useLoadingStore } from '@/stores/loading';
 
 const loadingStore = useLoadingStore();
-const dataCountdownTime = 4
+const dataCountdownTime = 3 * 60
 const countdownTime = ref(dataCountdownTime)
 const isShowCountdown = ref()
 const isVerifyCode = ref("")
