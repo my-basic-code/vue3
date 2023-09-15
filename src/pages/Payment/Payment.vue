@@ -22,7 +22,7 @@
                     rgba(255, 255, 255, 0.81) 100%
                   );
                 ">
-                <img class="object-cover w-full h-full" :src="prod?.productDto?.thumbnail" alt="product" />
+                <img class="object-contain w-full h-full" :src="prod?.productDto?.thumbnail" alt="product" />
               </figure>
               <div>
                 <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
@@ -266,16 +266,25 @@ const completePayment = async () => {
     const orderId = res.data.code
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
-    const tossPaymentsForm = {
-      amount: formatMoney(totalPaymentAmount.value, false),
+    // const tossPaymentsForm = {
+    //   amount: formatMoney(totalPaymentAmount.value, false),
+    //   orderId: orderId,
+    //   orderName: `order-${orderId}`,
+    //   customerName: formData.value.receiver,
+    //   successUrl: window.location.origin + '/order',
+    //   failUrl: window.location.origin + '/payment',
+    //   _skipAuth: 'FORCE_SUCCESS'
+    // }
+    // tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
+    tossPayments.requestPayment('카드', {
+      amount: 15000,
       orderId: orderId,
-      orderName: `order-${orderId}`,
-      customerName: formData.value.receiver,
+      orderName: '토스 티셔츠 외 2건',
+      customerName: '박토스',
       successUrl: window.location.origin + '/order',
       failUrl: window.location.origin + '/payment',
       _skipAuth: 'FORCE_SUCCESS'
-    }
-    tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
+    })
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
@@ -300,13 +309,13 @@ const getUserDeliveryAddress = async () => {
   try {
     const { data: res } = await paymentService.getDeliveryAddress()
     formData.value = {
-      shippingAddress: res.data.deliveryAddress,
-      receiver: res.data.receiver,
-      phone: res.data.phoneNumber,
-      mailboxNumber: res.data.numberOfMailbox,
-      address1: res.data.address1,
-      address2: res.data.address2,
-      separateRequest: res.data.otherRequest,
+      shippingAddress: res.data?.deliveryAddress,
+      receiver: res.data?.receiver,
+      phone: res.data?.phoneNumber,
+      mailboxNumber: res.data?.numberOfMailbox,
+      address1: res.data?.address1,
+      address2: res.data?.address2,
+      separateRequest: res.data?.otherRequest,
     }
   } catch (error) {
     alert(error.response?.data?.message || error)

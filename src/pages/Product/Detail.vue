@@ -4,7 +4,7 @@
       <div class="relative flex items-center justify-center px-[86px] py-[175px]"
         style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
         <figure class="w-full h-[237px] overflow-hidden">
-          <img class="object-fill object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
+          <img class="object-contain object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
         </figure>
       </div>
 
