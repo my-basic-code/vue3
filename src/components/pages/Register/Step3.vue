@@ -43,10 +43,16 @@ const handleRegisterStep3 = async () => {
     const { data: res } = await authService.checkEmail({
       username: store.information.email
     })
-    emit('complete-step3')
+    if (!!res.data) {
+      alert('이메일이 이미 존재합니다')
+      loadingStore.updateLoading(false)
+      return
+    } else {
+      emit('complete-step3')
+      loadingStore.updateLoading(false)
+    }
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
-  loadingStore.updateLoading(false)
 }
 </script>
