@@ -110,6 +110,7 @@ function startCountdown() {
       formattedTime.value = formatTime(countdownTime.value)
     } else {
       clearCountdownInterval()
+      isCheckCertification.value = false
     }
   }, 1000)
 }
@@ -118,7 +119,6 @@ const clearCountdownInterval = () => {
   clearInterval(countdownInterval)
   countdownTime.value = dataCountdownTime
   isShowCountdown.value = false
-  isCheckCertification.value = false
 }
 
 // Xóa interval khi component bị hủy
