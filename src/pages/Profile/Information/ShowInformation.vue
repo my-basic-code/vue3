@@ -94,7 +94,7 @@ const loadingStore = useLoadingStore();
 const router = useRouter()
 const user = ref()
 
-onMounted(async () => {
+const getProfileUser = async () => {
   loadingStore.updateLoading(true)
   try {
     const { data: res } = await userService.getProfile()
@@ -103,6 +103,11 @@ onMounted(async () => {
     alert(error.response?.data?.message || error)
   }
   loadingStore.updateLoading(false)
+}
+
+onMounted(async () => {
+  getProfileUser()
+
 })
 </script>
 <style scoped></style>
