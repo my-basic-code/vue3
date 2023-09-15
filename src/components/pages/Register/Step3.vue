@@ -17,11 +17,13 @@
       classLabel="block text-base font-bold" :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`"
       v-model="store.information.repeatPassword">
     </Input>
-    <Button :class="`w-full py-4 px-9 mt-12 ${true ? classBtn[1] : classBtn[2]}`" :disabled="!store.information.email ||
-      !store.information.password ||
-      !store.information.repeatPassword ||
-      store.information.password !== store.information.repeatPassword
-      " @click="handleRegisterStep3">다음</Button>
+    <Button
+      :class="`w-full py-4 px-9 mt-12 ${!store.information.password || !store.information.repeatPassword || store.information.password !== store.information.repeatPassword ? classBtn[2] : classBtn[1]}`"
+      :disabled="!store.information.email ||
+        !store.information.password ||
+        !store.information.repeatPassword ||
+        store.information.password !== store.information.repeatPassword
+        " @click="handleRegisterStep3">다음</Button>
   </article>
 </template>
 <script setup>
@@ -41,12 +43,7 @@ const handleRegisterStep3 = async () => {
     const { data: res } = await authService.checkEmail({
       username: store.information.email
     })
-    if (!!res.data) {
-      alert('이메일이 이미 존재합니다')
-      return
-    } else {
-      emit('complete-step3')
-    }
+    emit('complete-step3')
   } catch (error) {
     alert(error.response?.data?.message || error)
   }

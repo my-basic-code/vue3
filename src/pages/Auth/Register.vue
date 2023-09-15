@@ -24,5 +24,5 @@ import Step2 from "@/components/pages/Register/Step2.vue"
 import Step3 from "@/components/pages/Register/Step3.vue"
 import Step4 from "@/components/pages/Register/Step4.vue"
 
-const currentStep = ref(0)
+const currentStep = ref(2)
 </script>
