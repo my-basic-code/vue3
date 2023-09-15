@@ -286,6 +286,7 @@ const completePayment = async () => {
       _skipAuth: 'FORCE_SUCCESS'
     })
   } catch (error) {
+    console.log('🚀 ~ file: Payment.vue:289 ~ completePayment ~ error1:', error)
     alert(error.response?.data?.message || error)
   }
 
