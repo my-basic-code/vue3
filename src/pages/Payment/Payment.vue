@@ -278,7 +278,7 @@ const completePayment = async () => {
     // tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
     tossPayments.requestPayment('카드', {
       amount: 15000,
-      orderId: orderId,
+      orderId: 'Cxqv_Mh7W_7hRK2uy93kB',
       orderName: '토스 티셔츠 외 2건',
       customerName: '박토스',
       successUrl: window.location.origin + '/order',
