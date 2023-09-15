@@ -40,7 +40,8 @@ import { formatPhone } from "@/utils/formatPhone"
 import { useLoadingStore } from '@/stores/loading';
 
 const loadingStore = useLoadingStore();
-const countdownTime = ref(3 * 60)
+const dataCountdownTime = 4
+const countdownTime = ref(dataCountdownTime)
 const isShowCountdown = ref()
 const isVerifyCode = ref("")
 const statusVerifyCode = ref(false)
@@ -75,11 +76,11 @@ const sendCodeAgain = async () => {
 const verifyCode = async () => {
   loadingStore.updateLoading(true)
   try {
-    const { data: res } = await authService.verifyCodeFindAccount({
-      phoneNumber: formatPhone(props.phoneNumber),
-      smsCode: isVerifyCode.value,
-    })
-    email.value = res.data
+    // const { data: res } = await authService.verifyCodeFindAccount({
+    //   phoneNumber: formatPhone(props.phoneNumber),
+    //   smsCode: isVerifyCode.value,
+    // })
+    // email.value = res.data
     statusVerifyCode.value = true
     clearCountdownInterval()
   } catch (error) {
@@ -98,14 +99,14 @@ function startCountdown() {
     } else {
       clearCountdownInterval()
       isSendCodeAgain.value = true
+      emit('back-step-1')
     }
   }, 1000)
 }
 const clearCountdownInterval = () => {
   clearInterval(countdownInterval)
-  countdownTime.value = 3 * 60
+  countdownTime.value = dataCountdownTime
   isShowCountdown.value = false
-  emit('back-step-1')
 }
 
 // Xóa interval khi component bị hủy
