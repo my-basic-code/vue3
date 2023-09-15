@@ -30,7 +30,7 @@
               <div class="flex mt-[7px] space-x-4 h-full w-fit">
                 <p
                   class="text-[12px] font-normal text-[#6F6F6F] relative after:content-[''] after:block after:absolute after:top-0 after:right-0 after:mr-[-8px] after:w-[1px] after:h-full after:bg-[#DFDFDF]">
-                  옵션 - 네이비
+                  옵션 - {{ product?.option }}
                 </p>
                 <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ product?.quantity }}개</span>
               </div>

@@ -4,9 +4,9 @@
       <div class="w-[80px] h-[80px] rounded-full overflow-hidden">
         <img class="object-cover w-full h-full" :src="user?.thumbnail" alt="user">
       </div>
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-center gap-y-2">
         <h5 class="text-[28px] font-bold text-[#111]">{{ user?.nickName }}</h5>
-        <span class="px-4 py-1 text-white bg-[#414141] rounded-full w-fit">Colored</span>
+        <!-- <span class="px-4 py-1 text-white bg-[#414141] rounded-full w-fit">Colored</span> -->
       </div>
     </div>
     <button class="w-[318px] px-9 py-[10px] text-[14px] font-bold border border-[#DFDFDF]"
@@ -40,7 +40,7 @@
           <th class="pb-4 text-center border-b text-[12px] font-bold">주문일 </th>
           <th class="pb-4 text-center border-b text-[12px] font-bold">주문내역</th>
           <th class="pb-4 text-center border-b text-[12px] font-bold">주문상태</th>
-          <th class="pb-4 text-center border-b text-[12px] font-bold">마일리지</th>
+          <!-- <th class="pb-4 text-center border-b text-[12px] font-bold">마일리지</th> -->
           <th class="pb-4 text-center border-b text-[12px] font-bold">총 결제금액</th>
           <th class="pb-4 text-center border-b text-[12px] font-bold"></th>
         </tr>
@@ -69,7 +69,7 @@
               <button class="px-[21px] py-2 bg-[#F2F4F6] text-[12px] font-bold mx-auto">결제완료</button>
             </div>
           </td>
-          <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#FF4F27]">350P</td>
+          <!-- <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#FF4F27]">350P</td> -->
           <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#555555]">18,500원</td>
           <td class="pb-4 border-b ">
             <div class="flex flex-col items-center justify-center w-full gap-y-2">

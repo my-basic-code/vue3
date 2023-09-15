@@ -6,8 +6,8 @@
       style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
       <div v-if="type === 2" class="absolute top-0 left-0 flex items-center justify-center w-12 h-12 text-white bg-black">
         {{ index }}</div>
-      <div :class="`${type === 2 ? 'w-[266px] h-[153px]' : 'w-[196px] h-[113px]'} `">
-        <img class="object-cover object-center w-full " :src="item?.thumbnail" alt="blog">
+      <div :class="`${type === 2 ? 'w-[266px] h-[153px]' : 'w-[196px] h-[113px]'} overflow-hidden `">
+        <img class="object-cover object-center w-full h-full" :src="item?.thumbnail" alt="blog">
       </div>
     </div>
     <div class="mt-4">
@@ -19,7 +19,8 @@
       <hr class="mt-3">
       <div class="flex items-end justify-start mt-3 gap-x-[6px]">
         <span class="text-sm font-bold text-[#FF2618]">{{ item?.discount }}%</span>
-        <div class="text-xl font-bold text-black">{{ formatMoney(Number(item?.purchasePrice * item?.discount / 100)) }}
+        <div class="text-xl font-bold text-black">{{ formatMoney(calculateSalePrice(item?.purchasePrice, item?.discount))
+        }}
         </div>
       </div>
     </div>
@@ -28,6 +29,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { formatMoney } from '@/utils/formatMoney'
+import { calculateSalePrice } from '@/utils/calculateSalePrice'
 const router = useRouter()
 const props = defineProps({
   type: {

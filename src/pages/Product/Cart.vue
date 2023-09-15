@@ -87,6 +87,7 @@ import { useRouter } from 'vue-router'
 import { formatMoney } from '@/utils/formatMoney'
 import { cartService } from '@/services/cartService'
 import { useLoadingStore } from '@/stores/loading';
+import { calculateSalePrice } from '@/utils/calculateSalePrice';
 const loadingStore = useLoadingStore();
 
 const cart = ref([])
@@ -167,7 +168,7 @@ const callApiGetCart = async () => {
   try {
     const { data: res } = await cartService.getCart()
     cart.value = res.data.map(item => {
-      return { ...item, checkBox: item.status, price: item.productDto.purchasePrice * item.productDto.discount / 100 }
+      return { ...item, checkBox: item.status, price: calculateSalePrice(item.productDto.purchasePrice, item.productDto.discount) }
     })
   } catch (error) {
     alert(error.response?.data?.message || error)

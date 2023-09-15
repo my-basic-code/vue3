@@ -11,7 +11,7 @@
             총 <span class="text-[#FF4F27]">1</span>개
           </p>
         </div>
-        <div class="mt-4">
+        <div class="mt-4 space-y-3">
           <div class="relative flex items-center justify-between w-full gap-x-[40px]" v-for="prod in listProdPayment"
             :key="prod.id">
             <div class="flex items-center gap-x-[20px]">
@@ -22,7 +22,7 @@
                     rgba(255, 255, 255, 0.81) 100%
                   );
                 ">
-                <img class="object-contain w-full h-full" :src="prod?.productDto?.thumbnail" alt="product" />
+                <img class="object-cover w-full h-full" :src="prod?.productDto?.thumbnail" alt="product" />
               </figure>
               <div>
                 <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
@@ -201,6 +201,7 @@ import { paymentService } from "@/services/paymentService"
 import { formatMoney } from '@/utils/formatMoney'
 import useGetAddress from '@/helper/getMailBoxNumber'
 import { useLoadingStore } from '@/stores/loading';
+import { calculateSalePrice } from "@/utils/calculateSalePrice"
 
 const loadingStore = useLoadingStore();
 const router = useRouter()
@@ -266,7 +267,7 @@ const completePayment = async () => {
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
     const tossPaymentsForm = {
-      amount: totalPaymentAmount.value,
+      amount: formatMoney(totalPaymentAmount.value, false),
       orderId: orderId,
       orderName: `order-${orderId}`,
       customerName: formData.value.receiver,
@@ -286,7 +287,7 @@ const getProdPayment = async () => {
   try {
     const { data: res } = await cartService.getProdPayment()
     listProdPayment.value = res.data.map(item => {
-      return { ...item, price: item.productDto.purchasePrice * item.productDto.discount / 100 }
+      return { ...item, price: calculateSalePrice(item.productDto.purchasePrice, item.productDto.discount) }
     })
   } catch (error) {
     alert(error.response?.data?.message || error)

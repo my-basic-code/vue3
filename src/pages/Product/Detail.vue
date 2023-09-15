@@ -3,7 +3,7 @@
     <section class="w-full h-full overflow-hidden bg-white grid grid-cols-2 gap-x-[58px]">
       <div class="relative flex items-center justify-center px-[86px] py-[175px]"
         style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
-        <figure class="w-full h-[237px]">
+        <figure class="w-full h-[237px] overflow-hidden">
           <img class="object-fill object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
         </figure>
       </div>
@@ -32,9 +32,9 @@
             <strong class="text-[14px] text-black">구매가</strong>
             <div class="space-x-[6px]">
               <sub class="inline-block text-[#FF2618] text-base font-bold">{{ product.discount }}%</sub>
-              <strong class="text-[24px] inline-block">{{ formatMoney(product.purchasePrice - product.purchasePrice *
-                product.discount / 100)
-              }}</strong>
+              <strong class="text-[24px] inline-block">{{
+                formatMoney(calculateSalePrice(product.purchasePrice, product.discount))
+              }} </strong>
             </div>
           </div>
           <!-- <Collapse :isOpen="true" title="등급별 마일리지" classTitle="text-[14px] font-bold text-[#3D3D3D]"
@@ -130,6 +130,7 @@ import Button from '@/components/ui/Button.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { productService } from '@/services/productService'
 import { formatMoney } from '@/utils/formatMoney'
+import { calculateSalePrice } from '@/utils/calculateSalePrice'
 import { useLoadingStore } from '@/stores/loading';
 import Notification from '@/components/element/Notification.vue'
 import { cartService } from '@/services/cartService'

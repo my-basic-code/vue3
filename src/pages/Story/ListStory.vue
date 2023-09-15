@@ -7,9 +7,9 @@
         <time class="text-xs font-normal text-[#6F6F6F]">{{ formatDate(story.createDate) }}</time>
         <p class="mt-1 text-base font-bold">{{ story.title }}</p>
         <div class="relative overflow-hidden h-[300px] w-full mt-[14px]">
-          <picture class="object-cover w-full h-full">
-            <source media="(max-width: 768px)" :srcset="story.thumbnailMobile.path">
-            <img :src="story.thumbnailWeb.path">
+          <picture class="w-full h-full">
+            <source class="object-cover w-full h-full" media="(max-width: 768px)" :srcset="story.thumbnailMobile.path">
+            <img class="object-cover w-full h-full" :src="story.thumbnailWeb.path">
           </picture>
         </div>
       </div>
