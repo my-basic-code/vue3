@@ -261,7 +261,7 @@ const completePayment = async () => {
         otherRequest: formData.value.separateRequest,
         default: defaultShippingAddress.value
       },
-      paymentMethod: paymentMethods.value === "카드" ? 0 : paymentMethods.value === "계좌이체" ? 1 : 2,
+      paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
     })
     const orderId = res.data.code
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
