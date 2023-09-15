@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 // Define your Pinia store
 export const useCategoryStore = defineStore('myCategory', () => {
-  const valueCategory = ref()
+  const valueCategory = ref([])
 
   return {
     valueCategory,

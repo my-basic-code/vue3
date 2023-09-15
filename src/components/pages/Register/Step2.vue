@@ -14,8 +14,10 @@
       <span class="text-xs text-[#FF3609] font-normal">*</span>
     </template>
     </Input>
-    <Button :class="`w-full py-4 px-9 mt-4 ${!isCheckCertification ? classBtn[2] : classBtn[3]
-      }`" @click="checkCertification" :disabled="!store.information.name || !store.information.phone">인증번호 받기
+    <Button
+      :class="`w-full py-4 px-9 mt-4 ${!isCheckCertification && (!store.information.name || !store.information.phone) ? classBtn[2] : !isCheckCertification && (store.information.name || store.information.phone) ? classBtn[1] : classBtn[3]}`"
+      @click="checkCertification"
+      :disabled="!store.information.name || !store.information.phone || isCheckCertification">인증번호 받기
     </Button>
     <div v-if="isCheckCertification" class="flex items-end space-x-[10px]">
       <Input label="인증번호 입력" type="number" :maxLength="6" name="certification" wrapClass="mt-7 relative"
@@ -114,6 +116,7 @@ function startCountdown() {
 
 const clearCountdownInterval = () => {
   clearInterval(countdownInterval)
+  isCheckCertification.value = false
   countdownTime.value = 3 * 60
   isShowCountdown.value = false
 }

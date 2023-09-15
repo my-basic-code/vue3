@@ -2,30 +2,18 @@
   <main class="mt-[60px] my-[117px] mx-auto max-w-[335px]">
     <article>
       <h1 class="text-[28px] font-normal uppercase text-left">아이디 찾기</h1>
-      <Steps
-        class="mt-5"
-        :steps="Array(3).fill(null)"
-        :currentStep="currentStep"
-        @current-step="step => (currentStep = step)"
-      />
+      <Steps class="mt-5" :steps="Array(3).fill(null)" :currentStep="currentStep"
+        @current-step="step => (currentStep = step)" />
       <img class="mt-5" :src="Images.Line.src" :alt="Images.Line.alt" />
     </article>
     <section class="mt-5">
-      <Step1
-        v-if="currentStep === 0"
-        @value-phone="value => (phoneNumber = value)"
-        @complete-step1="() => (currentStep = 1)"
-      />
-      <Step2
-        v-if="currentStep === 1"
-        :phoneNumber="phoneNumber"
-        @complete-step2="
-          value => {
-            email = value
-            currentStep = 2
-          }
-        "
-      />
+      <Step1 v-if="currentStep === 0" @value-phone="value => (phoneNumber = value)"
+        @complete-step1="() => (currentStep = 1)" />
+      <Step2 v-if="currentStep === 1" :phoneNumber="phoneNumber" @complete-step2="value => {
+          email = value
+          currentStep = 2
+        }
+        " @back-step-1="() => (currentStep = 0)" />
       <Step3 v-if="currentStep === 2" :email="email" />
     </section>
   </main>

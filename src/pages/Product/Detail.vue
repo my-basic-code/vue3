@@ -87,8 +87,8 @@
     </section>
 
     <section class="mt-[120px]" v-for="(prod, iProd) in product.descriptionsProductDtos" :key="prod.id">
-      <h2 class="text-center text-[16px] font-bold">{{ prod.title }}</h2>
-      <p class="text-center text-[16px] font-bold">{{ prod.content }}</p>
+      <h2 class="text-center text-[16px] font-bold" v-html="prod.title"></h2>
+      <p class="text-center text-[16px] font-bold" v-html="prod.content"></p>
       <figure class="mt-[30px] relative w-full h-full" :class="{ 'show': isImageVisible[iProd] }">
         <img class="object-cover object-center w-full h-full" :src="prod.path
           " alt="Product">

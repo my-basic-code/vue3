@@ -56,7 +56,7 @@ const props = defineProps({
     type: Number,
   },
 })
-const emit = defineEmits(["complete-step2"])
+const emit = defineEmits(["complete-step2", "back-step-1"])
 
 const sendCodeAgain = async () => {
   loadingStore.updateLoading(true)
@@ -105,6 +105,7 @@ const clearCountdownInterval = () => {
   clearInterval(countdownInterval)
   countdownTime.value = 3 * 60
   isShowCountdown.value = false
+  emit('back-step-1')
 }
 
 // Xóa interval khi component bị hủy

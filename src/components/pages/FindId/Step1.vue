@@ -7,8 +7,8 @@
     </template>
     </Input>
 
-    <Button :class="`w-full py-4 px-9 mt-4 ${false ? classBtn[1] : classBtn[2]}`" :disabled="phone.length === 0"
-      @click="sendCode">인증번호 받기</Button>
+    <Button :class="`w-full py-4 px-9 mt-4 ${phone.length > 0 ? classBtn[1] : classBtn[2]}`"
+      :disabled="phone.length === 0" @click="sendCode">인증번호 받기</Button>
   </article>
   <Notification ref="notification" />
 </template>

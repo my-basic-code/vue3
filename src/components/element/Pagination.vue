@@ -26,7 +26,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import Images from "@/constants/images.js"
 
 const props = defineProps({
   totalPages: {

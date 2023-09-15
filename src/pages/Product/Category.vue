@@ -1,7 +1,7 @@
 <template>
   <main class="container mx-auto mt-[60px] mb-[150px]">
     <div class="pb-[28px] border-b-[4px] border-black w-full text-center">
-      <h1 class="text-[24px] font-bold">베스트</h1>
+      <h1 class="text-[24px] font-bold">{{ nameCategory || '' }}</h1>
     </div>
     <section>
       <div class="flex justify-between mt-[16px]">
@@ -22,18 +22,33 @@
   </main>
 </template>
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import Images from "@/constants/images"
 import { useRoute } from 'vue-router';
 import Button from '@/components/ui/Button.vue';
 import CardPrd from '@/components/element/CardPrd.vue'
 import { productService } from '@/services/productService';
 import { useLoadingStore } from '@/stores/loading';
+import { useCategoryStore } from '@/stores/category';
+
 const loadingStore = useLoadingStore();
+const categoryStore = useCategoryStore();
 
 const route = useRoute();
 const listProd = ref([])
 const sort = ref('createDate,desc')
+
+const nameCategory = computed(() => {
+  let name = '';
+  const categoryId = route.params.id;
+  const categories = categoryStore.valueCategory;
+
+  const foundCategory = categories.find(category => category.id == categoryId);
+  if (foundCategory) {
+    name = foundCategory.text;
+  }
+  return name;
+});
 
 const handleSearchProd = async (key, sort) => {
   loadingStore.updateLoading(true)
