@@ -19,6 +19,11 @@ function editProfile(payload) {
   });
 }
 
+function delUser() {
+  const url = "api/user";
+  return Axios.del(url);
+}
+
 export const userService = {
-  getProfile, editProfile, getSmsCode
+  getProfile, editProfile, getSmsCode, delUser
 };

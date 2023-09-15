@@ -88,7 +88,7 @@
   <section class="mt-[60px] flex flex-col items-center space-y-8">
     <button class="text-[14px] font-normal text-white bg-[#111111] py-4 px-9 w-full"
       @click="handleEditProfile">수정하기</button>
-    <button class="text-[14px] font-normal text-[#A5A5A5] py-4 px-9">회원탈퇴</button>
+    <button class="text-[14px] font-normal text-[#A5A5A5] py-4 px-9" @click="handleDelUser">회원탈퇴</button>
   </section>
 </template>
 <script setup>
@@ -104,8 +104,10 @@ import Button from "@/components/ui/Button.vue"
 import Notification from "@/components/element/Notification.vue"
 import { formatTime } from "@/utils/formatTime"
 import { useLoadingStore } from '@/stores/loading';
+import { useRouter } from "vue-router"
 const loadingStore = useLoadingStore();
 
+const router = useRouter()
 const options = [
   { label: "남성", value: 0 },
   { label: "여성", value: 1 },
@@ -168,6 +170,17 @@ const handleEditProfile = async () => {
   try {
     await userService.editProfile(formData)
     getProfile()
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+const handleDelUser = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    await userService.delUser()
+    router.push('/login')
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
