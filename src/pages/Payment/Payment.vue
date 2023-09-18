@@ -288,6 +288,7 @@ const completePayment = async () => {
     }
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
+
     const tossPaymentsForm = {
       amount: formatMoney(totalPaymentAmount.value, false),
       orderId: orderId,
