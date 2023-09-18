@@ -81,7 +81,7 @@
           <button v-else @click="handleEditCart"
             class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">고치다</button>
           <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white"
-            @click="handlePayNow">장바구니</button>
+            @click="handlePayNow">구매하기</button>
           <Notification ref="notification" />
         </article>
       </div>

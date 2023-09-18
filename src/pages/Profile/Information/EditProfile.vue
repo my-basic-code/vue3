@@ -88,8 +88,19 @@
   <section class="mt-[60px] flex flex-col items-center space-y-8">
     <button class="text-[14px] font-normal text-white bg-[#111111] py-4 px-9 w-full"
       @click="handleEditProfile">수정하기</button>
-    <button class="text-[14px] font-normal text-[#A5A5A5] py-4 px-9" @click="handleDelUser">회원탈퇴</button>
+    <button class="text-[14px] font-normal text-[#A5A5A5] py-4 px-9" @click="notification.isOpen = true">회원탈퇴</button>
   </section>
+  <Notification ref="notification" h1="회원탈퇴">
+    <template #content>
+      <div class="flex items-center justify-center">회원탈퇴를 진행하시겠습니까?</div>
+    </template>
+    <template #action>
+      <div class="mt-12 mb-[60px] space-y-2 w-full px-[80px]">
+        <Button :class="`w-full py-4 ${classBtn[2]}`" @click="handleDelUser">확인</Button>
+        <Button :class="`w-full py-4 ${classBtn[1]}`" @click="notification.isOpen = false">돌아가기</Button>
+      </div>
+    </template>
+  </Notification>
 </template>
 <script setup>
 import Input from "@/components/ui/Input.vue"
@@ -114,7 +125,7 @@ const options = [
 ]
 
 const dataPhone = ref()
-const popupCheckPhone = ref()
+const notification = ref()
 const isShowCountdown = ref(false)
 const countdownTime = ref(3 * 60)
 let countdownInterval = null

@@ -10,10 +10,10 @@
           :class="['text-[14px] font-normal cursor-pointer', route.name === 'Rating' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/rating')">내 등급
         </li>
-        <li
+        <!-- <li
           :class="['text-[14px] font-normal cursor-pointer', route.name === 'OrderDetail' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/order-detail')">
-          주문상세</li>
+          주문상세</li> -->
         <li class='text-[14px] font-normal cursor-pointer text-[#A5A5A5]' @click="handleLogout">
           Logout</li>
       </ul>

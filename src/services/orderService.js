@@ -9,7 +9,11 @@ function getOrderStatistics() {
   return Axios.get(url);
 }
 
+function getOrderDetail(payload) {
+  const url = `api/orderDetail?statuses=1,2,3`;
+  return Axios.get(url, payload);
+}
 
 export const orderService = {
-  paymentSuccess, getOrderStatistics
+  paymentSuccess, getOrderStatistics, getOrderDetail
 };

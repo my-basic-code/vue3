@@ -3,17 +3,17 @@
     <div class="mt-[24px] py-[48px] flex justify-center items-end gap-x-[48px] bg-[#111]">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ orderStatistics?.paid }}</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.paid?.length }}</strong>
       </div>
       <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ orderStatistics?.shipping }}</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.shipping?.length }}</strong>
       </div>
       <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ orderStatistics?.shipped }}</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.shipped?.length }}</strong>
       </div>
     </div>
   </section>
