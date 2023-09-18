@@ -231,7 +231,14 @@ const callApiGetProdInCart = async () => {
 }
 
 const handlePayNow = () => {
-
+  const dataProd = {
+    id: Number(route.params.id),
+    option: selectedColor.value,
+    quantity: selectedQuantity.value,
+    productDto: product.value,
+    price: formatMoney(calculateSalePrice(product.value.purchasePrice, product.value.discount))
+  }
+  console.log('🚀 ~ file: Detail.vue:241 ~ handlePayNow ~ dataProd:', dataProd)
 }
 
 onMounted(async () => {
