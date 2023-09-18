@@ -231,14 +231,19 @@ const callApiGetProdInCart = async () => {
 }
 
 const handlePayNow = () => {
+  if (!selectedColor.value) {
+    alert('Option is null')
+    return
+  }
   const dataProd = {
     id: Number(route.params.id),
-    option: selectedColor.value,
+    option: selectedColor.value?.trim(),
     quantity: selectedQuantity.value,
     productDto: product.value,
     price: formatMoney(calculateSalePrice(product.value.purchasePrice, product.value.discount))
   }
-  console.log('🚀 ~ file: Detail.vue:241 ~ handlePayNow ~ dataProd:', dataProd)
+  localStorage.setItem('prodNow', JSON.stringify(dataProd))
+  router.push(`/payment/${route.params.id}`)
 }
 
 onMounted(async () => {

@@ -264,7 +264,7 @@ const completePayment = async () => {
       },
       paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
     })
-    const orderId = `${res.data.code}-${Date.now()}`
+    const orderId = `${res.data.code}`
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
     const tossPaymentsForm = {
