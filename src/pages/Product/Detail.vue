@@ -240,7 +240,7 @@ const handlePayNow = () => {
     option: selectedColor.value?.trim(),
     quantity: selectedQuantity.value,
     productDto: product.value,
-    price: formatMoney(calculateSalePrice(product.value.purchasePrice, product.value.discount))
+    price: calculateSalePrice(product.value.purchasePrice, product.value.discount)
   }
   localStorage.setItem('prodNow', JSON.stringify(dataProd))
   router.push(`/payment/${route.params.id}`)

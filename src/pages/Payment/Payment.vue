@@ -249,22 +249,43 @@ const completePayment = async () => {
   listProdPayment.value.forEach(prod => {
     ids.push(prod.id)
   })
+  let orderId
   try {
-    const { data: res } = await paymentService.postPayment({
-      cartIds: ids,
-      deliveryAddressDefault: {
-        deliveryAddress: formData.value.shippingAddress,
-        receiver: formData.value.receiver,
-        phoneNumber: formData.value.phone,
-        numberOfMailbox: formData.value.mailboxNumber,
-        address1: formData.value.address1,
-        address2: formData.value.address2,
-        otherRequest: formData.value.separateRequest,
-        default: defaultShippingAddress.value
-      },
-      paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
-    })
-    const orderId = `${res.data.code}`
+    if (route.params.id) {
+      const { data: res } = await paymentService.postPaymentNow({
+        productId: listProdPayment.value[0].id,
+        quantity: listProdPayment.value[0].quantity,
+        option: listProdPayment.value[0].option,
+        deliveryAddressDefault: {
+          deliveryAddress: formData.value.shippingAddress,
+          receiver: formData.value.receiver,
+          phoneNumber: formData.value.phone,
+          numberOfMailbox: formData.value.mailboxNumber,
+          address1: formData.value.address1,
+          address2: formData.value.address2,
+          otherRequest: formData.value.separateRequest,
+          default: defaultShippingAddress.value
+        },
+        paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
+      })
+      orderId = res.data.code
+    } else {
+      const { data: res } = await paymentService.postPayment({
+        cartIds: ids,
+        deliveryAddressDefault: {
+          deliveryAddress: formData.value.shippingAddress,
+          receiver: formData.value.receiver,
+          phoneNumber: formData.value.phone,
+          numberOfMailbox: formData.value.mailboxNumber,
+          address1: formData.value.address1,
+          address2: formData.value.address2,
+          otherRequest: formData.value.separateRequest,
+          default: defaultShippingAddress.value
+        },
+        paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
+      })
+      orderId = res.data.code
+    }
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
     const tossPaymentsForm = {
@@ -274,6 +295,7 @@ const completePayment = async () => {
       customerName: formData.value.receiver,
       successUrl: window.location.origin + '/order',
       failUrl: window.location.origin + '/payment',
+      _skipAuth: 'FORCE_SUCCESS'
     }
     tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
   } catch (error) {
@@ -290,7 +312,6 @@ const getListProdPayment = async () => {
     listProdPayment.value = res.data.map(item => {
       return { ...item, price: calculateSalePrice(item.productDto.purchasePrice, item.productDto.discount) }
     })
-    console.log('🚀 ~ file: Payment.vue:293 ~ getListProdPayment ~ listProdPayment:', listProdPayment.value)
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
@@ -298,13 +319,8 @@ const getListProdPayment = async () => {
 }
 
 const getProdPayment = async () => {
-  loadingStore.updateLoading(true)
-  try {
-    const { data: res } = await productService.getDetail(Number(route.params.id))
-  } catch (error) {
-    alert(error.response?.data?.message || error)
-  }
-  loadingStore.updateLoading(false)
+  const prodPayment = JSON.parse(localStorage.getItem('prodNow'))
+  listProdPayment.value = [prodPayment]
 }
 
 const getUserDeliveryAddress = async () => {
