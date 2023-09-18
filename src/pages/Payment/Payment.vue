@@ -288,14 +288,15 @@ const completePayment = async () => {
     }
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
-
+    const successUrl = window.location.origin + '/order'
+    const failUrl = route.params.id ? window.location.origin + `/payment/${route.params.id}` : window.location.origin + '/payment'
     const tossPaymentsForm = {
       amount: formatMoney(totalPaymentAmount.value, false),
       orderId: orderId,
       orderName: `order-${orderId}`,
       customerName: formData.value.receiver,
-      successUrl: window.location.origin + '/order',
-      failUrl: window.location.origin + '/payment',
+      successUrl: successUrl,
+      failUrl: failUrl,
       _skipAuth: 'FORCE_SUCCESS'
     }
     tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
