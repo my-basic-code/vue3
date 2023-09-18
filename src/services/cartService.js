@@ -27,11 +27,11 @@ function editStatusProd(payload) {
   return Axios.post(url, payload);
 }
 
-function getProdPayment(payload) {
+function getListProdPayment(payload) {
   const url = `api/cart/get_carts_by_current_user`;
   return Axios.get(url, payload);
 }
 
 export const cartService = {
-  getCart, getDetailProd, addProd, delProd, editProfileProd, editStatusProd, getProdPayment
+  getCart, getDetailProd, addProd, delProd, editProfileProd, editStatusProd, getListProdPayment
 };

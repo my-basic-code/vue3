@@ -80,7 +80,8 @@
             class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">장바구니</button>
           <button v-else @click="handleEditCart"
             class="border border-[#242424] py-[19px] w-full text-base font-bold text-[#242424]">고치다</button>
-          <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white">장바구니</button>
+          <button class=" bg-[#242424] py-[19px] w-full text-base font-bold text-white"
+            @click="handlePayNow">장바구니</button>
           <Notification ref="notification" />
         </article>
       </div>
@@ -110,8 +111,8 @@
         <div class="mt-10 overflow-hidden border-t border-b">
           <div class="grid grid-cols-12 h-fit bg-[#FAFBFD] relative"
             v-for="(specification, iSpecification) in product.specifications" :key="iSpecification">
-            <strong class="text-[12px] px-[20px] py-[20px] col-span-2">{{ specification.title }}</strong>
-            <p class="bg-white py-[20px] px-7 grow col-span-10">{{ specification.content }}</p>
+            <strong class="text-[12px] px-[20px] py-[20px] col-span-2" v-html="specification.title"></strong>
+            <p class="bg-white py-[20px] px-7 grow col-span-10" v-html="specification.content"></p>
             <div v-if="iSpecification !== product.specifications.length - 1"
               class="h-[1px] w-full absolute bottom-0 left-[20px] right-0 bg-[#F2F4F6]"></div>
           </div>
@@ -227,6 +228,10 @@ const callApiGetProdInCart = async () => {
     alert(error.response?.data?.message || error)
   }
   loadingStore.updateLoading(false)
+}
+
+const handlePayNow = () => {
+
 }
 
 onMounted(async () => {

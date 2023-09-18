@@ -3,17 +3,17 @@
     <div class="mt-[24px] py-[48px] flex justify-center items-end gap-x-[48px] bg-[#111]">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">3</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.paid }}</strong>
       </div>
       <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">3</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.shipping }}</strong>
       </div>
       <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
       <div class="space-y-[6px] flex flex-col items-center">
         <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">3</strong>
+        <strong class="text-[28px] text-white">{{ orderStatistics?.shipped }}</strong>
       </div>
     </div>
   </section>
@@ -125,5 +125,25 @@
 <script setup>
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd'
+import { orderService } from '@/services/orderService';
+import { useLoadingStore } from '@/stores/loading';
+import { onMounted, ref } from 'vue';
+
+const loadingStore = useLoadingStore();
+const orderStatistics = ref()
+
+const getOrderStatisticsApi = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await orderService.getOrderStatistics()
+    orderStatistics.value = res.data
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+onMounted(async () => {
+  await Promise.all([getOrderStatisticsApi()])
+})
 </script>
 <style scoped></style>

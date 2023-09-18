@@ -10,6 +10,11 @@ function postPayment(payload) {
   return Axios.post(url, payload);
 }
 
+function postPaymentNow(payload) {
+  const url = `api/payment/now`;
+  return Axios.post(url, payload);
+}
+
 export const paymentService = {
-  getDeliveryAddress, postPayment
+  getDeliveryAddress, postPayment, postPaymentNow
 };

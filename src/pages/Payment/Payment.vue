@@ -190,7 +190,7 @@
 </template>
 <script setup>
 import { computed, onMounted, ref, watch } from "vue"
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import ImagesProd from "@/constants/imagesProd"
 import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
@@ -202,9 +202,10 @@ import { formatMoney } from '@/utils/formatMoney'
 import useGetAddress from '@/helper/getMailBoxNumber'
 import { useLoadingStore } from '@/stores/loading';
 import { calculateSalePrice } from "@/utils/calculateSalePrice"
+import { productService } from "@/services/productService"
 
 const loadingStore = useLoadingStore();
-const router = useRouter()
+const route = useRoute()
 const { handlerSearchAddress, dataGetAddress } = useGetAddress();
 
 const formData = ref({
@@ -263,28 +264,18 @@ const completePayment = async () => {
       },
       paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
     })
-    const orderId = res.data.code
+    const orderId = `${res.data.code}-${Date.now()}`
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
-    // const tossPaymentsForm = {
-    //   amount: formatMoney(totalPaymentAmount.value, false),
-    //   orderId: orderId,
-    //   orderName: `order-${orderId}`,
-    //   customerName: formData.value.receiver,
-    //   successUrl: window.location.origin + '/order',
-    //   failUrl: window.location.origin + '/payment',
-    //   _skipAuth: 'FORCE_SUCCESS'
-    // }
-    // tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
-    tossPayments.requestPayment('카드', {
-      amount: 15000,
-      orderId: 'Cxqv_Mh7W_7hRK2uy93kB',
-      orderName: '토스 티셔츠 외 2건',
-      customerName: '박토스',
+    const tossPaymentsForm = {
+      amount: formatMoney(totalPaymentAmount.value, false),
+      orderId: orderId,
+      orderName: `order-${orderId}`,
+      customerName: formData.value.receiver,
       successUrl: window.location.origin + '/order',
       failUrl: window.location.origin + '/payment',
-      _skipAuth: 'FORCE_SUCCESS'
-    })
+    }
+    tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
   } catch (error) {
     console.log('🚀 ~ file: Payment.vue:289 ~ completePayment ~ error:', error)
     alert(error.response?.data?.message || error)
@@ -292,13 +283,24 @@ const completePayment = async () => {
 
 }
 
-const getProdPayment = async () => {
+const getListProdPayment = async () => {
   loadingStore.updateLoading(true)
   try {
-    const { data: res } = await cartService.getProdPayment()
+    const { data: res } = await cartService.getListProdPayment()
     listProdPayment.value = res.data.map(item => {
       return { ...item, price: calculateSalePrice(item.productDto.purchasePrice, item.productDto.discount) }
     })
+    console.log('🚀 ~ file: Payment.vue:293 ~ getListProdPayment ~ listProdPayment:', listProdPayment.value)
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  loadingStore.updateLoading(false)
+}
+
+const getProdPayment = async () => {
+  loadingStore.updateLoading(true)
+  try {
+    const { data: res } = await productService.getDetail(Number(route.params.id))
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
@@ -329,7 +331,11 @@ watch(dataGetAddress.value, () => {
 })
 
 onMounted(async () => {
-  await Promise.all([getProdPayment(), getUserDeliveryAddress()])
+  if (route.params.id) {
+    await Promise.all([getProdPayment(), getUserDeliveryAddress()])
+  } else {
+    await Promise.all([getListProdPayment(), getUserDeliveryAddress()])
+  }
 })
 </script>
 <style scoped></style>
