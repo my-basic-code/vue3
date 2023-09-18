@@ -8,12 +8,8 @@
         :iconUp="Images.iconUp"
         classTitle="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF]">
         <div
-          class="bg-[#FAFBFD] mt-[16px] leading-[136%] flex gap-x-[12px] px-[20px] py-4 text-[16px] text-[#555555] font-normal">
-          <!-- <strong class="text-[16px] text-black">A.</strong>
-        <p class="text-[16px] font-normal text-[#555555]">주문상품 배송확인은 마이페이지 > 상세 내역 에서 확인 하실 수 있습니다 더미 텍스트 입니다. <br>
-          더 필요하신 내용은 1:1 문의를 이용해주세요<br><br>
-          감사합니다</p> -->
-          {{ content.content }}
+          class="bg-[#FAFBFD] mt-[16px] leading-[136%] flex gap-x-[12px] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
+          v-html="content.content">
         </div>
       </Collapse>
     </div>

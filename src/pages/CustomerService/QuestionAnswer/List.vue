@@ -26,6 +26,7 @@
     <Pagination :totalPages="pagination.totalPages" :currentPage="pagination.currentPage"
       @pageChanged="(page) => pagination.currentPage = page" />
   </section>
+  <PopupQuestionOrder ref="popupQuestionOrder" />
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
@@ -35,9 +36,12 @@ import { customerService } from '@/services/customerService'
 import { formatDate } from '@/utils/formatDate.js'
 import { useRouter } from 'vue-router'
 import { useLoadingStore } from '@/stores/loading';
+import PopupQuestionOrder from '@/components/element/PopupQuestionOrder.vue'
+import { orderService } from '@/services/orderService'
 const loadingStore = useLoadingStore();
 
 const router = useRouter()
+const popupQuestionOrder = ref()
 const pagination = ref({
   currentPage: 1,
   totalPages: 0,
@@ -61,8 +65,21 @@ const handleGetQuestion = async () => {
   loadingStore.updateLoading(false)
 }
 
-const showPopupAddQuestion = () => {
-
+const showPopupAddQuestion = async () => {
+  try {
+    const { data: res } = await orderService.getOrderDetail({
+      statuses: '0,1,2,3,4,5,6,7,8,9,10,11'
+    })
+    popupQuestionOrder.value.selectOptionsProd = res.data.map(item => {
+      return {
+        label: item.productName,
+        value: item
+      }
+    })
+  } catch (error) {
+    alert(error.response?.data?.message || error)
+  }
+  popupQuestionOrder.value.isOpen = true
 }
 
 onMounted(async () => {

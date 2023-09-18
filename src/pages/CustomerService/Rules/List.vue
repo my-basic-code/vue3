@@ -4,15 +4,23 @@
   </section>
   <section class="space-y-[28px] pt-[28px]">
     <div v-if="listContent.length > 0">
-      <div v-for="content in listContent" :key="content.id"
-        @click="router.push(`/customer-service/rules/detail/${content.id}`)"
-        class="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF] cursor-pointer">
-        <div class="flex items-center justify-start gap-x-3">
-          <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(content.createdDate) }}</time>
-          <p class="text-[16px] font-normal text-[#3D3D3D]">{{ content.content }}</p>
+      <collapse v-for="content in listContent" :key="content.id" :iconDown="Images.iconDown" :iconUp="Images.iconUp"
+        classTitle="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF]">
+        <template #title>
+          <div class="flex items-center justify-start gap-x-3">
+            <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(content.createdDate) }}</time>
+            <p class="text-[16px] font-normal text-[#3D3D3D]">{{ content.title }}</p>
+          </div>
+        </template>
+        <div>
+          <figure v-if="content?.path" class="h-[196px] w-auto">
+            <img class="object-contain w-full h-full" :src="content?.path" alt="content">
+          </figure>
+          <div
+            class="bg-[#FAFBFD] mt-[16px] leading-[136%] flex gap-x-[12px] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
+            v-html="content.content"> </div>
         </div>
-        <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
-      </div>
+      </collapse>
     </div>
     <div v-else class="flex justify-center w-full">
       <span class="text-[16px] text-[#555555] font-normal text-center">데이터 없음</span>
@@ -31,6 +39,7 @@ import { customerService } from '@/services/customerService'
 import { formatDate } from '@/utils/formatDate'
 import { useRouter } from 'vue-router'
 import { useLoadingStore } from '@/stores/loading';
+import Collapse from "@/components/element/Collapse.vue"
 const loadingStore = useLoadingStore();
 
 const router = useRouter()

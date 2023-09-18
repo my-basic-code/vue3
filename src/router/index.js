@@ -183,10 +183,10 @@ const router = createRouter({
         },
       ]
     },
-    // {
-    //   path: "/:pathMatch(.*)*",
-    //   redirect: { name: 'Home' }
-    // },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: 'Home' }
+    },
   ]
 })
 

@@ -6,6 +6,7 @@ import iconBar3 from '@/assets/images/icon/icon-bar3.svg'
 import iconBest from '@/assets/images/icon/best.svg'
 import iconCamera from '@/assets/images/icon/camera.png'
 import iconCart from '@/assets/images/icon/cart.svg'
+import iconCross from '@/assets/images/icon/cross.svg'
 import iconCustomerService from '@/assets/images/icon/customer-service.svg'
 import iconDiscount from '@/assets/images/icon/discount.svg'
 import iconDown from '@/assets/images/icon/down.svg'
@@ -113,6 +114,10 @@ const Images = {
   iconExit: {
     src: iconExit,
     alt: 'iconExit'
+  },
+  iconCross: {
+    src: iconCross,
+    alt: 'iconCross'
   },
   btnApple: {
     src: btnApple,

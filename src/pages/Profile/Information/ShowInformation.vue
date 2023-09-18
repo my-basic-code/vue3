@@ -47,14 +47,14 @@
       </thead>
       <tbody>
         <tr v-for="prod in listProdPayment" :key="prod.id">
-          <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#555555]">{{ prod.orderDate }}</td>
+          <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#555555]">{{ prod.order.orderDate }}</td>
           <td class=" pb-4 border-b flex items-center gap-x-[20px]">
             <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center"
               style="background: linear-gradient(155deg,#f2f4f6 0%,rgba(255, 255, 255, 0.81) 100%);">
-              <img class="object-cover w-full h-full" :src="prod?.product?.thumbnail" alt="product" />
+              <img class="object-contain w-full h-full" :src="prod?.thumbnail" alt="product" />
             </figure>
             <div>
-              <strong class="text-[16px] text-[#242424]">{{ prod?.product?.name }}</strong>
+              <strong class="text-[16px] text-[#242424]">{{ prod?.productName }}</strong>
               <div class="flex mt-[7px] space-x-4 h-full w-fit">
                 <p
                   class="text-[12px] font-normal text-[#6F6F6F] relative after:content-[''] after:block after:absolute after:top-0 after:right-0 after:mr-[-8px] after:w-[1px] after:h-full after:bg-[#DFDFDF]">
@@ -66,15 +66,18 @@
           </td>
           <td class="pb-4 border-b ">
             <div class="flex justify-center w-full">
-              <button class="px-[21px] py-2 bg-[#F2F4F6] text-[12px] font-bold mx-auto">{{ prod?.status }}</button>
+              <div class="px-[21px] py-2 bg-[#F2F4F6] text-[12px] font-bold mx-auto">
+                {{ prod?.status }}
+              </div>
             </div>
           </td>
           <!-- <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#FF4F27]">350P</td> -->
-          <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#555555]">{{ prod?.quantity *
-            calculateSalePrice(prod?.product?.purchasePrice, prod?.product?.discount) }}원</td>
+          <td class=" pb-4 border-b text-center text-[12px] font-normal text-[#555555]">{{ formatMoney(prod?.price) }}원
+          </td>
           <td class="pb-4 border-b ">
             <div class="flex flex-col items-center justify-center w-full gap-y-2">
-              <button class="px-[44px] py-[6px] border border-[#F2F4F6] text-[12px] font-normal mx-auto">문의하기</button>
+              <button class="px-[44px] py-[6px] border border-[#F2F4F6] text-[12px] font-normal mx-auto"
+                @click="handleQuestion(prod)">문의하기</button>
               <button class="px-[44px] py-[6px] border border-[#F2F4F6] text-[12px] font-normal mx-auto">배송조회</button>
             </div>
           </td>
@@ -82,28 +85,27 @@
       </tbody>
     </table>
   </section>
+  <PopupQuestionOrder ref="popupQuestionOrder" />
 </template>
 <script setup>
 import Images from '@/constants/images'
-import ImagesProd from '@/constants/imagesProd'
 import { userService } from '@/services/userService'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLoadingStore } from '@/stores/loading';
 import { orderService } from '@/services/orderService'
-import { calculateSalePrice } from '@/utils/calculateSalePrice'
+import { formatMoney } from '@/utils/formatMoney'
+import PopupQuestionOrder from '@/components/element/PopupQuestionOrder.vue';
 
 const loadingStore = useLoadingStore();
 
 const router = useRouter()
+const popupQuestionOrder = ref()
 const user = ref()
 const paid = ref([])
 const shipping = ref([])
 const shipped = ref([])
-
-const listProdPayment = computed(() => {
-  return [...paid.value, ...shipping.value, ...shipped.value]
-})
+const listProdPayment = ref([])
 
 const getProfileUser = async () => {
   loadingStore.updateLoading(true)
@@ -132,11 +134,19 @@ const getOrderStatisticsApi = async () => {
 const getListOrder = async () => {
   loadingStore.updateLoading(true)
   try {
-    const { data: res } = await orderService.getOrderDetail()
+    const { data: res } = await orderService.getOrderDetail({
+      statuses: '0,1,2,3,4,5,6,7,8,9,10,11'
+    })
+    listProdPayment.value = res.data
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
   loadingStore.updateLoading(false)
+}
+
+const handleQuestion = async (prod) => {
+  popupQuestionOrder.value.isOpen = true
+  popupQuestionOrder.value.data.selectedProd = prod
 }
 
 

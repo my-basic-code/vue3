@@ -19,9 +19,9 @@
           <template #label>
             <div class="relative flex items-center justify-between w-full gap-x-[40px]">
               <div class="flex gap-x-[20px]">
-                <figure class="w-[80px] h-[80px] flex justify-center items-center"
+                <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center"
                   style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
-                  <img :src="ImagesProd.ProductCrop.src" :alt="ImagesProd.ProductCrop.alt">
+                  <img class="object-contain w-full h-full" :src="prod?.productDto?.thumbnail" alt="Product">
                 </figure>
                 <div>
                   <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
