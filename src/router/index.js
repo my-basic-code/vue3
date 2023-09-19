@@ -187,7 +187,21 @@ const router = createRouter({
       path: "/:pathMatch(.*)*",
       redirect: { name: 'Home' }
     },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (to.hash) {
+          return resolve({ selector: to.hash });
+        } else if (savedPosition) {
+          return resolve(savedPosition);
+        } else {
+          resolve(document.getElementById("app").scrollIntoView({ behavior: "smooth" }));
+        }
+      }, 500);
+    })
+  },
+
 })
 
 export default router

@@ -9,6 +9,7 @@ const loadingStore = useLoadingStore()
 const layout = computed(
   () => (currentRoute.meta.layout || "default") + "-layout"
 )
+
 </script>
 
 <template>
