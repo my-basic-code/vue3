@@ -76,11 +76,11 @@ const sendCodeAgain = async () => {
 const verifyCode = async () => {
   loadingStore.updateLoading(true)
   try {
-    // const { data: res } = await authService.verifyCodeFindAccount({
-    //   phoneNumber: formatPhone(props.phoneNumber),
-    //   smsCode: isVerifyCode.value,
-    // })
-    // email.value = res.data
+    const { data: res } = await authService.verifyCodeFindAccount({
+      phoneNumber: formatPhone(props.phoneNumber),
+      smsCode: isVerifyCode.value,
+    })
+    email.value = res.data
     statusVerifyCode.value = true
     clearCountdownInterval()
   } catch (error) {

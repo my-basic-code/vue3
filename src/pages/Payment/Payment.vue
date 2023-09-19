@@ -8,7 +8,7 @@
         <div class="pb-4 border-b border-[#3D3D3D] flex justify-between w-full">
           <strong>주문상품</strong>
           <p class="text-xs font-bold text-[#3D3D3D]">
-            총 <span class="text-[#FF4F27]">1</span>개
+            총 <span class="text-[#FF4F27]">{{ listProdPayment.length }}</span>개
           </p>
         </div>
         <div class="mt-4 space-y-3">
@@ -246,52 +246,44 @@ const options = [
 ]
 
 const completePayment = async () => {
-  const ids = []
-  listProdPayment.value.forEach(prod => {
-    ids.push(prod.id)
-  })
+  const ids = listProdPayment.value.map(prod => prod.id)
+
+  loadingStore.updateLoading(true)
   let orderId
   try {
+    const paymentData = {
+      deliveryAddressDefault: {
+        deliveryAddress: formData.value.shippingAddress,
+        receiver: formData.value.receiver,
+        phoneNumber: formData.value.phone,
+        numberOfMailbox: formData.value.mailboxNumber,
+        address1: formData.value.address1,
+        address2: formData.value.address2,
+        otherRequest: formData.value.separateRequest,
+        default: defaultShippingAddress.value
+      },
+      paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
+    }
+
     if (route.params.id) {
-      const { data: res } = await paymentService.postPaymentNow({
-        productId: listProdPayment.value[0].id,
-        quantity: listProdPayment.value[0].quantity,
-        option: listProdPayment.value[0].option,
-        deliveryAddressDefault: {
-          deliveryAddress: formData.value.shippingAddress,
-          receiver: formData.value.receiver,
-          phoneNumber: formData.value.phone,
-          numberOfMailbox: formData.value.mailboxNumber,
-          address1: formData.value.address1,
-          address2: formData.value.address2,
-          otherRequest: formData.value.separateRequest,
-          default: defaultShippingAddress.value
-        },
-        paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
-      })
+      paymentData.productId = listProdPayment.value[0].id
+      paymentData.quantity = listProdPayment.value[0].quantity
+      paymentData.option = listProdPayment.value[0].option
+
+      const { data: res } = await paymentService.postPaymentNow(paymentData)
       orderId = res.data.code
       localStorage.removeItem('prodNow')
     } else {
-      const { data: res } = await paymentService.postPayment({
-        cartIds: ids,
-        deliveryAddressDefault: {
-          deliveryAddress: formData.value.shippingAddress,
-          receiver: formData.value.receiver,
-          phoneNumber: formData.value.phone,
-          numberOfMailbox: formData.value.mailboxNumber,
-          address1: formData.value.address1,
-          address2: formData.value.address2,
-          otherRequest: formData.value.separateRequest,
-          default: defaultShippingAddress.value
-        },
-        paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
-      })
+      paymentData.cartIds = ids
+
+      const { data: res } = await paymentService.postPayment(paymentData)
       orderId = res.data.code
     }
+
     const clientKey = import.meta.env.VITE_TOSSPAYMENT_CLIENT_KEY
     const tossPayments = TossPayments(clientKey)
-    const successUrl = window.location.origin + '/order'
-    const failUrl = route.params.id ? window.location.origin + `/payment/${route.params.id}` : window.location.origin + '/payment'
+    const successUrl = `${window.location.origin}/order`
+    const failUrl = route.params.id ? `${window.location.origin}/payment/${route.params.id}` : `${window.location.origin}/payment`
     const tossPaymentsForm = {
       amount: formatMoney(totalPaymentAmount.value, false),
       orderId: orderId,
@@ -301,12 +293,13 @@ const completePayment = async () => {
       failUrl: failUrl,
       _skipAuth: 'FORCE_SUCCESS'
     }
+
     tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)
   } catch (error) {
-    console.log('🚀 ~ file: Payment.vue:289 ~ completePayment ~ error:', error)
+    console.log('Error:', error)
     alert(error.response?.data?.message || error)
   }
-
+  loadingStore.updateLoading(false)
 }
 
 const getListProdPayment = async () => {
@@ -316,6 +309,9 @@ const getListProdPayment = async () => {
     listProdPayment.value = res.data.map(item => {
       return { ...item, price: calculateSalePrice(item.productDto.purchasePrice, item.productDto.discount) }
     })
+    if (listProdPayment.value.length === 0) {
+      router.push('/')
+    }
   } catch (error) {
     alert(error.response?.data?.message || error)
   }

@@ -66,13 +66,9 @@ const handleSearchProd = async (key, sort) => {
   loadingStore.updateLoading(false)
 }
 const handleSortPrd = () => {
-  if (sort.value === 'createDate,desc') {
-    sort.value = 'createDate,asc'
-  } else {
-    sort.value = 'createDate,desc'
-  }
-  handleSearchProd(route.params.id, sort.value)
-}
+  sort.value = sort.value === 'createDate,desc' ? 'createDate,asc' : 'createDate,desc';
+  handleSearchProd(route.params.id, sort.value);
+};
 
 watch(() => route.params.id, async () => {
   sort.value = 'createDate,desc'

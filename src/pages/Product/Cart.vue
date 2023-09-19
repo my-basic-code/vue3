@@ -135,23 +135,24 @@ watch(quantityProdChecked, () => {
 })
 
 const handleEditStatusProd = async () => {
-  if (quantityProdChecked.value === 0) return
-  const ids = []
-  cart.value.forEach((prod) => {
-    if (prod.checkBox) {
-      ids.push(prod.id)
-    }
-  })
-  loadingStore.updateLoading(true)
+  if (quantityProdChecked.value === 0) return;
+
+  const checkedProductIds = cart.value
+    .filter(prod => prod.checkBox)
+    .map(prod => prod.id);
+
+  loadingStore.updateLoading(true);
+
   try {
     await cartService.editStatusProd({
-      ids: ids
-    })
-    router.push('/payment')
+      ids: checkedProductIds
+    });
+    router.push('/payment');
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    alert(error.response?.data?.message || error);
   }
-  loadingStore.updateLoading(false)
+
+  loadingStore.updateLoading(false);
 }
 
 watch(valueCheckBoxAll, () => {

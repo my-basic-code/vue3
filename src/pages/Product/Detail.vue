@@ -210,15 +210,19 @@ const callApiGetProdInCart = async () => {
   loadingStore.updateLoading(true)
   try {
     const { data: res } = await cartService.getDetailProd(Number(route.params.id))
-    product.value = res.data.productDto
-    for (let iQuantity = 0; iQuantity < Number(res.data.productDto.stockQuantity); iQuantity++) {
+    const productDto = res.data.productDto
+    const stockQuantity = Number(productDto.stockQuantity)
+    const options = productDto.options
+
+    product.value = productDto
+    for (let iQuantity = 0; iQuantity < stockQuantity; iQuantity++) {
       selectOptionsQuantity.value.push({
         label: iQuantity + 1, value: iQuantity + 1
       })
     }
-    for (let iColor = 0; iColor < res.data.productDto.options.length; iColor++) {
+    for (let iColor = 0; iColor < options.length; iColor++) {
       selectOptionsColor.value.push({
-        label: res.data.productDto.options[iColor], value: res.data.productDto.options[iColor]
+        label: options[iColor], value: options[iColor]
       })
     }
     selectedQuantity.value = res.data.quantity

@@ -121,23 +121,24 @@ const changeFile = (event) => {
 };
 
 const callApiAddQuestion = async () => {
-  loadingStore.updateLoading(true)
+  loadingStore.updateLoading(true);
   try {
-    const formData = new FormData()
-    formData.append("typeQuestion", data.value.typeQuestion)
-    formData.append("title", data.value.questTitle)
-    formData.append("questContent", data.value.questContent)
-    data.value.selectedProd && formData.append("productId", data.value.selectedProd.id)
-    data.value.inputFileValue && formData.append("attachFiles", data.value.inputFileValue)
-    await questionService.postQuestion(formData)
-    closePopup()
+    const { typeQuestion, questTitle, questContent, selectedProd, inputFileValue } = data.value;
+    const formData = new FormData();
+    formData.append("typeQuestion", typeQuestion);
+    formData.append("title", questTitle);
+    formData.append("questContent", questContent);
+    selectedProd && formData.append("productId", selectedProd.id);
+    inputFileValue && formData.append("attachFiles", inputFileValue);
+    await questionService.postQuestion(formData);
+    closePopup();
     notification.value.isOpen = true
     notification.value.title = '문의 상품'
     notification.value.content = 'Them cau hoi thanh cong'
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    alert(error.response?.data?.message || error);
   }
-  loadingStore.updateLoading(false)
+  loadingStore.updateLoading(false);
 };
 
 const closePopup = () => {

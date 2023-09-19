@@ -33,28 +33,29 @@ const props = defineProps({
 })
 
 const changePassword = async () => {
-  if (
-    password.value !== repeatPassword.value ||
-    password.value.length === 0 ||
-    repeatPassword.value.length === 0
-  ) {
+  const passwordMismatch = password.value !== repeatPassword.value
+  const emptyPassword = password.value.length === 0
+  const emptyRepeatPassword = repeatPassword.value.length === 0
+
+  if (passwordMismatch || emptyPassword || emptyRepeatPassword) {
     errors.value = ["비밀번호가 일치하지 않습니다."]
     return
   }
+
   errors.value = []
   loadingStore.updateLoading(true)
+
   try {
-    await authService.changePassword(
-      {
-        password: password.value,
-        confirmPassword: repeatPassword.value,
-      },
-      props.token
-    )
+    const changePasswordData = {
+      password: password.value,
+      confirmPassword: repeatPassword.value,
+    }
+    await authService.changePassword(changePasswordData, props.token)
     router.push("/login")
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+
   loadingStore.updateLoading(false)
 }
 </script>

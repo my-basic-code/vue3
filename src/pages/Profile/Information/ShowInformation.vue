@@ -82,7 +82,7 @@
                 @click="handleQuestion(prod)">문의하기</button>
               <button v-if="prod.status >= 3"
                 class="px-[44px] py-[6px] border border-[#F2F4F6] min-w-[132px] text-[12px] font-normal mx-auto"
-                @click="router.push(`/product-detail/${prod?.order?.id}`)">재구매</button>
+                @click="router.push(`/product-detail/${prod?.product?.id}`)">재구매</button>
               <a v-if="prod.status = 2" href="https://www.cjlogistics.com/ko/tool/parcel/tracking" target="_blank"
                 class="px-[44px] py-[6px] border border-[#F2F4F6] min-w-[132px] text-[12px] font-normal mx-auto">배송조회</a>
             </div>

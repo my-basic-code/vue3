@@ -41,7 +41,7 @@ const props = defineProps({
   },
   handleValue: {
     type: Function,
-    default: () => {},
+    default: () => { },
   },
   errors: {
     type: Array,
@@ -56,7 +56,6 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"])
 
 const handleChange = e => {
-  // emit("update:modelValue", e.target.value)
   const value = e.target.value
   if (value.length > props.maxLength) {
     e.target.value = value.slice(0, props.maxLength)
@@ -84,21 +83,10 @@ const handleEnter = () => {
 
 <template>
   <div :class="wrapClass">
-    <label :class="classLabel" v-if="label"
-      >{{ label }} <slot name="sub-label"></slot
-    ></label>
+    <label :class="classLabel" v-if="label">{{ label }} <slot name="sub-label"></slot></label>
     <slot name="prefix"></slot>
-    <input
-      :class="className"
-      :type="type"
-      :name="name"
-      :placeholder="placeholder"
-      :value="modelValue"
-      @input="handleChange"
-      @keydown="handleKeyDown"
-      :disabled="disabled"
-      @keydown.enter="handleEnter"
-    />
+    <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
+      @input="handleChange" @keydown="handleKeyDown" :disabled="disabled" @keydown.enter="handleEnter" />
     <slot name="suffix"></slot>
   </div>
   <ErrorMessage v-if="errors.length > 0" :errors="errors" />

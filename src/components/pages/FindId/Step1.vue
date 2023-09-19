@@ -30,9 +30,9 @@ const emit = defineEmits(["valuePhone", "complete-step1"])
 const sendCode = async () => {
   loadingStore.updateLoading(true)
   try {
-    // await authService.sendCodeFindAccount({
-    //   phoneNumber: formatPhone(phone.value),
-    // })
+    await authService.sendCodeFindAccount({
+      phoneNumber: formatPhone(phone.value),
+    })
     emit("complete-step1")
   } catch (error) {
     notification.value.isOpen = true

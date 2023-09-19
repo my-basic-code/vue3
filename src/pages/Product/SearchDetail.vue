@@ -68,12 +68,8 @@ const handleSearchProd = async (key, sort) => {
 }
 
 const handleSortPrd = () => {
-  if (sort.value === 'createDate,desc') {
-    sort.value = 'createDate,asc'
-  } else {
-    sort.value = 'createDate,desc'
-  }
-  handleSearchProd(route.query.search, sort.value)
+  sort.value = sort.value === 'createDate,desc' ? 'createDate,asc' : 'createDate,desc';
+  handleSearchProd(route.query.search, sort.value);
 }
 
 const handleItemMenuClick = resp => {

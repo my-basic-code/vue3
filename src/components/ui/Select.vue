@@ -58,7 +58,6 @@ const positionOption = computed(() => {
 
 const toggle = () => {
   if (props.disabled) return
-
   isOpen.value = !isOpen.value
 }
 

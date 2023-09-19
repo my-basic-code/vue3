@@ -221,23 +221,27 @@ const handleValueDateBirth = e => {
 }
 
 const getProfile = async () => {
-  loadingStore.updateLoading(true)
   try {
+    loadingStore.updateLoading(true)
     const { data: res } = await userService.getProfile()
-    user.value.name = res.data.name
-    user.value.phone = formatPhone2(res.data.phone)
-    dataPhone.value = formatPhone2(res.data.phone)
-    user.value.email = res.data.username
-    user.value.nickName = res.data.nickName
-    user.value.thumbnail = res.data.thumbnail
-    user.value.gender = res.data.gender
-    user.value.address = res.data.address1
-    user.value.detailedAddress = res.data.address2
-    user.value.dateBirth = res.data.birthDate
+    const { data } = res
+    const { name, phone, username, nickName, thumbnail, gender, address1, address2, birthDate } = data
+    user.value.name = name
+    user.value.phone = formatPhone2(phone)
+    dataPhone.value = formatPhone2(phone)
+    user.value.email = username
+    user.value.nickName = nickName
+    user.value.thumbnail = thumbnail
+    user.value.gender = gender
+    user.value.address = address1
+    user.value.detailedAddress = address2
+    user.value.dateBirth = birthDate
   } catch (error) {
-    alert(error.response?.data?.message || error)
+    const errorMessage = error.response?.data?.message || error
+    alert(errorMessage)
+  } finally {
+    loadingStore.updateLoading(false)
   }
-  loadingStore.updateLoading(false)
 }
 
 function startCountdown() {

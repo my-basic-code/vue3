@@ -68,7 +68,8 @@
       <p class="text-[20px] font-bold text-[#3D3D3D]">총 결제금액</p>
       <strong class="text-[20px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
     </article>
-    <button class="mt-[60px] w-full py-4 px-9 text-white bg-[#111111]" @click="router.push('/profile/order-detail')">
+    <button class="mt-[60px] w-full py-4 px-9 text-white bg-[#111111]"
+      @click="router.push('/profile/information/show-information')">
       주문 내역 보기
     </button>
   </main>

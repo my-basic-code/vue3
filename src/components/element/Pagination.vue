@@ -43,25 +43,21 @@ const visiblePages = computed(() => {
   const pages = [];
   const startPage = Math.max(1, props.currentPage - 2);
   const endPage = Math.min(props.totalPages, startPage + 4);
-
   if (startPage > 1) {
     pages.push(1);
     if (startPage > 2) {
       pages.push('...');
     }
   }
-
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
   }
-
   if (endPage < props.totalPages) {
     if (endPage < props.totalPages - 1) {
       pages.push('...');
     }
     pages.push(props.totalPages);
   }
-
   return pages;
 });
 
