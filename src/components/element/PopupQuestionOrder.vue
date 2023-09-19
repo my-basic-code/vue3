@@ -79,7 +79,9 @@ import { questionService } from "@/services/questionService"
 import { formatMoney } from "@/utils/formatMoney"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
 import Notification from "./Notification.vue"
+import { useLoadingStore } from '@/stores/loading';
 
+const loadingStore = useLoadingStore();
 const isOpen = ref(false)
 const inputFile = ref()
 const notification = ref()
@@ -119,6 +121,7 @@ const changeFile = (event) => {
 };
 
 const callApiAddQuestion = async () => {
+  loadingStore.updateLoading(true)
   try {
     const formData = new FormData()
     formData.append("typeQuestion", data.value.typeQuestion)
@@ -134,6 +137,7 @@ const callApiAddQuestion = async () => {
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
+  loadingStore.updateLoading(false)
 };
 
 const closePopup = () => {

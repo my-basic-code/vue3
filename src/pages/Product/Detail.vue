@@ -122,7 +122,7 @@
   </main>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd.js'
 import Collapse from '@/components/element/Collapse.vue'
@@ -246,13 +246,24 @@ const handlePayNow = () => {
   router.push(`/payment/${route.params.id}`)
 }
 
+const handleGlobalEnterKey = (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+  }
+}
+
 onMounted(async () => {
+  document.addEventListener('keydown', handleGlobalEnterKey);
   window.scroll(0, 0)
   if (route.query.inCart) {
     callApiGetProdInCart()
   } else {
     callApiGetProd()
   }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleGlobalEnterKey);
 })
 </script>
 <style scoped>
