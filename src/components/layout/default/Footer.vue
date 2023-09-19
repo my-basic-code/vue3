@@ -4,11 +4,7 @@
       <div class="flex items-end justify-between">
         <div class="space-y-6">
           <a href="#">
-            <img
-              class="w-auto h-7"
-              :src="Images.logo.src"
-              :alt="Images.logo.alt"
-            />
+            <img class="w-auto h-7" :src="Images.logo.src" :alt="Images.logo.alt" />
           </a>
           <ul class="space-y-2">
             <li class="text-xs font-normal text-[#555555]">
@@ -22,14 +18,11 @@
         </div>
 
         <div class="space-y-7">
-          <strong class="text-xs font-bold text-[#3D3D3D]"
-            >고객센터 1833-9133</strong
-          >
-          <Button
-            class="py-[6px] w-[200px] border border-[#DFDFDF] text-xs font-normal text-[#242424]"
-          >
+          <strong class="text-xs font-bold text-[#3D3D3D]">고객센터 1833-9133</strong>
+          <router-link to="/terms-of-use"
+            class="flex justify-center py-[6px] w-[200px] border border-[#DFDFDF] text-xs font-normal text-[#242424]">
             이용약관
-          </Button>
+          </router-link>
         </div>
       </div>
     </div>

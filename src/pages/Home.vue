@@ -128,7 +128,6 @@
 import { ref, computed, onMounted } from "vue"
 import CarouselWithProgress from "@/components/pages/Home/CarouselWithProgress.vue"
 import ImagesLanding from "@/constants/imagesLanding"
-import Images from "@/constants/images"
 import SimpleBanner from "@/components/element/SimpleBanner.vue"
 import CardPrd from "@/components/element/CardPrd.vue"
 import Button from "@/components/ui/Button.vue"

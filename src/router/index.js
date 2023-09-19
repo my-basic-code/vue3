@@ -184,6 +184,11 @@ const router = createRouter({
       ]
     },
     {
+      path: "/terms-of-use",
+      name: "TermsOfUse",
+      component: () => import("@/pages/TermsOfUse.vue"),
+    },
+    {
       path: "/:pathMatch(.*)*",
       redirect: { name: 'Home' }
     },
