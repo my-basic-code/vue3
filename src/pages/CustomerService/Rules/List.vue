@@ -12,7 +12,7 @@
             <p class="text-[16px] font-normal text-[#3D3D3D]">{{ content.title }}</p>
           </div>
         </template>
-        <div>
+        <div class="mt-4">
           <figure v-if="content?.path" class="h-[196px] w-auto">
             <img class="object-contain w-full h-full" :src="content?.path" alt="content">
           </figure>

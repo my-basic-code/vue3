@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed z-[100] inset-0 bg-[#11111142] flex justify-center items-center" v-if="isOpen">
+  <div class="fixed z-50 inset-0 bg-[#11111142] flex justify-center items-center" v-if="isOpen">
     <article class="bg-white shadow rounded-xl max-w-[600px] min-h-[266px] max-h-screen w-full relative overflow-auto">
       <h4 class="text-[16px] font-bold text-[#242424] text-center mt-[17px]">주문문의</h4>
       <div class="px-[80px] mt-[65px] mb-[60px]">
@@ -9,7 +9,8 @@
             classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between text-[#A5A5A5]"
             classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsProd"
-            v-model="data.selectedProd" placeholder="주문 상품을 선택해 주세요" placement="bottomLeft">
+            v-model="data.selectedProd"
+            :placeholder="`${selectOptionsProd.length > 0 ? '주문 상품을 선택해 주세요' : '주문 상품이 없습니다.'}`" placement="bottomLeft">
             <template #icon>
               <img :src="Images.iconDownBlack.src" :alt="Images.iconDownBlack.alt">
             </template>
@@ -49,12 +50,12 @@
           <div class="flex justify-between w-full pb-2 border-b border-[#3D3D3D]">
             <h6 class="text-[14px] font-bold text-[#242424]">제목</h6>
           </div>
+          <input class="border border-[#DFDFDF] w-full p-4" type="text" placeholder="문의 제목을 입력해주세요"
+            v-model="data.questTitle">
           <input class="hidden" type="file" ref="inputFile" @change="($event) => {
             changeFile($event)
           }" />
           <div v-if="data.inputFileValue">{{ data.inputFileValue?.name }}</div>
-          <input class="border border-[#DFDFDF] w-full p-4" type="text" placeholder="문의 제목을 입력해주세요"
-            v-model="data.questTitle">
           <textarea class="border border-[#DFDFDF] w-full p-4 min-h-[160px]" placeholder="문의 내용을 작성해주세요"
             v-model="data.questContent"></textarea>
         </section>
@@ -66,6 +67,7 @@
       </div>
     </article>
   </div>
+  <Notification ref="notification" />
 </template>
 <script setup>
 import Images from "@/constants/images"
@@ -76,9 +78,11 @@ import Button from "@/components/ui/Button.vue"
 import { questionService } from "@/services/questionService"
 import { formatMoney } from "@/utils/formatMoney"
 import { classBtn, classInputCustom } from "@/utils/customClass.js"
+import Notification from "./Notification.vue"
 
 const isOpen = ref(false)
 const inputFile = ref()
+const notification = ref()
 const data = ref({
   selectedProd: null,
   typeQuestion: 0,
@@ -124,6 +128,9 @@ const callApiAddQuestion = async () => {
     data.value.inputFileValue && formData.append("attachFiles", data.value.inputFileValue)
     await questionService.postQuestion(formData)
     closePopup()
+    notification.value.isOpen = true
+    notification.value.title = '문의 상품'
+    notification.value.content = 'Them cau hoi thanh cong'
   } catch (error) {
     alert(error.response?.data?.message || error)
   }

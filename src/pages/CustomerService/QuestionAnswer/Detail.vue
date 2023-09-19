@@ -15,10 +15,6 @@
     <article class="py-[40px] space-y-[40px] border-b border-[#DFDFDF]">
       <div class="text-[16px] font-normal text-[#242424]">{{ question?.questContent }}</div>
       <div v-if="question?.replyContent" class="bg-[#FAFBFD] mt-[40px] leading-[136%] flex gap-x-[12px] px-[20px] py-4">
-        <!-- <strong class="text-[#8B8B8B] text-[16px]">A.</strong>
-        <p class="text-[16px] font-normal text-[#8B8B8B]">주문상품 배송확인은 마이페이지 > 상세 내역 에서 확인 하실 수 있습니다 더미 텍스트 입니다. <br>
-          더 필요하신 내용은 1:1 문의를 이용해주세요<br><br>
-          감사합니다</p> -->
         {{ question?.replyContent }}
       </div>
     </article>

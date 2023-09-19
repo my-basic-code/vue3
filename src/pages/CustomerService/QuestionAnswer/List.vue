@@ -5,7 +5,7 @@
   </section>
   <section class="space-y-[28px] pt-[28px]">
     <div v-if="listQuestion.length > 0">
-      <div v-for="question in listQuestion" :key="question.id"
+      <!-- <div v-for="question in listQuestion" :key="question.id"
         @click="router.push(`/customer-service/question-answer/detail/${question.id}`)"
         class="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF] cursor-pointer">
         <div class="flex items-center justify-start gap-x-3">
@@ -16,7 +16,41 @@
           <p class="text-[16px] font-normal text-[#3D3D3D]">{{ question.questContent }}</p>
         </div>
         <img class="w-4 h-4" :src="Images.iconRightGray.src" :alt="Images.iconRightGray.alt">
-      </div>
+      </div> -->
+      <collapse v-for="question in listQuestion" :key="question.id" :iconDown="Images.iconDown" :iconUp="Images.iconUp"
+        classTitle="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF]">
+        <template #title>
+          <div class="flex items-center justify-start gap-x-3">
+            <div
+              :class="['text-[14px] font-normal px-[10px] border rounded-full ', question.status === 1 ? 'text-[#FF4F27] border-[#FF4F27]' : 'text-[#A5A5A5] border-[#A5A5A5]']">
+              {{ question.status === 1 ? '답변완료' : '답변대기' }}</div>
+            <time class="text-[14px] font-normal text-[#8B8B8B]">{{ formatDate(question.createdDate) }}</time>
+            <p class="text-[16px] font-normal text-[#3D3D3D]">{{ question.title }}</p>
+          </div>
+        </template>
+        <div>
+          <div class="bg-[#FAFBFD] mt-[16px] px-[20px] py-4 space-y-2">
+            <div class="grid grid-cols-12 gap-x-[12px]">
+              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2">{{ question?.createdBy.nickName }} .
+              </div>
+              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-10">
+                <a class="text-blue-500" v-for="(file, iFile) in question?.fileQuestions" :key="iFile"
+                  :href="file.path">{{ file.path }}</a>
+                <div v-html="question.questContent"></div>
+              </div>
+            </div>
+            <div v-if="question.status !== 0" class="grid grid-cols-12 gap-x-[12px]">
+              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2">{{ question?.answeredBy?.nickName }} .
+              </div>
+              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-10">
+                <a class="text-blue-500" v-for="(file, iFile) in question?.fileResponseQuestions" :key="iFile"
+                  :href="file.path">{{ file.path }}</a>
+                <div v-html="question.replyContent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </collapse>
     </div>
     <div v-else class="flex justify-center w-full">
       <span class="text-[16px] text-[#555555] font-normal text-center">데이터 없음</span>
@@ -37,6 +71,7 @@ import { formatDate } from '@/utils/formatDate.js'
 import { useRouter } from 'vue-router'
 import { useLoadingStore } from '@/stores/loading';
 import PopupQuestionOrder from '@/components/element/PopupQuestionOrder.vue'
+import Collapse from "@/components/element/Collapse.vue"
 import { orderService } from '@/services/orderService'
 const loadingStore = useLoadingStore();
 
