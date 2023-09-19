@@ -190,7 +190,7 @@
 </template>
 <script setup>
 import { computed, onMounted, ref, watch } from "vue"
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import ImagesProd from "@/constants/imagesProd"
 import Checkbox from "@/components/ui/Checkbox.vue"
 import Input from "@/components/ui/Input.vue"
@@ -206,6 +206,7 @@ import { productService } from "@/services/productService"
 
 const loadingStore = useLoadingStore();
 const route = useRoute()
+const router = useRouter()
 const { handlerSearchAddress, dataGetAddress } = useGetAddress();
 
 const formData = ref({
@@ -269,6 +270,7 @@ const completePayment = async () => {
         paymentMethod: paymentMethods.value === "카드" ? 1 : paymentMethods.value === "계좌이체" ? 2 : 3,
       })
       orderId = res.data.code
+      localStorage.removeItem('prodNow')
     } else {
       const { data: res } = await paymentService.postPayment({
         cartIds: ids,
@@ -322,7 +324,11 @@ const getListProdPayment = async () => {
 
 const getProdPayment = async () => {
   const prodPayment = JSON.parse(localStorage.getItem('prodNow'))
-  listProdPayment.value = [prodPayment]
+  if (!prodPayment) {
+    router.push('/')
+  } else {
+    listProdPayment.value = [prodPayment]
+  }
 }
 
 const getUserDeliveryAddress = async () => {
