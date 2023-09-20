@@ -2,9 +2,9 @@
   <main class="container mx-auto mt-[60px] mb-[211px]">
     <section
       class="w-full h-full overflow-hidden bg-white grid grid-cols-1 lg:grid-cols-2 gap-x-[58px] gap-y-7 relative z-50">
-      <div class="relative flex items-center justify-center px-[15%] py-[20%] lg:py-[40%]"
+      <div class="relative flex items-center justify-center px-[15%] py-[20%]"
         style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
-        <figure class="w-full h-[237px] overflow-hidden">
+        <figure class="w-full h-full overflow-hidden">
           <img class="object-contain object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
         </figure>
       </div>
