@@ -1,8 +1,8 @@
 <template>
-  <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
+  <section class="hidden  pb-[28px] border-b-[4px] border-black w-full lg:flex justify-between items-end">
     <h5 class="text-[28px] font-bold text-[#111]">개인정보 수정</h5>
   </section>
-  <section class="mt-[60px] grid grid-cols-2 gap-x-[68px]">
+  <section class="mt-7 lg:mt-[60px] grid grid-cols-1 lg:grid-cols-2  gap-[28px] lg:gap-[68px]">
     <article>
       <Input label="이름" type="text" placeholder="이름을 입력해주세요" classLabel="block text-base font-bold"
         :className="`px-5 py-4 mt-[6px] w-full ${classInputCustom[2].input}`" v-model="user.name">
@@ -95,7 +95,7 @@
       <div class="flex items-center justify-center">회원탈퇴를 진행하시겠습니까?</div>
     </template>
     <template #action>
-      <div class="mt-12 mb-[60px] space-y-2 w-full px-[80px]">
+      <div class="mt-[60px] lg:mt-12 mb-[60px] gap-2 w-full lg:px-[80px] flex lg:flex-col justify-between items-center">
         <Button :class="`w-full py-4 ${classBtn[2]}`" @click="handleDelUser">확인</Button>
         <Button :class="`w-full py-4 ${classBtn[1]}`" @click="notification.isOpen = false">돌아가기</Button>
       </div>

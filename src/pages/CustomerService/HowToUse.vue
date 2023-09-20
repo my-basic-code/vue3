@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
+  <section class="pb-4 lg:pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
     <h5 class="text-[28px] font-bold text-[#111]">자주 묻는 질문</h5>
   </section>
   <section class="space-y-[28px] pt-[28px]">
@@ -7,8 +7,7 @@
       <Collapse v-for="content in listContent" :key="content.id" :title="content.title" :iconDown="Images.iconDown"
         :iconUp="Images.iconUp"
         classTitle="flex justify-between text-[16px] text-[#3D3D3D] font-normal py-[13px] border-b border-[#DFDFDF]">
-        <div
-          class="bg-[#FAFBFD] mt-[16px] leading-[136%] flex gap-x-[12px] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
+        <div class="bg-[#FAFBFD] mt-[16px] leading-[136%] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
           v-html="content.content">
         </div>
       </Collapse>

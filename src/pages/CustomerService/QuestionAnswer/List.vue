@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
+  <section class="pb-4 lg:pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
     <h5 class="text-[28px] font-bold text-[#111]">문의내역</h5>
     <button class="py-[5px] px-[54px] bg-black text-white" @click="showPopupAddQuestion">문의하기</button>
   </section>
@@ -30,19 +30,23 @@
         </template>
         <div>
           <div class="bg-[#FAFBFD] mt-[16px] px-[20px] py-4 space-y-2">
-            <div class="grid grid-cols-12 gap-x-[12px]">
-              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2">{{ question?.createdBy.nickName }} .
+            <div class="flex">
+              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2 min-w-[150px]">{{ question?.createdBy.nickName
+              }}
+                .
               </div>
-              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-10">
+              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-4 lg:col-span-10">
                 <a class="text-blue-500" v-for="(file, iFile) in question?.fileQuestions" :key="iFile"
                   :href="file.path">{{ file.path }}</a>
                 <div v-html="question.questContent"></div>
               </div>
             </div>
-            <div v-if="question.status !== 0" class="grid grid-cols-12 gap-x-[12px]">
-              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2">{{ question?.answeredBy?.nickName }} .
+            <div v-if="question.status !== 0" class="flex">
+              <div class="text-[#3D3D3D] text-[16px] font-bold col-span-2 min-w-[150px]">{{ question?.answeredBy?.nickName
+              }}
+                .
               </div>
-              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-10">
+              <div class="flex flex-col gap-y-1 text-[16px] text-[#555555] font-normal col-span-4 lg:col-span-10">
                 <a class="text-blue-500" v-for="(file, iFile) in question?.fileResponseQuestions" :key="iFile"
                   :href="file.path">{{ file.path }}</a>
                 <div v-html="question.replyContent"></div>

@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
+  <section class="pb-4 lg:pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
     <h5 class="text-[28px] font-bold text-[#111]">공지사항</h5>
   </section>
   <section class="space-y-[28px] pt-[28px]">
@@ -16,8 +16,7 @@
           <figure v-if="content?.path" class="h-[196px] w-auto">
             <img class="object-contain w-full h-full" :src="content?.path" alt="content">
           </figure>
-          <div
-            class="bg-[#FAFBFD] mt-[16px] leading-[136%] flex gap-x-[12px] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
+          <div class="bg-[#FAFBFD] mt-[16px] leading-[136%] px-[20px] py-4 text-[16px] text-[#555555] font-normal"
             v-html="content.content"> </div>
         </div>
       </collapse>
