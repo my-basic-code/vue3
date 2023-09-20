@@ -39,7 +39,7 @@
     </div>
 
     <div class="container mx-auto">
-      <Dropdown classMenu="absolute left-0 z-20 w-[335px] origin-top-right bg-white shadow-xl dark:bg-gray-800"
+      <Dropdown classMenu="absolute left-0 z-[1000] w-[335px] origin-top-right bg-white shadow-xl dark:bg-gray-800"
         classItem="flex justify-start space-x-3 px-5 py-3 text-sm text-[#242424] capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 cursor-pointer text-[16px] text-[#242424] font-normal"
         classIcon="w-6 h-6" :menuItems="categoryStore.valueCategory" @item-clicked="handleItemMenuClick">
         <template v-slot:toggle>
