@@ -1,13 +1,14 @@
 <template>
-  <main class="max-w-[790px] mx-auto mt-[60px] mb-[93px]">
-    <h1 class="pb-[60px] border-b-[4px] border-black w-full flex flex-col justify-center items-center gap-y-4">
-      <img class="w-[100px] h-[100px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
-      <span class="text-[28px] font-bold">주문/결제</span>
+  <main class="max-w-[790px] mx-auto mt-[60px] mb-[93px] px-[20px]">
+    <h1 class="pb-10 lg:pb-[60px] border-b-[4px] border-black w-full flex flex-col justify-center items-center gap-y-4">
+      <img class="w-[80px] lg:w-[100px] h-[80px] lg:h-[100px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
+      <span class="hidden lg:block text-[28px] font-bold">주문/결제</span>
+      <span class="block lg:hidden text-[16px] font-bold">주문이 완료되었습니다</span>
     </h1>
 
     <article class="mt-[48px]">
-      <div class="pb-4 border-b border-[#3D3D3D] flex justify-between w-full">
-        <strong>주문상품</strong>
+      <div class="pb-3 lg:pb-4 border-b border-[#3D3D3D] flex justify-between w-full">
+        <strong class="text-[12px] lg:text-[16px]">주문상품</strong>
         <p class="text-xs font-bold text-[#3D3D3D]">
           총 <span class="text-[#FF4F27]">{{ quantityProdChecked }}</span>개
         </p>
@@ -16,7 +17,7 @@
         <div class="relative flex items-center justify-between w-full gap-x-[40px]" v-for="product in listOrder"
           :key="product.id">
           <div class="flex items-center gap-x-[20px]">
-            <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center" style="
+            <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center py-5 px-2" style="
                   background: linear-gradient(
                     155deg,
                     #f2f4f6 0%,
@@ -36,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="flex items-center justify-end grow">
+          <div class="items-center justify-end hidden lg:flex grow">
             <div class="space-x-[6px] ml-[40px]">
               <span class="text-[#FF4F27] font-bold text-[12px]">{{ product?.product?.discount }}%</span>
               <strong class="text-[#111111] text-[16px]">{{ formatMoney(product?.price) }}</strong>

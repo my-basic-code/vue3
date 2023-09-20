@@ -1,10 +1,10 @@
 <template>
   <main class="mt-[60px] my-[117px] mx-auto max-w-[335px]">
     <article>
-      <h1 class="text-[28px] font-normal uppercase text-left">회원가입</h1>
+      <h1 class="hidden lg:block text-[28px] font-normal uppercase text-left">회원가입</h1>
       <Steps class="mt-5" :steps="Array(4).fill(null)" :currentStep="currentStep"
         @current-step="step => (currentStep = step)" />
-      <img class="mt-5" :src="Images.Line.src" :alt="Images.Line.alt" />
+      <img class="hidden mt-5 lg:block" :src="Images.Line.src" :alt="Images.Line.alt" />
     </article>
     <section class="mt-5">
       <Step1 v-if="currentStep === 0" @complete-step1="() => (currentStep = 1)" />

@@ -1,11 +1,12 @@
 <template>
-  <main class="container mx-auto mt-[60px] mb-[87px] grid grid-cols-3 gap-x-9">
-    <section class="col-span-2">
+  <main class="container mx-auto mt-[60px] mb-[87px] grid grid-cols-1 lg:grid-cols-3 gap-x-9">
+    <section class="lg:col-span-2">
       <h1 class="pb-[28px] border-b-[4px] border-black w-full text-start text-[28px] font-bold">
         주문/결제
       </h1>
-      <article class="mt-7">
-        <div class="pb-4 border-b border-[#3D3D3D] flex justify-between w-full">
+      <article class="mt-4 lg:mt-7">
+        <div
+          class="pb-2 lg:pb-4 border-b border-[#F2F4F6] lg:border-[#3D3D3D] lg:flex justify-between w-full space-y-5 lg:space-y-0">
           <strong>주문상품</strong>
           <p class="text-xs font-bold text-[#3D3D3D]">
             총 <span class="text-[#FF4F27]">{{ listProdPayment.length }}</span>개
@@ -15,7 +16,7 @@
           <div class="relative flex items-center justify-between w-full gap-x-[40px]" v-for="prod in listProdPayment"
             :key="prod.id">
             <div class="flex items-center gap-x-[20px]">
-              <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center" style="
+              <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center py-5 px-2" style="
                   background: linear-gradient(
                     155deg,
                     #f2f4f6 0%,
@@ -136,36 +137,37 @@
         <div class="pb-4 border-b border-[#3D3D3D]">
           <strong>결제방법</strong>
         </div>
-        <Radio class="mt-4 flex justify-start space-x-[11px]" classInput="hidden"
+        <Radio class="mt-4 grid grid-cols-1 lg:grid-cols-3 justify-start gap-[11px]" classInput="hidden"
           className="border border-[#DFDFDF] text-center text-[#A5A5A5] py-[10px] px-9 cursor-pointer text-sm"
           classActive="border-gray-700 text-stone-950 font-bold" v-model="paymentMethods" :options="options"></Radio>
       </article>
     </section>
 
     <section>
-      <div class="mt-[72px] col-span-1 border-t-[4px] border-black px-[20px] pt-[32px] pb-[40px]">
-        <article class="pb-[14px] border-b border-[#DFDFDF] w-full text-center">
+      <div class="lg:mt-[72px] col-span-1 lg:border-t-[4px] border-black lg:px-[20px] pt-[32px] pb-[40px]">
+        <article class="hidden lg:block pb-[14px] border-b border-[#DFDFDF] w-full text-center">
           <h4 class="text-[16px] font-bold">결제 금액</h4>
         </article>
-        <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[24px]">
-          <div class="flex justify-between">
-            <p class="text-[12px] font-normal text-[#8B8B8B]">주문 상품 수</p>
-            <strong class="text-[16px] text-[#111111]">{{ quantityProdChecked }}개</strong>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-[12px] font-normal text-[#8B8B8B]">총 주문 금액</p>
-            <strong class="text-[16px] text-[#111111]">{{ formatMoney(totalOrderAmount) }}원</strong>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-[12px] font-normal text-[#8B8B8B]">배송비</p>
-            <strong class="text-[16px] text-[#111111]">{{ formatMoney(deliveryCharges) }}원</strong>
-          </div>
-          <!-- <div class="flex justify-between">
+        <div class="flex flex-col-reverse lg:flex-col">
+          <article class="lg:pb-[24px] lg:border-b lg:border-[#DFDFDF] space-y-[14px] lg:space-y-[24px] mt-[24px]">
+            <div class="flex justify-between">
+              <p class="text-[12px] font-normal text-[#8B8B8B]">주문 상품 수</p>
+              <strong class="text-[16px] text-[#111111]">{{ quantityProdChecked }}개</strong>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-[12px] font-normal text-[#8B8B8B]">총 주문 금액</p>
+              <strong class="text-[16px] text-[#111111]">{{ formatMoney(totalOrderAmount) }}원</strong>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-[12px] font-normal text-[#8B8B8B]">배송비</p>
+              <strong class="text-[16px] text-[#111111]">{{ formatMoney(deliveryCharges) }}원</strong>
+            </div>
+            <!-- <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">마일리지 사용</p>
             <strong class="text-[16px] text-[#111111]">-300원</strong>
           </div> -->
-        </article>
-        <!-- <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[15px]">
+          </article>
+          <!-- <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[15px]">
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">
               적립 예정 마일리지
@@ -176,10 +178,11 @@
             </div>
           </div>
         </article> -->
-        <article class="mt-[14px] flex justify-between">
-          <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
-          <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
-        </article>
+          <article class="mt-[14px] flex justify-between pb-[24px] lg:pb-0 lg:border-none border-b border-[#DFDFDF]">
+            <p class="text-[14px] font-bold text-[#3D3D3D]">총 결제금액</p>
+            <strong class="text-[24px] text-[#FF2618]">{{ formatMoney(totalPaymentAmount) }}원</strong>
+          </article>
+        </div>
         <button @click="completePayment" class="w-full mt-10 py-4 px-9 bg-[#111111] text-white text-[16px] font-bold"
           :disabled="validateFormData">
           {{ formatMoney(totalPaymentAmount) }}원 결제하기
@@ -291,7 +294,7 @@ const completePayment = async () => {
       customerName: formData.value.receiver,
       successUrl: successUrl,
       failUrl: failUrl,
-      _skipAuth: 'FORCE_SUCCESS'
+      // _skipAuth: 'FORCE_SUCCESS'
     }
 
     tossPayments.requestPayment(paymentMethods.value, tossPaymentsForm)

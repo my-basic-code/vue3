@@ -1,9 +1,12 @@
 <template>
   <main class="mt-[60px] my-[117px] mx-auto max-w-[335px]">
     <form @submit="handleLogin">
-      <h1 class="text-[28px] font-normal uppercase text-left">Login</h1>
-      <div class="mt-5">
+      <h1 class="hidden lg:block text-[28px] font-normal uppercase text-left">Login</h1>
+      <div class="hidden mt-5 lg:block">
         <img :src="Images.Line.src" :alt="Images.Line.alt" />
+      </div>
+      <div class="lg:hidden w-[150px] h-[95px] overflow-hidden mx-auto">
+        <img class="object-contain w-full h-full" :src="Images.logoLogin.src" :alt="Images.logoLogin.alt" />
       </div>
       <article class="mt-7">
         <Input label="이메일" type="text" name="email" placeholder="이메일을 입력해주세요" classLabel="block text-base font-bold"

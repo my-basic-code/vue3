@@ -1,34 +1,35 @@
 <template>
   <main class="container mx-auto mt-[60px] mb-[211px]">
-    <section class="w-full h-full overflow-hidden bg-white grid grid-cols-2 gap-x-[58px]">
-      <div class="relative flex items-center justify-center px-[86px] py-[175px]"
+    <section
+      class="w-full h-full overflow-hidden bg-white grid grid-cols-1 lg:grid-cols-2 gap-x-[58px] gap-y-7 relative z-50">
+      <div class="relative flex items-center justify-center px-[15%] py-[20%] lg:py-[40%]"
         style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
         <figure class="w-full h-[237px] overflow-hidden">
           <img class="object-contain object-center w-full h-full" :src="product.thumbnail" alt="thumbnail">
         </figure>
       </div>
 
-      <div>
-        <article class="pb-[20px] border-b-[4px] border-black flex justify-between items-center">
+      <div class="relative z-50">
+        <article class="pb-[20px] lg:border-b-[4px] border-black flex justify-between items-center relative z-50">
           <div>
-            <span class="text-[14px] font-normal text-[#555555]">{{ product.category?.name }}</span>
+            <span class="text-[12px] lg:text-[14px] font-normal text-[#555555]">{{ product.category?.name }}</span>
             <strong class="block text-xl font-bold uppercase mt-[8px] mb-3">{{ product.name }}</strong>
             <div class="space-x-2">
               <small class="py-[2px] px-[6px] text-xs font-normal bg-[#FFF6F2] text-[#FF3609]" v-for="tag in product.tags"
                 :key="tag.id">{{ tag.name }}</small>
             </div>
           </div>
-          <figure class="w-6 h-6">
+          <!-- <figure class="w-6 h-6">
             <img class="object-cover object-center w-full h-full" :src="Images.iconLinkSimple.src"
               :alt="Images.iconLinkSimple.alt">
-          </figure>
+          </figure> -->
         </article>
-        <article class="mt-4 space-y-4">
-          <div class="flex items-center justify-between">
+        <article class="relative z-50 mt-4 space-y-4">
+          <div class="flex items-center justify-between pb-4 border-b lg:border-none">
             <strong class="text-[14px] text-black">정가</strong>
             <del class="text-[14px] font-normal text-[#6F6F6F]">{{ formatMoney(product.purchasePrice) }}원</del>
           </div>
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between lg:border-none">
             <strong class="text-[14px] text-black">구매가</strong>
             <div class="space-x-[6px]">
               <sub class="inline-block text-[#FF2618] text-base font-bold">{{ product.discount }}%</sub>
@@ -59,17 +60,17 @@
             </div>
           </Collapse> -->
           <Select classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between"
-            classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
+            classWrapOption="space-y-1 w-full my-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsQuantity"
-            v-model="selectedQuantity" placeholder="Select an option" placement="bottomLeft">
+            v-model="selectedQuantity" placeholder="Select an option" :placement="placementSelect">
             <template #icon>
               <img :src="Images.iconDownBlack.src" :alt="Images.iconDownBlack.alt">
             </template>
           </Select>
           <Select classSelected="text-[14px] font-normal bg-[#F2F4F6] px-[20px] py-[10px] flex justify-between"
-            classWrapOption="space-y-1 w-full mt-1 bg-white z-50 overflow-y-auto max-h-[221px]"
+            classWrapOption="space-y-1 w-full my-1 bg-white z-50 overflow-y-auto max-h-[221px]"
             classOption="bg-[#F2F4F6] text-[14px] font-normal w-full px-[20px] py-[10px]" :options="selectOptionsColor"
-            v-model="selectedColor" placeholder="COLOR" placement="bottomLeft">
+            v-model="selectedColor" placeholder="COLOR" :placement="placementSelect">
             <template #icon>
               <img :src="Images.iconDownBlack.src" :alt="Images.iconDownBlack.alt">
             </template>
@@ -87,24 +88,44 @@
       </div>
     </section>
 
-    <section class="mt-[120px]" v-for="(prod, iProd) in product.descriptionsProductDtos" :key="prod.id">
-      <h2 class="text-center text-[16px] font-bold" v-html="prod.title"></h2>
-      <p class="text-center text-[16px] font-bold" v-html="prod.content"></p>
-      <figure class="mt-[30px] relative w-full h-full" :class="{ 'show': isImageVisible[iProd] }">
-        <img class="object-cover object-center w-full h-full" :src="prod.path
-          " alt="Product">
-      </figure>
-      <Button @click="toggleImage(iProd)"
-        class="border py-[19px] w-full text-base font-bold text-[#242424] flex justify-center items-center space-x-2 border-[#DFDFDF] mt-[96px]">
-        <span>상품 설명 접기</span>
-        <template #right-icon>
-          <img v-if="!isImageVisible[iProd]" class="w-6 h-6" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
-          <img v-else class="w-6 h-6" :src="Images.iconUp.src" :alt="Images.iconUp.alt">
-        </template>
-      </Button>
+    <section class="lg:hidden grid grid-cols-2 mt-[52px]">
+      <div class="text-[16px] font-normal py-[10px] border-b flex justify-center text-[#A5A5A5] border-[#A5A5A5]"
+        :class="{ 'font-bold text-black border-black': isShowInformation.moreInformation }" @click="() => {
+          isShowInformation.moreInformation = true
+          isShowInformation.purchaseInformation = false
+        }">
+        상세정보
+      </div>
+      <div class="text-[16px] font-normal py-[10px] border-b flex justify-center text-[#A5A5A5] border-[#A5A5A5]"
+        :class="{ 'font-bold text-black border-black': isShowInformation.purchaseInformation }" @click="() => {
+          isShowInformation.moreInformation = false
+          isShowInformation.purchaseInformation = true
+        }">
+        구매정보
+      </div>
     </section>
 
-    <section class="mt-[120px]">
+    <section v-if="isShowInformation.moreInformation">
+      <div class="mt-[48px] lg:mt-[120px] relative z-10" v-for="(prod, iProd) in product.descriptionsProductDtos"
+        :key="prod.id">
+        <h2 class="text-center text-[16px] font-bold" v-html="prod.title"></h2>
+        <p class="text-center text-[16px] font-bold" v-html="prod.content"></p>
+        <figure class="mt-[30px] relative w-full h-full" :class="{ 'show': isImageVisible[iProd] }">
+          <img class="object-cover object-center w-full h-full" :src="prod.path
+            " alt="Product">
+        </figure>
+        <Button @click="toggleImage(iProd)"
+          class="border py-[19px] w-full text-base font-bold text-[#242424] flex justify-center items-center space-x-2 border-[#DFDFDF] mt-[96px]">
+          <span>상품 설명 접기</span>
+          <template #right-icon>
+            <img v-if="!isImageVisible[iProd]" class="w-6 h-6" :src="Images.iconDown.src" :alt="Images.iconDown.alt">
+            <img v-else class="w-6 h-6" :src="Images.iconUp.src" :alt="Images.iconUp.alt">
+          </template>
+        </Button>
+      </div>
+    </section>
+
+    <section v-if="isShowInformation.purchaseInformation" class="mt-[48px] lg:mt-[120px]">
       <Collapse :isOpen="true" title="제품정보 고시"
         classTitle="text-[20px] font-bold text-[#242424] flex justify-between py-[18px] border-b border-[#000]"
         :iconDown="Images.iconDownBlack" :iconUp="Images.iconUpBlack">
@@ -122,7 +143,7 @@
   </main>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import Images from '@/constants/images'
 import ImagesProd from '@/constants/imagesProd.js'
 import Collapse from '@/components/element/Collapse.vue'
@@ -146,6 +167,12 @@ const selectedQuantity = ref(1)
 const selectOptionsColor = ref([])
 const selectedColor = ref()
 const isImageVisible = ref([]);
+const isShowInformation = ref({
+  moreInformation: true,
+  purchaseInformation: true
+})
+
+const placementSelect = ref('bottomLeft');
 
 const toggleImage = (index) => {
   isImageVisible.value[index] = !isImageVisible.value[index];
@@ -161,7 +188,7 @@ const handleAddCart = async () => {
     })
     notification.value.isOpen = true
     notification.value.title = '장바구니'
-    notification.value.content = '장바구니에  추가완료하였습니다.'
+    notification.value.content = '장바구니에 담겼습니다.'
   } catch (error) {
     alert(error.response?.data?.message || error)
   }
@@ -256,8 +283,17 @@ const handleGlobalEnterKey = (event) => {
   }
 }
 
+function handleResize() {
+  placementSelect.value = window.innerWidth >= 1024 ? 'bottomLef' : 'topLeft';
+  isShowInformation.value.moreInformation = true
+  isShowInformation.value.purchaseInformation = window.innerWidth >= 1024 ? true : false
+}
+
+
 onMounted(async () => {
   document.addEventListener('keydown', handleGlobalEnterKey);
+  window.addEventListener("resize", handleResize);
+  handleResize()
   window.scroll(0, 0)
   if (route.query.inCart) {
     callApiGetProdInCart()
@@ -268,6 +304,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleGlobalEnterKey);
+  document.removeEventListener('resize', handleResize);
 })
 </script>
 <style scoped>

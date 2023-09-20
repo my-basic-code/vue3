@@ -1,6 +1,6 @@
 <template>
-  <main class="container mx-auto mt-[60px] grid grid-cols-3 gap-x-9 mb-[170px]">
-    <section class="col-span-2">
+  <main class="container mx-auto mt-[60px] grid grid-cols-1 lg:grid-cols-3 gap-x-9 mb-[100px] lg:mb-[170px]">
+    <section class="lg:col-span-2">
       <div class="pb-[28px] border-b-[4px] border-black w-full text-start">
         <h1 class="text-[28px] font-bold">장바구니</h1>
       </div>
@@ -17,26 +17,32 @@
           className="relative flex w-full justify-start items-start gap-x-3 pb-[24px] border-b border-[#DFDFDF]"
           id="check-all" v-model="prod.checkBox">
           <template #label>
-            <div class="relative flex items-center justify-between w-full gap-x-[40px]">
-              <div class="flex gap-x-[20px]">
-                <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center"
+            <div class="relative lg:flex items-center justify-between w-full gap-x-[10px] ">
+              <div class="flex gap-x-2 lg:gap-x-[20px] grow">
+                <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center py-5 px-2"
                   style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
                   <img class="object-contain w-full h-full" :src="prod?.productDto?.thumbnail" alt="Product">
                 </figure>
-                <div>
+                <div class="w-full">
                   <strong class="text-[16px] text-[#242424]">{{ prod?.productDto?.name }}</strong>
                   <p class="text-[12px] font-normal text-[#6F6F6F]">옵션 - {{ prod?.option }}</p>
                   <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ prod?.quantity }}</span>
+                  <div class="space-x-[6px] block lg:hidden">
+                    <span class="text-[#FF4F27] font-bold text-[12px]">{{ prod?.productDto?.discount }}%</span>
+                    <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod?.price) }}</strong>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-center justify-end grow">
-                <div class="space-x-[20px]">
-                  <button class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]"
-                    @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">옵션변경</button>
-                  <button class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF]"
-                    @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">수량변경</button>
-                </div>
-                <div class="space-x-[6px] ml-[40px]">
+              <div class="flex items-center justify-between lg:justify-end space-x-[20px] mt-3 lg:mt-0">
+                <button
+                  class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF] w-1/2 lg:w-fit"
+                  @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">옵션변경</button>
+                <button
+                  class="text-[#242424] text-[12px] font-normal px-[28px] py-[6px] border border-[#DFDFDF] w-1/2 lg:w-fit"
+                  @click="router.push(`/product-detail/${prod.id}?inCart=${prod.productDto.id}`)">수량변경</button>
+              </div>
+              <div class="items-center hidden lg:flex">
+                <div class="space-x-[6px]">
                   <span class="text-[#FF4F27] font-bold text-[12px]">{{ prod?.productDto?.discount }}%</span>
                   <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod?.price) }}</strong>
                 </div>
@@ -50,11 +56,12 @@
       </article>
     </section>
     <section>
-      <div class="mt-[72px] col-span-1 border-t-[4px] border-black px-[20px] pt-[32px] pb-[40px]">
-        <article class="pb-[14px] border-b border-[#DFDFDF] w-full text-center">
+      <div
+        class="mt-0 lg:mt-[72px] col-span-1 border-t-[2px] lg:border-t-[4px] border-black lg:px-[20px] lg:pt-[32px] lg:pb-[40px]">
+        <article class="pb-[14px] border-b border-[#DFDFDF] w-full text-center hidden lg:block">
           <h4 class="text-[16px] font-bold">장바구니</h4>
         </article>
-        <article class="pb-[24px] border-b border-[#DFDFDF] space-y-[24px] mt-[24px]">
+        <article class="pb-[19px] lg:pb-[24px] border-b border-[#DFDFDF] space-y-[14px] lg:space-y-[24px] mt-[24px]">
           <div class="flex justify-between">
             <p class="text-[12px] font-normal text-[#8B8B8B]">주문 상품 수</p>
             <strong class="text-[16px] text-[#111111]">{{ quantityProdChecked }}개</strong>

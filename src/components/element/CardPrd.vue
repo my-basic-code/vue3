@@ -1,22 +1,27 @@
 <template>
   <div
-    :class="`w-full h-full overflow-hidden bg-white cursor-pointer ${type === 3 && 'grid grid-cols-2 gap-x-[20px] items-center'}`"
+    :class="`w-full h-full overflow-hidden bg-white cursor-pointer relative ${type === 2 && 'grid grid-cols-2 lg:grid-cols-1 gap-x-[20px] items-start pl-9 lg:pl-0 pb-4 lg:pb-0 border-b lg:border-none'} ${type === 3 && 'grid grid-cols-2 gap-x-[20px] items-center'}`"
     @click="router.push(`/product-detail/${item.id}`)">
-    <div :class="`flex justify-center items-center relative ${type === 2 ? 'h-[380px]' : 'h-[280px]'}`"
+    <div v-if="type === 2"
+      class="absolute top-0 left-0 flex items-center justify-center w-6 h-6 text-white bg-black text-[12px] font-bold lg:hidden">
+      {{ index }}</div>
+    <div
+      :class="`flex justify-center items-center relative w-full px-[15%] h-auto ${type === 2 ? 'py-[30%]' : 'py-[20%]'}`"
       style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
-      <div v-if="type === 2" class="absolute top-0 left-0 flex items-center justify-center w-12 h-12 text-white bg-black">
+      <div v-if="type === 2"
+        class="absolute top-0 left-0 items-center justify-center hidden w-12 h-12 text-white bg-black lg:flex">
         {{ index }}</div>
-      <div :class="`${type === 2 ? 'w-[266px] h-[153px]' : 'w-[196px] h-[113px]'} overflow-hidden `">
-        <img class="object-cover object-center w-full h-full" :src="item?.thumbnail" alt="blog">
+      <div class="w-full h-full overflow-hidden">
+        <img class="object-contain object-center w-full h-full" :src="item?.thumbnail" alt="blog">
       </div>
     </div>
     <div class="mt-4">
-      <div class="space-x-2">
-        <small class="py-[2px] px-[6px] text-xs font-normal bg-[#FFF6F2] text-[#FF3609]" v-for="tag in item?.tags"
+      <div class="flex flex-wrap gap-2">
+        <small class="py-[2px] px-[6px] text-xs font-normal bg-[#FFF6F2] text-[#FF3609] w-fit" v-for="tag in item?.tags"
           :key="tag.id">{{ tag?.name }}</small>
       </div>
       <p class="text-sm font-bold uppercase mt-[6px]">{{ item?.name }}</p>
-      <hr class="mt-3">
+      <hr v-if="type !== 2" class="mt-3">
       <div class="flex items-end justify-start mt-3 gap-x-[6px]">
         <span class="text-sm font-bold text-[#FF2618]">{{ item?.discount }}%</span>
         <div class="text-xl font-bold text-black">{{ formatMoney(calculateSalePrice(item?.purchasePrice, item?.discount))

@@ -1,21 +1,22 @@
 <template>
   <header class="relative bg-white border-b border-[#DFDFDF]">
-    <div class="container relative items-center justify-between block py-3 mx-auto space-y-4 lg:space-y-0 lg:flex">
-      <div class="flex items-center justify-between lg:justify-start space-x-4 lg:space-x-[120px]">
-        <router-link to="/" class="h-8 w-28">
+    <div class="container relative flex items-center justify-between py-3 mx-auto space-y-4 lg:space-y-0">
+      <div class="flex items-center justify-between lg:justify-start gap-x-4 sm:gap-x-[100px] lg:gap-x-[161px]">
+        <router-link to="/" class="flex items-center h-8">
           <img :src="Images.logo.src" :alt="Images.logo.alt" />
         </router-link>
         <Input :wrapClass="classInputCustom[1].wrapper"
-          :className="`pt-1 pb-[10px] lg:w-[300px] ${classInputCustom[1].input}`" name="search"
-          placeholder="썸머 마지막 50% 세일" v-model="search" @enter="handleSearch">
+          :className="`py-1 lg:py-[7px] w-[100px] sm:w-[200px] lg:w-[300px] placeholder:text-[10px] lg:placeholder:text-[14px] ${classInputCustom[1].input}`"
+          name="search" placeholder="썸머 마지막 50% 세일" v-model="search" @enter="handleSearch">
         <template #suffix>
-          <img @click="handleSearch" :src="Images.iconSearch.src" :alt="Images.iconSearch.alt" />
+          <img class="w-4 h-4 lg:w-6 lg:h-[6]" @click="handleSearch" :src="Images.iconSearch.src"
+            :alt="Images.iconSearch.alt" />
         </template>
         </Input>
       </div>
 
-      <ul class="absolute right-[20px]">
-        <li class="flex space-x-7">
+      <ul class="">
+        <li class="flex space-x-2 lg:space-x-7">
           <router-link v-if="userStore.state.isLogin" to="/cart" class="flex flex-col items-center space-y-1">
             <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
             <span class="text-[10px] text-[#242424] font-normal">장바구니</span>

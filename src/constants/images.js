@@ -25,11 +25,16 @@ import iconUp from '@/assets/images/icon/up.svg'
 import iconUpBlack from '@/assets/images/icon/up-black.svg'
 import iconUser from '@/assets/images/icon/user.svg'
 import logo from '@/assets/images/logo.svg'
+import logoLogin from '@/assets/images/logo-login.svg'
 
 const Images = {
   logo: {
     src: logo,
     alt: 'logo'
+  },
+  logoLogin: {
+    src: logoLogin,
+    alt: 'logoLogin'
   },
   iconSearch: {
     src: iconSearch,

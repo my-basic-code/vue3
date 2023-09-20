@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-white dark:bg-gray-900 border-t border-[#DFDFDF]">
-    <div class="container py-20 mx-auto">
-      <div class="flex items-end justify-between">
+    <div class="container py-10 mx-auto lg:py-20">
+      <div class="items-end justify-between sm:flex">
         <div class="space-y-6">
           <a href="#">
             <img class="w-auto h-7" :src="Images.logo.src" :alt="Images.logo.alt" />

@@ -2,9 +2,10 @@
   <section class="relative">
     <Carousel :wrap-around="true" v-model="currentSlide">
       <Slide v-for="(slide, index) in carouselItems" :key="index" class="relative">
-        <div class="overflow-hidden w-full h-[600px]">
-          <img class="object-cover w-full h-full" :src="slide.pathDesktop" :alt="slide.pathDesktop" />
-        </div>
+        <picture class="overflow-hidden w-full h-[400px] lg:h-[600px]">
+          <source class="object-cover w-full h-full" media="(max-width: 768px)" :srcset="slide.pathMobile">
+          <img class="object-cover w-full h-full" :src="slide.pathDesktop">
+        </picture>
         <div class="container absolute inset-0 mx-auto pt-20 pb-[60px] text-left flex flex-col justify-end h-full">
           <!-- <h4 class="text-5xl font-black uppercase">
             Special sale <br />

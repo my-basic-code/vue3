@@ -48,9 +48,9 @@ const positionOption = computed(() => {
     case "bottomRight":
       return "right-0 top-[100%]"
     case "topLeft":
-      return "left-0 top-[-100%]"
+      return "left-0 bottom-[100%]"
     case "topRight":
-      return "right-0 top-[-100%]"
+      return "right-0 bottom-[100%]"
     default:
       return ""
   }

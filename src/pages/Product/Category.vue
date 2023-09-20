@@ -10,12 +10,12 @@
           <em class="text-[14px]">{{ listProd.length }}건</em>
         </strong>
         <button class="flex items-center justify-center" @click="handleSortPrd">
-          <img :src="Images.iconLatest.src" :alt="Images.iconLatest.alt">
-          <span class="text--[14px] font-normal text-[#6F6F6F]">최신순</span>
+          <img class="w-4 h-4 lg:w-6 lg:h-6" :src="Images.iconLatest.src" :alt="Images.iconLatest.alt">
+          <span class="text-[12px] lg:text-[14px] font-normal text-[#6F6F6F]">최신순</span>
         </button>
       </div>
 
-      <div class="grid grid-cols-4 gap-x-[26px] gap-y-[60px] mt-[34px]">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-[15px] gap-y-28px] lg:gap-x-[26px] lg:gap-y-[60px] mt-[34px]">
         <CardPrd v-for="prod in listProd" :key="prod.id" :item="prod" />
       </div>
     </section>

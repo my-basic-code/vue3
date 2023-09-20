@@ -9,7 +9,7 @@
       checkmarkClass="absolute right-0 w-6 h-6 transparent peer-checked/all:bg-[#FF4F27] after:absolute after:left-2 after:top-[2px] after:w-2 after:h-4 after:border-[3px] after:border-white after:border-t-0 after:border-l-0 after:transform after:rotate-45"
       className="mt-10 relative flex flex-row-reverse w-full justify-between" id="check-all"
       v-model="store.valueCheckBox.all" />
-    <div class="mt-[17px] bg-[#3D3D3D] w-full h-[1px]"></div>
+    <div class="mt-[17px] bg-[#3D3D3D] w-full h-[4px] lg:h-[1px]"></div>
     <Checkbox type="checkbox" name="old"
       inputClass="absolute right-0 w-6 h-6 border appearance-none checked:scale-150 checked:opacity-0 peer/old"
       checkmarkClass="absolute right-0 w-6 h-6 transparent peer-checked/old:bg-[#FF4F27] after:absolute after:left-2 after:top-[2px] after:w-2 after:h-4 after:border-[3px] after:border-white after:border-t-0 after:border-l-0 after:transform after:rotate-45"

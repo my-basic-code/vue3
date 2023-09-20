@@ -1,39 +1,49 @@
 <template>
-  <section class="pb-[28px] border-b-[4px] border-black w-full flex justify-between items-end">
-    <div class="flex justify-start gap-x-[28px]">
-      <div class="w-[80px] h-[80px] rounded-full overflow-hidden">
+  <section
+    class="py-[20px] px-5 lg:pb-[28px] bg-black lg:bg-transparent lg:border-b-[4px] lg:border-black w-full flex flex-wrap justify-between items-center lg:items-end gap-y-4">
+    <div class="flex justify-start gap-x-3 lg:gap-x-[28px]">
+      <div class="w-[68px] lg:w-[80px] h-[68px] lg:h-[80px] rounded-full overflow-hidden">
         <img class="object-cover w-full h-full" :src="user?.thumbnail" alt="user">
       </div>
       <div class="flex flex-col justify-center gap-y-2">
-        <h5 class="text-[28px] font-bold text-[#111]">{{ user?.nickName }}</h5>
+        <h5 class="text-[20px] lg:text-[28px] font-bold text-white lg:text-[#111]">{{ user?.nickName }}</h5>
         <!-- <span class="px-4 py-1 text-white bg-[#414141] rounded-full w-fit">Colored</span> -->
       </div>
     </div>
-    <button class="w-[318px] px-9 py-[10px] text-[14px] font-bold border border-[#DFDFDF]"
+    <button
+      class="px-[10px] py-[6px] lg:px-28 lg:py-[10px] text-[12px] lg:text-[14px] font-bold border border-[#DFDFDF] text-white lg:text-[#111]"
       @click="router.push('/profile/information/edit-profile')">
       개인정보 수정
     </button>
   </section>
-  <section class="mt-[60px]">
+  <!-- <section class="mt-7 lg:mt-[60px]">
     <h4 class="text-[20px] font-bold">쇼핑정보</h4>
-    <div class="mt-[24px] py-[48px] flex justify-center items-end gap-x-[48px] bg-[#111]">
+    <div class="mt-[24px] py-[48px] flex justify-center items-end gap-x-[48px] lg:bg-[#111]">
       <div class="space-y-[6px] flex flex-col items-center">
-        <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ paid.length }}</strong>
+        <span class="text-[14px] text-[#111] lg:text-white font-normal">결제완료</span>
+        <strong class="text-[28px] text-[#111] lg:text-white">{{ paid.length }}</strong>
       </div>
-      <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
+      <picture class="h-[24px] w-[24px] translate-y-[-25%]">
+        <source class="object-cover w-full h-full" media="(max-width: 1024px)" :srcset="Images.iconRightGray.src"
+          :alt="Images.iconRightGray.alt">
+        <img class="object-cover w-full h-full" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
+      </picture>
       <div class="space-y-[6px] flex flex-col items-center">
-        <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ shipping.length }}</strong>
+        <span class="text-[14px] text-[#111] lg:text-white font-normal">결제완료</span>
+        <strong class="text-[28px] text-[#111] lg:text-white">{{ shipping.length }}</strong>
       </div>
-      <img class="h-[24px] w-[24px] translate-y-[-25%]" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
+      <picture class="h-[24px] w-[24px] translate-y-[-25%]">
+        <source class="object-cover w-full h-full" media="(max-width: 1024px)" :srcset="Images.iconRightGray.src"
+          :alt="Images.iconRightGray.alt">
+        <img class="object-cover w-full h-full" :src="Images.iconRight.src" :alt="Images.iconRight.alt">
+      </picture>
       <div class="space-y-[6px] flex flex-col items-center">
-        <span class="text-[14px] text-white font-normal">결제완료</span>
-        <strong class="text-[28px] text-white">{{ shipped.length }}</strong>
+        <span class="text-[14px] text-[#111] lg:text-white font-normal">결제완료</span>
+        <strong class="text-[28px] text-[#111] lg:text-white">{{ shipped.length }}</strong>
       </div>
     </div>
-  </section>
-  <section class="mt-[72px] border-t-[2px] border-[#111]">
+  </section> -->
+  <section class="hidden lg:block mt-[72px] border-t-[2px] border-[#111]">
     <table class="w-full border-separate table-auto border-spacing-y-4">
       <thead>
         <tr class="border-b">
@@ -79,7 +89,7 @@
           <td class="pb-4 border-b ">
             <div class="flex flex-col items-center justify-center w-full gap-y-2">
               <button class="px-[44px] py-[6px] border border-[#F2F4F6] min-w-[132px] text-[12px] font-normal mx-auto"
-                @click="handleQuestion(prod)">문의하기</button>
+                @click.stop="handleQuestion(prod)">문의하기</button>
               <button v-if="prod.status >= 3"
                 class="px-[44px] py-[6px] border border-[#F2F4F6] min-w-[132px] text-[12px] font-normal mx-auto"
                 @click="router.push(`/product-detail/${prod?.product?.id}`)">재구매</button>
@@ -91,8 +101,36 @@
       </tbody>
     </table>
   </section>
+  <section class="block space-y-7 mt-7 lg:hidden">
+    <div class="relative lg:flex items-center justify-between w-full gap-x-[10px]" v-for="prod in listProdPayment"
+      :key="prod.id">
+      <div class="flex gap-x-2 lg:gap-x-[20px] grow" @click="showProdInformation(prod)">
+        <figure class="w-[80px] h-[80px] overflow-hidden flex justify-center items-center py-5 px-2"
+          style="background: linear-gradient(155deg, #F2F4F6 0%, rgba(255, 255, 255, 0.81) 100%);">
+          <img class="object-contain w-full h-full" :src="prod?.thumbnail" alt="product">
+        </figure>
+        <div class="w-full">
+          <strong class="text-[16px] text-[#242424]">{{ prod?.productName }}</strong>
+          <p class="text-[12px] font-normal text-[#6F6F6F]">옵션 - {{ prod?.option }}</p>
+          <span class="text-[12px] font-normal text-[#6F6F6F]">수량 - {{ prod?.quantity }}</span>
+          <div class="space-x-[6px] block lg:hidden">
+            <strong class="text-[#111111] text-[16px]">{{ formatMoney(prod?.price) }} 원</strong>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-start w-full gap-x-1 gap-y-2">
+        <button class="px-[44px] py-[6px] border border-[#F2F4F6] w-full text-[12px] mt-3 font-normal"
+          @click.stop="handleQuestion(prod)">문의하기</button>
+        <button v-if="prod.status >= 3"
+          class="px-[44px] py-[6px] border border-[#F2F4F6] w-full text-[12px] mt-3 font-normal"
+          @click="router.push(`/product-detail/${prod?.product?.id}`)">재구매</button>
+        <a v-if="prod.status === 2" href="https://www.cjlogistics.com/ko/tool/parcel/tracking" target="_blank"
+          class="px-[44px] py-[6px] border border-[#F2F4F6] w-full text-[12px] mt-3 font-normal">배송조회</a>
+      </div>
+    </div>
+  </section>
   <div v-if="cartSummary.isShow">
-    <section class="mt-[60px] pb-[30px] border-b border-[#3D3D3D]">
+    <section class="mt-7 lg:mt-[60px] pb-[30px] border-b border-[#3D3D3D]">
       <article>
         <div class="pb-4 border-b-[4px] border-[#3D3D3D] flex justify-between w-full">
           <strong class="text-[20px]">결제 정보</strong>

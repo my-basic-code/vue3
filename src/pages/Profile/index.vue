@@ -1,15 +1,21 @@
 <template>
-  <main class="container grid grid-cols-12 mx-auto mt-[60px] mb-[109px]">
-    <aside class="col-span-2">
-      <h3 class="text-[#555555] text-[14px] font-normal">마이페이지</h3>
-      <ul class="space-y-[28px] mt-[40px]">
+  <main class="container grid lg:grid-cols-12 mx-auto mt-[60px] mb-[109px]">
+    <aside class="lg:col-span-2">
+      <h3 class="text-[#555555] text-[14px] font-bold lg:font-normal">마이페이지</h3>
+      <ul class="flex lg:flex-col justify-start items-center lg:items-start gap-[28px] mt-3 lg:mt-[40px]">
         <li
           :class="['text-[14px] font-normal cursor-pointer', route.name === 'ShowInformation' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/information/show-information')">홈</li>
+        <span class="block text-gray-500 lg:hidden dark:text-gray-300">
+          /
+        </span>
         <li
           :class="['text-[14px] font-normal cursor-pointer', route.name === 'Rating' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/rating')">내 등급
         </li>
+        <span class="block text-gray-500 lg:hidden dark:text-gray-300">
+          /
+        </span>
         <!-- <li
           :class="['text-[14px] font-normal cursor-pointer', route.name === 'OrderDetail' ? 'text-[#242424]' : 'text-[#A5A5A5]']"
           @click="router.push('/profile/order-detail')">
@@ -18,7 +24,7 @@
           Logout</li>
       </ul>
     </aside>
-    <div class="col-span-10">
+    <div class="mt-4 lg:mt-0 lg:col-span-10">
       <router-view />
     </div>
   </main>
