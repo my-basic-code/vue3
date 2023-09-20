@@ -15,29 +15,27 @@
         </Input>
       </div>
 
-      <ul class="">
-        <li class="flex space-x-2 lg:space-x-7">
-          <router-link v-if="userStore.state.isLogin" to="/cart" class="flex flex-col items-center space-y-1">
-            <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
-            <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
-          </router-link>
-          <router-link v-if="userStore.state.isLogin" to="/customer-service/how-to-use"
-            class="flex flex-col items-center space-y-1">
-            <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconCustomerService.src"
-              :alt="Images.iconCustomerService.alt" />
-            <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
-          </router-link>
-          <router-link v-if="userStore.state.isLogin" to="/profile/information/show-information"
-            class="flex flex-col items-center space-y-1">
-            <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
-            <span class="text-[10px] text-[#242424] font-normal">마이</span>
-          </router-link>
-          <router-link v-else to="/login" class="flex flex-col items-center space-y-1">
-            <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconLogin.src" :alt="Images.iconLogin.alt" />
-            <span class="text-[10px] text-[#242424] font-normal">마이</span>
-          </router-link>
-        </li>
-      </ul>
+      <div class="flex space-x-4 lg:space-x-7">
+        <router-link v-if="userStore.state.isLogin" to="/cart" class="flex flex-col items-center space-y-1">
+          <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconCart.src" :alt="Images.iconCart.alt" />
+          <span class="text-[10px] text-[#242424] font-normal">장바구니</span>
+        </router-link>
+        <router-link v-if="userStore.state.isLogin" to="/customer-service/how-to-use"
+          class="flex flex-col items-center space-y-1">
+          <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconCustomerService.src"
+            :alt="Images.iconCustomerService.alt" />
+          <span class="text-[10px] text-[#242424] font-normal">고객센터</span>
+        </router-link>
+        <router-link v-if="userStore.state.isLogin" to="/profile/information/show-information"
+          class="flex flex-col items-center space-y-1">
+          <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconUser.src" :alt="Images.iconUser.alt" />
+          <span class="text-[10px] text-[#242424] font-normal">마이</span>
+        </router-link>
+        <router-link v-else to="/login" class="flex flex-col items-center space-y-1">
+          <img class="w-4 h-4 lg:w-[20px] lg:h-[20px]" :src="Images.iconLogin.src" :alt="Images.iconLogin.alt" />
+          <span class="text-[10px] text-[#242424] font-normal">마이</span>
+        </router-link>
+      </div>
     </div>
 
     <div class="container mx-auto">
@@ -46,7 +44,7 @@
         classIcon="w-6 h-6" :menuItems="categoryStore.valueCategory" @item-clicked="handleItemMenuClick">
         <template v-slot:toggle>
           <Button
-            class="relative py-3 lg:px-[18px] z-10 flex text-[#242424] space-x-[10px] border border-transparent dark:text-white">
+            class="relative lg:py-3 lg:px-[18px] z-10 flex text-[#242424] space-x-[10px] border border-transparent dark:text-white">
             <template v-slot:left-icon>
               <img :src="Images.iconBar3.src" :alt="Images.iconBar3.alt" />
             </template>
