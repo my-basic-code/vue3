@@ -1,31 +1,24 @@
 import '@/assets/css/main.css'
+import '@/permission' // permission control
+import 'element-plus/dist/index.css'
 
 import App from './App.vue'
+import ElementPlus from 'element-plus'
+import { clickOutsideDirective } from "@/hooks/clickOutsideDirective";
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { registerGlobalComponent } from "@/utils/import";
 import router from './router'
-
-const clickOutside = {
-  beforeMount(el, binding) {
-    el.__clickOutsideHandler = (event) => {
-      if (!el.contains(event.target)) {
-        binding.value()
-      }
-    }
-
-    document.addEventListener('click', el.__clickOutsideHandler)
-  },
-
-  unmounted(el) {
-    document.removeEventListener('click', el.__clickOutsideHandler)
-  }
-}
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 const app = createApp(App)
 registerGlobalComponent(app);
 app.use(createPinia())
 app.use(router)
-app.directive('click-outside', clickOutside)
+app.use(ElementPlus, {
+  locale: zhCn,
+})
+app.directive('click-outside', clickOutsideDirective)
+app.config.productionTip = false
 
 app.mount('#app')

@@ -6,192 +6,23 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
+      meta: {
+        title: 'Home'
+      },
       component: () => import("@/pages/Home.vue"),
     },
     {
-      path: "/login",
-      name: "Login",
-      component: () => import("@/pages/Auth/Login.vue"),
-    },
-    {
-      path: "/register",
-      name: "Register",
-      component: () => import("@/pages/Auth/Register.vue"),
-    },
-    {
-      path: "/find-id",
-      name: "FindId",
-      component: () => import("@/pages/Auth/FindId.vue"),
-    },
-    {
-      path: "/find-password",
-      name: "FindPassword",
-      component: () => import("@/pages/Auth/FindPassword.vue"),
-    },
-    {
-      path: "/list-story",
-      name: "ListStory",
-      component: () => import("@/pages/Story/ListStory.vue"),
-    },
-    {
-      path: "/detail-story/:id",
-      name: "DetailStory",
-      component: () => import("@/pages/Story/DetailStory.vue"),
-    },
-    {
-      path: "/category/:id",
-      name: "Category",
-      component: () => import("@/pages/Product/Category.vue"),
-    },
-    {
-      path: "/search-detail",
-      name: "SearchDetail",
-      component: () => import("@/pages/Product/SearchDetail.vue"),
-    },
-    {
-      path: "/product-detail/:id",
-      name: "ProductDetail",
-      component: () => import("@/pages/Product/Detail.vue"),
-    },
-    {
-      path: "/cart",
-      name: "Cart",
-      component: () => import("@/pages/Product/Cart.vue"),
-    },
-    {
-      path: "/payment/:id?",
-      name: "Payment",
-      component: () => import("@/pages/Payment/Payment.vue"),
-    },
-    {
-      path: "/order",
-      name: "Order",
-      component: () => import("@/pages/Payment/Order.vue"),
-    },
-    {
-      path: "/profile",
-      name: "Profile",
-      component: () => import("@/pages/Profile/index.vue"),
-      beforeEnter: (to, from, next) => {
-        if (to.matched.length === 1) { next({ name: "Home" }); } else { next(); }
+      path: '/404',
+      name: 'NotFound',
+      meta: {
+        title: 'NotFound'
       },
-      children: [
-        {
-          path: "information",
-          name: "Information",
-          component: () => import("@/pages/Profile/Information/index.vue"),
-          beforeEnter: (to, from, next) => {
-            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
-          },
-          children: [
-            {
-              path: "edit-profile",
-              name: "EditProfile",
-              component: () => import("@/pages/Profile/Information/EditProfile.vue"),
-            },
-            {
-              path: "show-information",
-              name: "ShowInformation",
-              component: () => import("@/pages/Profile/Information/ShowInformation.vue"),
-            },
-          ]
-        },
-        {
-          path: "rating",
-          name: "Rating",
-          component: () => import("@/pages/Profile/Rating.vue"),
-        },
-        {
-          path: "order-detail",
-          name: "OrderDetail",
-          component: () => import("@/pages/Profile/OrderDetail.vue"),
-        },
-      ]
+      component: () => import("@/pages/404.vue"),
     },
-    {
-      path: "/customer-service",
-      name: "CustomerService",
-      component: () => import("@/pages/CustomerService/index.vue"),
-      beforeEnter: (to, from, next) => {
-        if (to.matched.length === 1) { next({ name: "Home" }); } else { next(); }
-      },
-      children: [
-        {
-          path: "how-to-use",
-          name: "HowToUse",
-          component: () => import("@/pages/CustomerService/HowToUse.vue"),
-        },
-        {
-          path: "question-answer",
-          name: "QuestionAnswer",
-          component: () => import("@/pages/CustomerService/QuestionAnswer/index.vue"),
-          beforeEnter: (to, from, next) => {
-            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
-          },
-          children: [
-            {
-              path: "list",
-              name: "ListQuestionAnswer",
-              component: () => import("@/pages/CustomerService/QuestionAnswer/List.vue"),
-            },
-            {
-              path: "detail/:id",
-              name: "DetailQuestionAnswer",
-              component: () => import("@/pages/CustomerService/QuestionAnswer/Detail.vue"),
-            },
-          ]
-        },
-        {
-          path: "notification",
-          name: "Notification",
-          component: () => import("@/pages/CustomerService/Notification/index.vue"),
-          beforeEnter: (to, from, next) => {
-            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
-          },
-          children: [
-            {
-              path: "list",
-              name: "ListNotification",
-              component: () => import("@/pages/CustomerService/Notification/List.vue"),
-            },
-            {
-              path: "detail/:id",
-              name: "DetailNotification",
-              component: () => import("@/pages/CustomerService/Notification/Detail.vue"),
-            },
-          ]
-        },
-        {
-          path: "rules",
-          name: "Rules",
-          component: () => import("@/pages/CustomerService/Rules/index.vue"),
-          beforeEnter: (to, from, next) => {
-            if (to.matched.length === 2) { next({ name: "Home" }); } else { next(); }
-          },
-          children: [
-            {
-              path: "list",
-              name: "ListRules",
-              component: () => import("@/pages/CustomerService/Rules/List.vue"),
-            },
-            {
-              path: "detail/:id",
-              name: "DetailRules",
-              component: () => import("@/pages/CustomerService/Rules/Detail.vue"),
-            },
-          ]
-        },
-      ]
-    },
-    {
-      path: "/terms-of-use",
-      name: "TermsOfUse",
-      component: () => import("@/pages/TermsOfUse.vue"),
-    },
-    {
-      path: "/:pathMatch(.*)*",
-      redirect: { name: 'Home' }
-    },
+    // {
+    //   path: "/:pathMatch(.*)*",
+    //   redirect: { name: 'NotFound' }
+    // },
   ],
   scrollBehavior(to, from, savedPosition) {
     return new Promise((resolve, reject) => {
@@ -206,7 +37,11 @@ const router = createRouter({
       }, 500);
     })
   },
-
 })
+
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

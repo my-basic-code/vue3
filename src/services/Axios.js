@@ -1,3 +1,5 @@
+import { ElMessage, ElMessageBox } from 'element-plus'
+
 import axios from "axios";
 
 let axiosInstance = null;
@@ -10,27 +12,56 @@ function getInstance() {
         baseURL: import.meta.env.VITE_API_KEY,
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 5000 // request timeout
     })
     //hook interceptor cài ở đây
-    axiosInstance.interceptors.request.use(config => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+    axiosInstance.interceptors.request.use(
+        config => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        },
+        error => {
+            console.log(error)
+            return Promise.reject(error)
         }
-        return config;
-    })
+    )
 
-    axiosInstance.interceptors.response.use(response => {
-        return response;
-    }, error => {
-        if (error.response.status === 401) {
-            localStorage.removeItem('token');
-            // alert('Bạn phải đăng nhập để truy cập vào api này');
-            window.location.href = '/login';
-        }
-        return Promise.reject(error);
-    })
+    axiosInstance.interceptors.response.use(
+        response => {
+            const res = response.data
+            // if the custom code is not 20000, it is judged as an error.
+            // if (res.code !== 20000) {
+            //     ElMessage({
+            //         message: res.message || 'Error',
+            //         type: 'error',
+            //         duration: 5 * 1000
+            //     })
+
+            //     // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+            //     if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+            //         // to re-login
+            //         ElMessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+            //             confirmButtonText: 'Re-Login',
+            //             cancelButtonText: 'Cancel',
+            //             type: 'warning'
+            //         }).then(() => {
+            //             store.dispatch('user/resetToken').then(() => {
+            //                 location.reload()
+            //             })
+            //         })
+            //     }
+            //     return Promise.reject(new Error(res.message || 'Error'))
+            // }
+            return res
+        },
+        error => {
+            console.log(error)
+            return Promise.reject(error);
+        })
     return axiosInstance;
 }
 

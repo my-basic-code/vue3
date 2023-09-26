@@ -26,3 +26,4 @@ const hasErrors = computed(() => props.errors.length > 0)
     {{ props.errors.join(", ") }}
   </div>
 </template>
+@/helper/customClass
