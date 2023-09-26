@@ -12,6 +12,22 @@ const router = createRouter({
       component: () => import("@/pages/Home.vue"),
     },
     {
+      path: '/login',
+      name: 'Login',
+      meta: {
+        title: 'Login'
+      },
+      component: () => import("@/pages/Login.vue"),
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      meta: {
+        title: 'Test'
+      },
+      component: () => import("@/pages/Test.vue"),
+    },
+    {
       path: '/404',
       name: 'NotFound',
       meta: {
@@ -19,10 +35,10 @@ const router = createRouter({
       },
       component: () => import("@/pages/404.vue"),
     },
-    // {
-    //   path: "/:pathMatch(.*)*",
-    //   redirect: { name: 'NotFound' }
-    // },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: 'NotFound' }
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return new Promise((resolve, reject) => {
