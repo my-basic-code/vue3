@@ -16,6 +16,7 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "axios": "^1.4.0",
     "element-plus": "^2.3.14",
+    "js-cookie": "^3.0.5",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
