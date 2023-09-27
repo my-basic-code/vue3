@@ -16,17 +16,9 @@ const router = createRouter({
       name: 'Login',
       meta: {
         title: 'Login',
-        layout:'only-view'
+        layout: 'only-view'
       },
       component: () => import("@/pages/Login.vue"),
-    },
-    {
-      path: '/test',
-      name: 'Test',
-      meta: {
-        title: 'Test'
-      },
-      component: () => import("@/pages/Test.vue"),
     },
     {
       path: '/404',

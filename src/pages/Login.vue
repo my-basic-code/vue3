@@ -19,6 +19,7 @@ import Input from "@/components/ui/Input.vue";
 import { validateForm, onBlurInput } from '@/helper/validateForm'
 import { ref } from "vue";
 import { useUserStore } from '@/stores/user'
+import { isLoading } from '@/hooks/isLoading'
 
 const userStore = useUserStore()
 
@@ -47,6 +48,7 @@ const onSubmit = async () => {
     errors.value.password = err.password
     return
   }
+  isLoading.value = true
   try {
     await userStore.login({
       username: data.value.username,
@@ -55,5 +57,6 @@ const onSubmit = async () => {
   } catch (error) {
     console.log(error);
   }
+  isLoading.value = false
 }
 </script>

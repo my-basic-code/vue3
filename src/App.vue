@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router"
 import { computed } from "vue"
+import Loading from "./components/Loading.vue";
 
 const currentRoute = useRoute()
 const layout = computed(
@@ -12,5 +13,6 @@ const layout = computed(
 <template>
   <component :is="layout">
     <router-view />
+    <Loading />
   </component>
 </template>
