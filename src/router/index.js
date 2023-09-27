@@ -15,7 +15,8 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       meta: {
-        title: 'Login'
+        title: 'Login',
+        layout:'only-view'
       },
       component: () => import("@/pages/Login.vue"),
     },

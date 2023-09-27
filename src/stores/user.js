@@ -24,23 +24,26 @@ export const useUserStore = defineStore('user', () => {
     const { username, password } = userInfo;
     try {
       const response = await userService.login({ username: username.trim(), password: password });
-      const { data } = response;
-      state.token = data.token;
-      setToken(data.token);
+      // const { data } = response;
+      // state.token = data.accessToken;
+      // setToken(data.accessToken);
+      state.token = response.accessToken;
+      setToken(response.accessToken);
     } catch (error) {
       throw error;
     }
   }
   const getInfo = async () => {
     try {
-      const response = await userService.getInfo(state.token);
+      // const response = await userService.getInfo(state.token);
+      const response = await userService.getInfo();
       const { data } = response;
       if (!data) {
         return Promise.reject('Verification failed, please Login again.');
       }
-      const { name, avatar } = data;
-      state.name = name
-      state.avatar = avatar
+      const { username, thumbnail } = data;
+      state.name = username
+      state.avatar = thumbnail
     } catch (error) {
       throw error;
     }

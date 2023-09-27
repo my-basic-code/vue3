@@ -34,9 +34,9 @@
       </div>
       <ul class="flex items-center hidden space-x-8 lg:flex">
         <li>
-          <a href="/" aria-label="Sign in" title="Sign in"
+          <router-link to="/login"
             class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400">Sign
-            in</a>
+            in</router-link>
         </li>
         <li>
           <a href="/"
@@ -103,9 +103,9 @@
                     us</a>
                 </li>
                 <li>
-                  <a href="/" aria-label="Sign in" title="Sign in"
+                  <router-link to="/login" aria-label="Sign in" title="Sign in"
                     class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400">Sign
-                    in</a>
+                    in</router-link>
                 </li>
                 <li>
                   <a href="/"
