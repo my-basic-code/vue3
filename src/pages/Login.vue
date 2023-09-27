@@ -50,10 +50,7 @@ const onSubmit = async () => {
   }
   isLoading.value = true
   try {
-    await userStore.login({
-      username: data.value.username,
-      password: data.value.password
-    })
+    await userStore.login(data.value)
   } catch (error) {
     console.log(error);
   }
