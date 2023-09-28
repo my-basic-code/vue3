@@ -11,8 +11,73 @@ custom by Hoang Hiéu
 
 ## Giới thiệu
 
-Vue 3 basic code
-Để thay đổi layout trong route thêm
+# permission.js Thanh tiến trình và Middleware xác thực
+
+Phần mã này cung cấp tính năng thanh tiến trình sử dụng NProgress và triển khai middleware xác thực cho router trong ứng dụng Vue.js. Nó đảm bảo hiển thị thanh tiến trình trong quá trình điều hướng và xử lý xác thực người dùng.
+
+```js
+import "nprogress/nprogress.css" // Kiểu thanh tiến trình
+
+import { ElMessage } from "element-plus"
+import NProgress from "nprogress" // Thanh tiến trình
+import getPageTitle from "@/utils/get-page-title"
+import { getToken } from "@/utils/auth" // Lấy token từ cookie
+import router from "./router"
+import { useUserStore } from "@/stores/user"
+
+NProgress.configure({ showSpinner: false }) // Cấu hình NProgress
+
+const whiteList = ["/login", "/", "/404"] // Danh sách trang không chuyển hướng
+
+router.beforeEach(async (to, from, next) => {
+  // Bắt đầu thanh tiến trình
+  NProgress.start()
+  // Đặt tiêu đề trang
+  document.title = getPageTitle(to.meta.title)
+  // Xác định người dùng đã đăng nhập hay chưa
+  const userStore = useUserStore()
+  const hasToken = getToken()
+  if (hasToken) {
+    if (to.path === "/login") {
+      // Nếu người dùng đã đăng nhập, chuyển hướng đến trang chủ
+      next({ path: "/" })
+      NProgress.done()
+    } else {
+      const hasGetUserInfo = userStore.getterName
+      if (hasGetUserInfo) {
+        next()
+      } else {
+        try {
+          // Lấy thông tin người dùng
+          await userStore.getInfo()
+          next()
+        } catch (error) {
+          // Xóa token và chuyển hướng đến trang đăng nhập để đăng nhập lại
+          userStore.resetToken()
+          ElMessage.error(error || "Has Error")
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
+        }
+      }
+    }
+  } else {
+    /* Không có token */
+    if (whiteList.indexOf(to.path) !== -1) {
+      // Trong danh sách trang không yêu cầu xác thực, điều hướng trực tiếp
+      next()
+    } else {
+      // Các trang khác không có quyền truy cập sẽ được chuyển hướng đến trang đăng nhập.
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
+    }
+  }
+})
+
+router.afterEach(() => {
+  // Hoàn thành thanh tiến trình
+  NProgress.done()
+})
+```
 
 ```sh
       meta: {
@@ -59,7 +124,7 @@ npm run dev
 
     ├── constants /* Khi có quá nhiều import hãy tạo file và lưu vào đây. ex : images.js file import tất cả các ảnh */
     │
-    ├── helper /* Các hàm tiện ích của library */
+    ├── helper /* Các hàm tiện ích */
     │
     ├── hooks /* Custom hooks */
     │
@@ -76,14 +141,14 @@ npm run dev
     ├── stores /* Quản lý state */
     │
     ├── utils /* Các tiện ích khác */
-    │   │
-    │   ├── import.js /* import layout */
-    │   │
-    │   └── customClass.js /* custom classes dùng */
     │
     ├── App.vue /* Gốc ứng dụng */
     │
     └── main.js /* Entry point
+    │
+    ├── settings.js
+    │
+    └── permission.js /* Permission router
 
 ## document
 

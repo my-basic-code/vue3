@@ -1,27 +1,27 @@
-import 'nprogress/nprogress.css' // progress bar style
+import 'nprogress/nprogress.css' // Kiểu thanh tiến trình
 
 import { ElMessage } from 'element-plus'
-import NProgress from 'nprogress' // progress bar
+import NProgress from 'nprogress' // Thanh tiến trình
 import getPageTitle from '@/utils/get-page-title'
-import { getToken } from '@/utils/auth' // get token from cookie
+import { getToken } from '@/utils/auth' // Lấy token từ cookie
 import router from './router'
 import { useUserStore } from '@/stores/user'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // Cấu hình NProgress
 
-const whiteList = ['/login', '/', '/404'] // no redirect whitelist
+const whiteList = ['/login', '/', '/404'] // Danh sách trang không chuyển hướng
 
 router.beforeEach(async (to, from, next) => {
-  // start progress bar
+  // Bắt đầu thanh tiến trình
   NProgress.start()
-  // set page title
+  // Đặt tiêu đề trang
   document.title = getPageTitle(to.meta.title)
-  // determine whether the user has logged in
+  // Xác định người dùng đã đăng nhập hay chưa
   const userStore = useUserStore()
   const hasToken = getToken()
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+      // Nếu người dùng đã đăng nhập, chuyển hướng đến trang chủ
       next({ path: '/' })
       NProgress.done()
     } else {
@@ -30,11 +30,11 @@ router.beforeEach(async (to, from, next) => {
         next()
       } else {
         try {
-          // get user info
+          // Lấy thông tin người dùng
           await userStore.getInfo()
           next()
         } catch (error) {
-          // remove token and go to login page to re-login
+          // Xóa token và chuyển hướng đến trang đăng nhập để đăng nhập lại
           userStore.resetToken()
           ElMessage.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
@@ -43,12 +43,12 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    /* has no token*/
+    /* Không có token */
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
+      // Trong danh sách trang không yêu cầu xác thực, điều hướng trực tiếp
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
+      // Các trang khác không có quyền truy cập sẽ được chuyển hướng đến trang đăng nhập.
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
@@ -56,6 +56,6 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach(() => {
-  // finish progress bar
+  // Hoàn thành thanh tiến trình
   NProgress.done()
 })
