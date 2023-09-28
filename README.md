@@ -79,9 +79,12 @@ router.afterEach(() => {
 })
 ```
 
+Setting layout và title
+
 ```sh
       meta: {
         layout: "name-layout",
+        title: 'title',
       }
 ```
 
