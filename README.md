@@ -6,10 +6,34 @@ custom by Hoang Hiéu
 
 - [Giới thiệu](#giới-thiệu)
 - [Hướng dẫn cài đặt](#hướng-dẫn-cài-đặt)
+- [Note](#note)
 - [Cấu trúc thư mục](#cấu-trúc-thư-mục)
 - [Document](#document)
 
 ## Giới thiệu
+
+## Hướng dẫn cài đặt
+
+Để chạy ứng dụng trên máy local:
+Clone repository này về máy
+
+```sh
+git clone https://github.com/my-basic-code/vue3.git
+```
+
+Cài đặt các dependency
+
+```sh
+npm install
+```
+
+Khởi động server dev
+
+```sh
+npm run dev
+```
+
+## Note
 
 # permission.js Thanh tiến trình và Middleware xác thực
 
@@ -86,27 +110,6 @@ Setting layout và title
         layout: "name-layout",
         title: 'title',
       }
-```
-
-## Hướng dẫn cài đặt
-
-Để chạy ứng dụng trên máy local:
-Clone repository này về máy
-
-```sh
-git clone https://github.com/my-basic-code/vue3.git
-```
-
-Cài đặt các dependency
-
-```sh
-npm install
-```
-
-Khởi động server dev
-
-```sh
-npm run dev
 ```
 
 ## Cấu trúc thư mục
