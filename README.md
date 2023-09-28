@@ -1,16 +1,18 @@
-# Project of Hoang Hiéu
+# Project of Hoàng Hiếu
 
-custom by Hoang Hiéu
+custom by Hoàng Hiếu
 
 ## Mục lục
 
 - [Giới thiệu](#giới-thiệu)
 - [Hướng dẫn cài đặt](#hướng-dẫn-cài-đặt)
-- [Note](#note)
 - [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+- [Note](#note)
 - [Document](#document)
 
 ## Giới thiệu
+
+Nhớ cảm ơn Hoàng Hiếu
 
 ## Hướng dẫn cài đặt
 
@@ -32,6 +34,50 @@ Khởi động server dev
 ```sh
 npm run dev
 ```
+
+## Cấu trúc thư mục
+
+├── src
+
+    ├── assets
+        │
+        ├── css /* Các file css */
+        │
+        └── images /* Các file ảnh */
+
+    ├── components
+        │
+        ├── layout /* Các layout component */
+        │
+        └── ui /* Các component UI tái sử dụng */
+
+    ├── constants /* Khi có quá nhiều import hãy tạo file và lưu vào đây. ex : images.js file import tất cả các ảnh */
+    │
+    ├── helper /* Các hàm tiện ích */
+    │
+    ├── hooks /* Custom hooks */
+    │
+    ├── layouts /* Các layout wrapper */
+        │
+        ├── Default.vue
+        │
+        └── OnlyView.vue
+
+    ├── pages /* Các trang */
+    │
+    ├── router /* Cấu hình routing */
+    │
+    ├── stores /* Quản lý state */
+    │
+    ├── utils /* Các tiện ích khác */
+    │
+    ├── App.vue /* Gốc ứng dụng */
+    │
+    └── main.js /* Entry point
+    │
+    ├── settings.js
+    │
+    └── permission.js /* Permission router
 
 ## Note
 
@@ -111,50 +157,6 @@ Setting layout và title
         title: 'title',
       }
 ```
-
-## Cấu trúc thư mục
-
-├── src
-
-    ├── assets
-        │
-        ├── css /* Các file css */
-        │
-        └── images /* Các file ảnh */
-
-    ├── components
-        │
-        ├── layout /* Các layout component */
-        │
-        └── ui /* Các component UI tái sử dụng */
-
-    ├── constants /* Khi có quá nhiều import hãy tạo file và lưu vào đây. ex : images.js file import tất cả các ảnh */
-    │
-    ├── helper /* Các hàm tiện ích */
-    │
-    ├── hooks /* Custom hooks */
-    │
-    ├── layouts /* Các layout wrapper */
-        │
-        ├── Default.vue
-        │
-        └── OnlyView.vue
-
-    ├── pages /* Các trang */
-    │
-    ├── router /* Cấu hình routing */
-    │
-    ├── stores /* Quản lý state */
-    │
-    ├── utils /* Các tiện ích khác */
-    │
-    ├── App.vue /* Gốc ứng dụng */
-    │
-    └── main.js /* Entry point
-    │
-    ├── settings.js
-    │
-    └── permission.js /* Permission router
 
 ## document
 
