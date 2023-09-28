@@ -1,3 +1,10 @@
+/**
+ * Validates a form based on the provided validation rules.
+ *
+ * @param {object} formData - The data to be validated.
+ * @param {object} validationRules - The rules for validating the form data.
+ * @return {object} - An object containing any validation errors.
+ */
 export function validateForm(formData, validationRules) {
   const errors = {};
   for (const fieldName in validationRules) {
@@ -18,6 +25,14 @@ export function validateForm(formData, validationRules) {
   return errors;
 }
 
+/**
+ * Validates the input onBlur and returns the error message if any.
+ *
+ * @param {string} inputName - The name of the input field.
+ * @param {object} formData - The form data object.
+ * @param {object} validationRules - The validation rules for the form fields.
+ * @return {string} The error message, if any.
+ */
 export const onBlurInput = (inputName, formData, validationRules) => {
   const errors = validateForm(formData, validationRules);
   let message

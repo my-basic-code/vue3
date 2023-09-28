@@ -3,22 +3,10 @@ import { ref, defineProps, defineEmits, watch } from "vue"
 
 const props = defineProps({
   modelValue: null,
-  options: {
-    type: Array,
-    required: true,
-  },
-  classInput: {
-    type: String,
-    default: "",
-  },
-  className: {
-    type: String,
-    default: "",
-  },
-  classActive: {
-    type: String,
-    default: "",
-  },
+  options: { type: Array, required: true },
+  classInput: { type: String, default: "" },
+  className: { type: String, default: "" },
+  classActive: { type: String, default: "" },
 })
 
 const emit = defineEmits(["update:modelValue"])

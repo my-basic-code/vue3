@@ -1,5 +1,10 @@
 import { ref } from "vue";
 
+/**
+ * Generates a function comment for the given function body.
+ *
+ * @return {Object} An object containing the handlerSearchAddress function and the dataGetAddress object
+ */
 export default function useGetAddress() {
   const dataGetAddress = ref({
     zip: '',

@@ -11,12 +11,12 @@ const props = defineProps({
   label: { type: String, default: "" },
   maxLength: { type: Number, default: 100 },
   disabled: { type: Boolean, default: false },
-  handleValue: { type: Function, default: () => { } },
-  error: { type: String, default: '' },
+  handlePattern: { type: Function, default: () => {} },
+  error: { type: String, default: "" },
   modelValue: { type: String, default: "" },
 })
 
-const emit = defineEmits(["update:modelValue", 'onBlur'])
+const emit = defineEmits(["update:modelValue", "onBlur"])
 
 const handleChange = e => {
   const value = e.target.value
@@ -29,24 +29,31 @@ const handleChange = e => {
 }
 
 const handleKeyDown = event => {
-  props.handleValue(event)
+  props.handlePattern(event)
   // Prevent input of "e" on input of type "number"
-  if (
-    props.type === "number" &&
-    (event.key === "e" || event.key === "E")
-  ) {
+  if (props.type === "number" && (event.key === "e" || event.key === "E")) {
     event.preventDefault()
   }
 }
-
 </script>
 
 <template>
   <div :class="wrapClass">
-    <label :class="classLabel" v-if="label">{{ label }} <slot name="sub-label"></slot></label>
+    <label :class="classLabel" v-if="label"
+      >{{ label }} <slot name="sub-label"></slot
+    ></label>
     <slot name="prefix"></slot>
-    <input :class="className" :type="type" :name="name" :placeholder="placeholder" :value="modelValue"
-      @input="handleChange" @keydown="handleKeyDown" :disabled="disabled" @blur="emit('onBlur')" />
+    <input
+      :class="className"
+      :type="type"
+      :name="name"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="handleChange"
+      @keydown="handleKeyDown"
+      :disabled="disabled"
+      @blur="emit('onBlur')"
+    />
     <slot name="suffix"></slot>
   </div>
   <ErrorMessage v-if="error.length > 0" :error="error" />

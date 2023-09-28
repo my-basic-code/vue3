@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup>
-import { isLoading } from '@/hooks/isLoading'
+import { isLoading } from "@/hooks/isLoading"
 </script>
 <style scoped>
 .loader {

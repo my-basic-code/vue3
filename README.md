@@ -105,17 +105,15 @@ Dưới đây là một ví dụ về cách sử dụng component `Button` trong
 
 ```vue
 <template>
-  <div>
-    <Button :class="`${classButtonCustom[1]}`" @click="handleClick">
-      <template v-slot:right-icon>
-        <div>right-icon</div>
-      </template>
-      Gửi
-      <template v-slot:left-icon>
-        <div>right-icon</div>
-      </template>
-    </Button>
-  </div>
+  <Button :class="`${classButtonCustom[1]}`" @click="handleClick">
+    <template v-slot:right-icon>
+      <div>right-icon</div>
+    </template>
+    Gửi
+    <template v-slot:left-icon>
+      <div>right-icon</div>
+    </template>
+  </Button>
 </template>
 
 <script setup>
@@ -129,31 +127,47 @@ const handleClick = () => {
 
 # Component Input
 
-Component `Input` là một thành phần Vue được sử dụng để tạo ra một trường nhập liệu đơn giản với các tính năng như nhãn, biểu tượng tiền tố và hậu tố, và hiển thị thông báo lỗi.
+Component `Input` cung cấp một trường nhập liệu tuỳ chỉnh với các tính năng như độ dài tối đa, trạng thái bị vô hiệu hóa và xử lý lỗi.
 
 ## Props
 
-- **wrapClass** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường.
+- **wrapClass** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho container bao bọc.
 
-- **className** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường nhập liệu.
+- **className** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho phần tử input.
 
-- **name** (kiểu: `String`, bắt buộc): Prop này chỉ định tên của trường nhập liệu.
+- **name** (kiểu: `String`, bắt buộc): Thuộc tính name cho phần tử input.
 
-- **placeholder** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một văn bản gợi ý trong trường nhập liệu.
+- **placeholder** (kiểu: `String`, mặc định: `''`): Văn bản gợi ý trong trường nhập liệu.
 
-- **type** (kiểu: `String`, mặc định: `'text'`): Prop này chỉ định kiểu của trường nhập liệu, như `'text'`, `'password'`, `'email'`, v.v.
+- **type** (kiểu: `String`, mặc định: `'text'`): Thuộc tính type cho phần tử input.
 
-- **label** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một nhãn cho trường nhập liệu.
+- **label** (kiểu: `String`, mặc định: `''`):Văn bản nhãn cho phần tử input.
 
-- **errors** (kiểu: `Array`, mặc định: `[]`): Prop này cho phép bạn truyền vào một mảng chứa các thông báo lỗi liên quan đến trường nhập liệu.
+- **maxLength ** (kiểu: `Number`, mặc định: `100`):Độ dài tối đa của giá trị nhập liệu.
+
+- **disabled ** (kiểu: `Boolean`, mặc định: `false`):Xác định trạng thái bị vô hiệu hóa của trường nhập liệu.
+
+- **handlePattern ** (kiểu: `Function`, mặc định: `() => {}`):Một hàm để xử lý giá trị nhập liệu.
+
+- **error** (kiểu: `String`, mặc định: `'text'`): Prop này cho phép bạn truyền vào một thông báo lỗi liên quan đến trường nhập liệu.
 
 - **modelValue** (kiểu: `String`, mặc định: `''`): Prop này chỉ định giá trị hiện tại của trường nhập liệu.
 
 ## Sự kiện
 
-- **update:modelValue**: Sự kiện này được phát ra khi giá trị của trường nhập liệu thay đổi. Bạn có thể lắng nghe sự kiện này để cập nhật giá trị của trường nhập liệu trong component cha.
+- **update:modelValue**: Khi giá trị nhập liệu được cập nhật.
+
+- **onBlur**: Khi phần tử input mất trạng thái focus.
+
+## Phương thức
+
+- **handleChange**: Phương thức để xử lý sự kiện thay đổi giá trị nhập liệu.
+
+- **handleKeyDown**: Phương thức để xử lý sự kiện nhấn phím.
 
 ## Slots
+
+- **sub-label**: Nội dung bổ sung được hiển thị dưới nhãn (label).
 
 - **prefix slot**: Slot này cho phép bạn đặt các phần tử hoặc biểu tượng trước trường nhập liệu.
 
@@ -166,13 +180,17 @@ Dưới đây là một ví dụ về cách sử dụng component `Input` trong 
 ```vue
 <template>
   <Input
-    class="input-wrap"
+    wrapClass="my-input"
     className="input-field"
+    type="text"
     name="username"
-    placeholder="Nhập tên người dùng"
-    :label="labelText"
-    :errors="inputErrors"
-    v-model="username"
+    placeholder="Nhập tên tài khoản"
+    label="Tên tài khoản"
+    :maxLength="20"
+    :disabled="false"
+    :modelValue="username"
+    @onBlur="handleBlur"
+    :error="usernameError"
   >
     <template #prefix>
       <i class="prefix-icon"></i>
@@ -187,32 +205,74 @@ Dưới đây là một ví dụ về cách sử dụng component `Input` trong 
 import Input from "@/components/ui/Input.vue"
 
 const username = ref("")
-const labelText = ref("Tên người dùng")
-const inputErrors = ref([])
+const usernameError = ref("")
+const handleBlur = () => {
+    // Thực hiện kiểm tra hợp lệ hoặc các hành động khác khi mất trạng thái focus
+},
 </script>
 ```
 
-# Component CheckboxRadio
+# Component InputImgReview
 
-Component `CheckboxRadio` là một thành phần Vue được sử dụng để tạo ra một trường checkbox đơn giản với các tính năng như nhãn và hiển thị thông báo lỗi.
+Component `InputImgReview` cho phép người dùng chọn một file hình ảnh và xem trước hình ảnh đó. Khi người dùng chọn một file hình ảnh, component sẽ hiển thị hình ảnh xem trước của file đó. Người dùng cũng có thể thay thế hình ảnh xem trước bằng cách chọn một file hình ảnh khác.
 
 ## Props
 
-- **className** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho phần bao bọc của trường checkbox.
+- **classImgReview ** (kiểu: `String`, mặc định: `''`): ớp CSS bổ sung cho phần tử chứa hình ảnh xem trước.
 
-- **inputClass** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một lớp CSS cho trường checkbox.
+- **modelValue** (kiểu: `String || null,`, mặc định: `null`): Giá trị mô hình cho trường nhập file.
 
-- **type** (kiểu: `String`, mặc định: `'checkbox'`): Prop này chỉ định kiểu của trường input : checkbox hoặc radio.
+## Sự kiện
 
-- **name** (kiểu: `String`, bắt buộc): Prop này chỉ định tên của trường checkbox.
+- **update:modelValue**: Khi giá trị nhập liệu được cập nhật.
 
-- **id** (kiểu: `String`, bắt buộc): Prop này chỉ định ID của trường checkbox.
+## Slots
 
-- **label** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn chỉ định một nhãn cho trường checkbox.
+- **imgInput**: Nội dung bổ sung hiển thị khi không có hình ảnh xem trước.
 
-- **errors** (kiểu: `Array`, mặc định: `[]`): Prop này cho phép bạn truyền vào một mảng chứa các thông báo lỗi liên quan đến trường checkbox.
+## Sử dụng
 
-- **checkmarkClass** (kiểu: `Object`, mặc định: `null`): Prop này cho phép bạn chỉ định một lớp CSS cho biểu tượng checkmark.
+Dưới đây là một ví dụ về cách sử dụng component `Input` trong code của bạn:
+
+```vue
+<template>
+  <InputImgReview classImgReview="my-img-review" v-model="selectedImage">
+    <div class="custom-file-input">
+      <span>Select Image</span>
+    </div>
+  </InputImgReview>
+</template>
+
+<script setup>
+import InputImgReview from "@/components/ui/InputImgReview.vue"
+
+const selectedImage = ref(null)
+</script>
+```
+
+# Component Checkbox
+
+Component `Checkbox` cho phép người dùng chọn một giá trị checkbox và hiển thị thông báo lỗi nếu có. Component cũng hỗ trợ tùy chỉnh các lớp CSS và các sự kiện để xử lý sự kiện thay đổi giá trị checkbox.
+
+## Props
+
+- **className** (kiểu: `String`, mặc định: `''`): ớp CSS bổ sung cho container bao bọc.
+
+- **inputClass** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho phần tử input.
+
+- **type** (kiểu: `String`, mặc định: `'checkbox'`): Kiểu của trường checkbox.
+
+- **name** (kiểu: `String`, bắt buộc): Thuộc tính name cho phần tử input.
+
+- **id** (kiểu: `String`, bắt buộc): Thuộc tính id cho phần tử input
+
+- **label** (kiểu: `String`, mặc định: `''`): Văn bản nhãn cho phần tử checkbox.
+
+- **classLabel ** (kiểu: `String`, mặc định: `''`): VLớp CSS bổ sung cho phần tử nhãn (label).
+
+- **error** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn truyền vào một thông báo lỗi liên quan đến trường nhập liệu.
+
+- **checkmarkClass** (kiểu: `Object`, mặc định: `null`): Lớp CSS bổ sung cho phần tử checkmark (dấu tích).
 
 - **modelValue** (kiểu: `Boolean`, mặc định: `false`): Prop này chỉ định giá trị hiện tại của trường checkbox.
 
@@ -222,29 +282,29 @@ Component `CheckboxRadio` là một thành phần Vue được sử dụng để
 
 ## Slots
 
-Không có slot nào trong component `CheckboxRadio`.
+- **label**: Nội dung bổ sung hiển thị cho nhãn (label) của checkbox.
 
 ## Sử dụng
 
-Dưới đây là một ví dụ về cách sử dụng component `CheckboxRadio` trong code của bạn:
+Dưới đây là một ví dụ về cách sử dụng component `Checkbox` trong code của bạn:
 
 ```vue
 <template>
-  <CheckboxRadio
-    className="checkbox-container"
-    inputClass="checkbox-field"
-    name="agree_terms"
-    id="agree_terms"
+  <Checkbox
+    className="my-checkbox"
+    inputClass="my-checkbox-input"
+    name="agree"
+    id="agree"
     label="Tôi đồng ý với các điều khoản và điều kiện"
-    :errors="checkboxErrors"
-    v-model="agreeTerms"
+    :modelValue="agree"
+    :error="checkboxError"
   />
 </template>
 
 <script setup>
-import CheckboxRadio from "@/components/ui/CheckboxRadio.vue"
-const checkboxErrors = ref([])
-const agreeTerms = ref(false)
+import Checkbox from "@/components/ui/Checkbox.vue"
+const checkboxError = ref("")
+const agree = ref(false)
 </script>
 ```
 
@@ -254,17 +314,25 @@ Component `Select` là một thành phần Vue được sử dụng để tạo 
 
 ## Props
 
-- **options** (kiểu: `Array`, bắt buộc): Prop này chỉ định danh sách các tùy chọn cho trường chọn. Mỗi tùy chọn là một đối tượng có hai thuộc tính: `value` (giá trị của tùy chọn) và `label` (nhãn hiển thị cho tùy chọn).
+- **options** (kiểu: `Array`, bắt buộc): Danh sách các tùy chọn cho dropdown.
 
-- **modelValue** (kiểu: `String`, `Number`, `Array`): Prop này chỉ định giá trị hiện tại của trường chọn. Nếu `multiple` được đặt thành `true`, giá trị có thể là một mảng các giá trị.
+- **modelValue** (kiểu: `String`, `Number`, `Array`): Giá trị được chọn hiện tại của dropdown.
 
-- **disabled** (kiểu: `Boolean`): Prop này chỉ định trạng thái vô hiệu hóa của trường chọn.
+- **disabled** (kiểu: `Boolean`, mặc định: `false`): Xác định xem dropdown có bị vô hiệu hóa hay không.
 
-- **multiple** (kiểu: `Boolean`): Prop này chỉ định xem trường chọn có cho phép lựa chọn đa giá trị hay không.
+- **multiple** (kiểu: `Boolean`, mặc định: `false`): Xác định xem dropdown có hỗ trợ chọn nhiều giá trị hay không.
 
-- **placeholder** (kiểu: `String`, mặc định: `"Select..."`): Prop này chỉ định văn bản mặc định hiển thị khi không có tùy chọn nào được chọn.
+- **isShowInput** (kiểu: `Boolean`, mặc định: `false`) Xác định xem ô nhập liệu có được hiển thị hay không.
 
-- **placement** (kiểu: `String`, mặc định: `"bottomLeft"`): Prop này chỉ định vị trí hiển thị dropdown của trường chọn. Các giá trị hợp lệ bao gồm `"bottomLeft"`, `"bottomRight"`, `"topLeft"` và `"topRight"`.
+- **placeholder** (kiểu: `String`, mặc định: `"Select..."`): Văn bản mặc định hiển thị khi không có giá trị nào được chọn.
+
+- **placement** (kiểu: `String`, mặc định: `"bottomLeft"`): Vị trí hiển thị dropdown, có thể là "bottomLeft", "bottomRight", "topLeft" hoặc "topRight".
+
+- **classSelected** (kiểu: `String`, mặc định: `"flex items-center justify-between text-2xl"`): Lớp CSS cho phần hiển thị giá trị đã chọn.
+
+- **classWrapOption** (kiểu: `String`, mặc định: `""`): Lớp CSS cho phần bao bọc các tùy chọn.
+
+- **classOption** (kiểu: `String`, mặc định: `""`): Lớp CSS cho mỗi tùy chọn.
 
 ## Sự kiện
 
@@ -273,8 +341,6 @@ Component `Select` là một thành phần Vue được sử dụng để tạo 
 ## Slots
 
 - **icon**: Slot này cho phép bạn tùy chỉnh biểu tượng hiển thị bên trong trường chọn.
-
-- **options**: Slot này cho phép bạn tùy chỉnh giao diện của dropdown và các tùy chọn. Bên trong slot, bạn có thể sử dụng vòng lặp `v-for` để tạo các tùy chọn dựa trên danh sách `options`.
 
 ## Sử dụng
 
@@ -285,11 +351,11 @@ Dưới đây là một ví dụ về cách sử dụng component `Select` trong
   <Select
     :options="selectOptions"
     :modelValue="selectedValue"
-    :disabled="isDisabled"
-    :multiple="isMultiple"
-    placeholder="Select an option"
+    class-selected="custom-selected"
+    class-wrap-option="custom-wrap"
+    class-option="custom-option"
+    placeholder="Chọn một tùy chọn"
     placement="bottomLeft"
-    @update:modelValue="handleSelect"
   >
     <template #icon>
       <svg
@@ -310,13 +376,6 @@ Dưới đây là một ví dụ về cách sử dụng component `Select` trong
         />
       </svg>
     </template>
-
-    <template #options>
-      <div v-for="option in selectOptions" :key="option.value">
-        <input type="checkbox" />
-        {{ option.label }}
-      </div>
-    </template>
   </Select>
 </template>
 
@@ -329,7 +388,51 @@ const selectOptions = ref([
   { value: "option3", label: "Option 3" },
 ])
 const selectedValue = ref()
-const isDisabled = ref(false)
-const isMultiple = ref(false)
+</script>
+```
+
+# Component Radio
+
+Component Radio là một thành phần giao diện người dùng cho phép người dùng chọn một giá trị duy nhất từ một danh sách các tùy chọn. Mô-đun này được viết bằng Vue.js và sử dụng các thuộc tính và sự kiện để thực hiện các chức năng và tương tác.
+
+## Các thuộc tính
+
+- **update:modelValue**: Sự kiện này được phát ra khi giá trị của trường chọn thay đổi. Bạn có thể lắng nghe sự kiện này để cập nhật giá trị của trường chọn trong component cha.
+- **options** (kiểu: `Array`, bắt buộc): Danh sách các tùy chọn cho Radio Group.
+- **classInput** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho các input radio.
+- **className** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho mỗi tùy chọn.
+- **classActive** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho tùy chọn được chọn.
+
+## Các sự kiện
+
+- **update:modelValue**: Sự kiện được phát ra khi giá trị được chọn trong Radio Group thay đổi.
+
+## Cách sử dụng
+
+Để sử dụng mô-đun Radio Group Vue, bạn cần cung cấp danh sách các tùy chọn cho Radio Group thông qua thuộc tính `options`, và giám sát giá trị được chọn thông qua thuộc tính `modelValue` hoặc bắt sự kiện `update:modelValue` để cập nhật giá trị khi người dùng thay đổi.
+
+Dưới đây là một ví dụ về cách sử dụng mô-đun Radio Group Vue:
+
+```vue
+<template>
+  <Radio
+    :options="options"
+    v-model="selectedValue"
+    class-input="custom-input"
+    class-name="custom-option"
+    class-active="custom-active"
+  />
+</template>
+
+<script setup>
+import { ref } from "vue"
+import Radio from "@/components/ui/Radio.vue"
+
+const options = ref([
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+])
+const selectedValue = ref()
 </script>
 ```

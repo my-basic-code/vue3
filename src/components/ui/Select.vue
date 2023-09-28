@@ -2,36 +2,19 @@
 import { ref, computed, onMounted, onUnmounted, watch } from "vue"
 
 const props = defineProps({
-  options: {
-    type: Array,
-    required: true,
-  },
-  modelValue: {
-    type: [String, Number, Array],
-  },
-  disabled: Boolean,
-  multiple: Boolean,
-  isShowInput: Boolean,
-  placeholder: {
-    type: String,
-    default: "Select...",
-  },
-  placement: {
-    type: String,
-    default: "bottomLeft",
-  },
+  options: { type: Array, required: true },
+  modelValue: { type: [String, Number, Array] },
+  disabled: { type: Boolean, default: false },
+  multiple: { type: Boolean, default: false },
+  isShowInput: { type: Boolean, default: false },
+  placeholder: { type: String, default: "Select..." },
+  placement: { type: String, default: "bottomLeft" },
   classSelected: {
     type: String,
-    default: "flex items-center justify-between text-2xl"
+    default: "flex items-center justify-between text-2xl",
   },
-  classWrapOption: {
-    type: String,
-    default: ""
-  },
-  classOption: {
-    type: String,
-    default: ""
-  },
+  classWrapOption: { type: String, default: "" },
+  classOption: { type: String, default: "" },
 })
 
 const emits = defineEmits(["update:modelValue"])
@@ -90,46 +73,48 @@ function updateValue(newValue) {
   emits("update:modelValue", newValue)
 }
 
-function close() {
-  isOpen.value = false
-}
-
-function handleClickOutside(event) {
-  if (!element.value.contains(event.target)) {
-    close()
-  }
-}
-
 watch(
   () => props.modelValue,
-  (newValue) => {
+  newValue => {
     selected.value = !props.multiple ? newValue || "" : newValue || []
   }
 )
-
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener("click", handleClickOutside)
-})
 </script>
 
 <template>
-  <div ref="element" @click="toggle" :class="`${disabled ? 'opacity-50' : ''} relative`">
+  <div
+    v-click-outside="() => (isOpen = false)"
+    @click="toggle"
+    :class="disabled ? 'opacity-50' : ''"
+    class="relative"
+  >
     <div :class="classSelected">
       <span>{{ selectedText }}</span>
       <slot name="icon"></slot>
     </div>
     <div v-if="isOpen" :class="`absolute ${positionOption} ${classWrapOption}`">
-      <div :class="classOption" v-for="option in options" :key="option.value" @click="
-        updateValue(multiple ? toggleValue(option.value) : option.value)
-        ">
-        <input :class="isShowInput ? 'block' : 'hidden'" type="checkbox" v-if="multiple"
-          :checked="(selected || []).includes(option.value)" @change="updateValue(toggleValue(option.value))" />
-        <input :class="isShowInput ? 'block' : 'hidden'" type="radio" v-else :checked="option.value === selected"
-          @change="updateValue(option.value)" />
+      <div
+        :class="classOption"
+        v-for="option in options"
+        :key="option.value"
+        @click="
+          updateValue(multiple ? toggleValue(option.value) : option.value)
+        "
+      >
+        <input
+          :class="isShowInput ? 'block' : 'hidden'"
+          type="checkbox"
+          v-if="multiple"
+          :checked="(selected || []).includes(option.value)"
+          @change="updateValue(toggleValue(option.value))"
+        />
+        <input
+          :class="isShowInput ? 'block' : 'hidden'"
+          type="radio"
+          v-else
+          :checked="option.value === selected"
+          @change="updateValue(option.value)"
+        />
         {{ option.label }}
       </div>
     </div>
