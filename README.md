@@ -210,9 +210,10 @@ Component `InputImgReview` cho phép người dùng chọn một file hình ản
 
 ## Props
 
-- **classImgReview ** (kiểu: `String`, mặc định: `''`): ớp CSS bổ sung cho phần tử chứa hình ảnh xem trước.
-
-- **modelValue** (kiểu: `String || null,`, mặc định: `null`): Giá trị mô hình cho trường nhập file.
+| Prop           | Type               | Required | Default | Description                                           |
+| -------------- | ------------------ | -------- | ------- | ----------------------------------------------------- |
+| classImgReview | String             | false    | ''      | Class CSS bổ sung cho phần tử chứa hình ảnh xem trước |
+| modelValue     | String &#124; null | false    | null    | Giá trị mô hình cho trường nhập file                  |
 
 ## Sự kiện
 
@@ -248,25 +249,18 @@ Component `Checkbox` cho phép người dùng chọn một giá trị checkbox v
 
 ## Props
 
-- **className** (kiểu: `String`, mặc định: `''`): ớp CSS bổ sung cho container bao bọc.
-
-- **inputClass** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho phần tử input.
-
-- **type** (kiểu: `String`, mặc định: `'checkbox'`): Kiểu của trường checkbox.
-
-- **name** (kiểu: `String`, bắt buộc): Thuộc tính name cho phần tử input.
-
-- **id** (kiểu: `String`, bắt buộc): Thuộc tính id cho phần tử input
-
-- **label** (kiểu: `String`, mặc định: `''`): Văn bản nhãn cho phần tử checkbox.
-
-- **classLabel ** (kiểu: `String`, mặc định: `''`): VLớp CSS bổ sung cho phần tử nhãn (label).
-
-- **error** (kiểu: `String`, mặc định: `''`): Prop này cho phép bạn truyền vào một thông báo lỗi liên quan đến trường nhập liệu.
-
-- **checkmarkClass** (kiểu: `Object`, mặc định: `null`): Lớp CSS bổ sung cho phần tử checkmark (dấu tích).
-
-- **modelValue** (kiểu: `Boolean`, mặc định: `false`): Prop này chỉ định giá trị hiện tại của trường checkbox.
+| Prop           | Type    | Required | Default    | Description                             |
+| -------------- | ------- | -------- | ---------- | --------------------------------------- |
+| className      | String  | false    | ''         | Class CSS bổ sung cho container bao bọc |
+| inputClass     | String  | false    | ''         | Class CSS bổ sung cho phần tử input     |
+| type           | String  | false    | 'checkbox' | Kiểu của trường checkbox                |
+| name           | String  | true     | -          | Thuộc tính name cho phần tử input       |
+| id             | String  | true     | -          | Thuộc tính id cho phần tử input         |
+| label          | String  | false    | ''         | Văn bản nhãn cho phần tử checkbox       |
+| classLabel     | String  | false    | ''         | Class CSS bổ sung cho phần tử nhãn      |
+| error          | String  | false    | ''         | Thông báo lỗi cho trường nhập liệu      |
+| checkmarkClass | Object  | false    | null       | Class CSS bổ sung cho phần tử checkmark |
+| modelValue     | Boolean | false    | false      | Giá trị hiện tại của trường checkbox    |
 
 ## Sự kiện
 
@@ -306,25 +300,18 @@ Component `Select` là một thành phần Vue được sử dụng để tạo 
 
 ## Props
 
-- **options** (kiểu: `Array`, bắt buộc): Danh sách các tùy chọn cho dropdown.
-
-- **modelValue** (kiểu: `String`, `Number`, `Array`): Giá trị được chọn hiện tại của dropdown.
-
-- **disabled** (kiểu: `Boolean`, mặc định: `false`): Xác định xem dropdown có bị vô hiệu hóa hay không.
-
-- **multiple** (kiểu: `Boolean`, mặc định: `false`): Xác định xem dropdown có hỗ trợ chọn nhiều giá trị hay không.
-
-- **isShowInput** (kiểu: `Boolean`, mặc định: `false`) Xác định xem ô nhập liệu có được hiển thị hay không.
-
-- **placeholder** (kiểu: `String`, mặc định: `"Select..."`): Văn bản mặc định hiển thị khi không có giá trị nào được chọn.
-
-- **placement** (kiểu: `String`, mặc định: `"bottomLeft"`): Vị trí hiển thị dropdown, có thể là "bottomLeft", "bottomRight", "topLeft" hoặc "topRight".
-
-- **classSelected** (kiểu: `String`, mặc định: `"flex items-center justify-between text-2xl"`): Lớp CSS cho phần hiển thị giá trị đã chọn.
-
-- **classWrapOption** (kiểu: `String`, mặc định: `""`): Lớp CSS cho phần bao bọc các tùy chọn.
-
-- **classOption** (kiểu: `String`, mặc định: `""`): Lớp CSS cho mỗi tùy chọn.
+| Prop            | Type                  | Required | Default                                      | Description                       |
+| --------------- | --------------------- | -------- | -------------------------------------------- | --------------------------------- |
+| options         | Array                 | true     | -                                            | Danh sách các tùy chọn            |
+| modelValue      | String, Number, Array | false    | null                                         | Giá trị được chọn                 |
+| disabled        | Boolean               | false    | false                                        | Xác định có bị disabled hay không |
+| multiple        | Boolean               | false    | false                                        | Cho phép chọn nhiều giá trị       |
+| isShowInput     | Boolean               | false    | false                                        | Hiển thị ô input                  |
+| placeholder     | String                | false    | "Select..."                                  | Văn bản mặc định khi không chọn   |
+| placement       | String                | false    | "bottomLeft"                                 | Vị trí hiển thị dropdown          |
+| classSelected   | String                | false    | "flex items-center justify-between text-2xl" | Class CSS cho phần đã chọn        |
+| classWrapOption | String                | false    | ""                                           | Class CSS bao bọc các option      |
+| classOption     | String                | false    | ""                                           | Class CSS cho mỗi option          |
 
 ## Sự kiện
 
@@ -387,13 +374,14 @@ const selectedValue = ref()
 
 Component Radio là một thành phần giao diện người dùng cho phép người dùng chọn một giá trị duy nhất từ một danh sách các tùy chọn. Mô-đun này được viết bằng Vue.js và sử dụng các thuộc tính và sự kiện để thực hiện các chức năng và tương tác.
 
-## Các thuộc tính
+## Props
 
-- **update:modelValue**: Sự kiện này được phát ra khi giá trị của trường chọn thay đổi. Bạn có thể lắng nghe sự kiện này để cập nhật giá trị của trường chọn trong component cha.
-- **options** (kiểu: `Array`, bắt buộc): Danh sách các tùy chọn cho Radio Group.
-- **classInput** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho các input radio.
-- **className** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho mỗi tùy chọn.
-- **classActive** (kiểu: `String`, mặc định: `""`) : Lớp CSS cho tùy chọn được chọn.
+| Prop        | Type   | Required | Default | Description                      |
+| ----------- | ------ | -------- | ------- | -------------------------------- |
+| options     | Array  | true     | -       | Danh sách các tùy chọn           |
+| classInput  | String | false    | ""      | Class CSS cho các input radio    |
+| className   | String | false    | ""      | Class CSS cho mỗi tùy chọn       |
+| classActive | String | false    | ""      | Class CSS cho tùy chọn được chọn |
 
 ## Các sự kiện
 
