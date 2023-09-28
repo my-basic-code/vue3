@@ -131,27 +131,19 @@ Component `Input` cung cấp một trường nhập liệu tuỳ chỉnh với c
 
 ## Props
 
-- **wrapClass** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho container bao bọc.
-
-- **className** (kiểu: `String`, mặc định: `''`): Lớp CSS bổ sung cho phần tử input.
-
-- **name** (kiểu: `String`, bắt buộc): Thuộc tính name cho phần tử input.
-
-- **placeholder** (kiểu: `String`, mặc định: `''`): Văn bản gợi ý trong trường nhập liệu.
-
-- **type** (kiểu: `String`, mặc định: `'text'`): Thuộc tính type cho phần tử input.
-
-- **label** (kiểu: `String`, mặc định: `''`):Văn bản nhãn cho phần tử input.
-
-- **maxLength ** (kiểu: `Number`, mặc định: `100`):Độ dài tối đa của giá trị nhập liệu.
-
-- **disabled ** (kiểu: `Boolean`, mặc định: `false`):Xác định trạng thái bị vô hiệu hóa của trường nhập liệu.
-
-- **handlePattern ** (kiểu: `Function`, mặc định: `() => {}`):Một hàm để xử lý giá trị nhập liệu.
-
-- **error** (kiểu: `String`, mặc định: `'text'`): Prop này cho phép bạn truyền vào một thông báo lỗi liên quan đến trường nhập liệu.
-
-- **modelValue** (kiểu: `String`, mặc định: `''`): Prop này chỉ định giá trị hiện tại của trường nhập liệu.
+| Prop          | Type     | Required | Default  | Description                                             |
+| ------------- | -------- | -------- | -------- | ------------------------------------------------------- |
+| wrapClass     | String   | false    | ''       | Lớp CSS bổ sung cho container bao bọc                   |
+| className     | String   | false    | ''       | Lớp CSS bổ sung cho phần tử input                       |
+| name          | String   | true     | -        | Thuộc tính name cho phần tử input                       |
+| placeholder   | String   | false    | ''       | Văn bản gợi ý trong trường nhập liệu                    |
+| type          | String   | false    | 'text'   | Thuộc tính type cho phần tử input                       |
+| label         | String   | false    | ''       | Văn bản nhãn cho phần tử input                          |
+| maxLength     | Number   | false    | 100      | Độ dài tối đa của giá trị nhập liệu                     |
+| disabled      | Boolean  | false    | false    | Xác định trạng thái bị vô hiệu hóa của trường nhập liệu |
+| handlePattern | Function | false    | () => {} | Hàm xử lý giá trị nhập liệu                             |
+| error         | String   | false    | ''       | Thông báo lỗi liên quan đến trường nhập liệu            |
+| modelValue    | String   | false    | ''       | Giá trị hiện tại của trường nhập liệu                   |
 
 ## Sự kiện
 
