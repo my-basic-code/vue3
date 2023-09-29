@@ -57,6 +57,8 @@ npm run dev
     │
     ├── hooks /* Custom hooks */
     │
+    ├── locales /* lang */
+    │
     ├── layouts /* Các layout wrapper */
         │
         ├── Default.vue
@@ -72,6 +74,8 @@ npm run dev
     ├── utils /* Các tiện ích khác */
     │
     ├── App.vue /* Gốc ứng dụng */
+    │
+    ├── i18n.js
     │
     └── main.js /* Entry point
     │

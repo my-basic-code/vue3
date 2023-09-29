@@ -19,7 +19,7 @@
           <div class="w-full px-4 ml-auto mr-auto text-center lg:w-6/12">
             <div class="pr-12">
               <h1 class="text-5xl font-semibold text-white">
-                Your story starts with us.
+                {{ $t("welcome") }}
               </h1>
               <p class="mt-4 text-lg text-blueGray-200">
                 This is a simple example of a Landing Page you can build using
@@ -112,5 +112,12 @@
     </section>
   </section>
 </template>
-<script setup></script>
+<script setup>
+import { changeLanguage } from "@/helper/changeLanguage"
+import { onMounted } from "vue"
+
+onMounted(() => {
+  changeLanguage("vi")
+})
+</script>
 <style scoped></style>

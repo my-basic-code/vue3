@@ -48,7 +48,7 @@ export const constantRoutes = [
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: constantRoutes,
   /**
    * Scrolls to a specific position on the page with smooth behavior.
