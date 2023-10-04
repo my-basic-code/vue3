@@ -11,11 +11,17 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"])
 
-const selected = ref(props.modelValue)
+const selected = ref("")
 
 watch(selected, () => {
   emit("update:modelValue", selected.value)
 })
+watch(
+  () => props.modelValue,
+  () => {
+    selected.value = props.modelValue
+  }
+)
 </script>
 
 <template>
